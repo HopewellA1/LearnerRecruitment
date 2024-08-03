@@ -1,0 +1,253 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+
+
+    {% load static %}
+    <style>
+
+        #innerManu{
+            display:flex;
+            justify-content:end
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    
+   <div class="container">
+        <div>
+            <h1>
+                {{Category.categoryName}} Learner
+             </h1>
+        </div>
+        <hr/>
+        <div id="innerManu">
+           
+            
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                    Back to Learners
+                </a>
+            </div>
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                    Learner details
+                </a>
+            </div>
+        </div>
+
+      
+        <div id="addformHolder" >
+            
+            <form method="post"  >
+                {% csrf_token %}
+
+                <div>
+                    <div>
+                        <label>
+                           <b> ID number*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="LearnerIDNumber" value="{{learner.LearnerIDNumber}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>First name*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerFirstName" value="{{learner.LearnerFirstName}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last name*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerSurname" value="{{learner.LearnerSurname}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Midle name<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerMiddleName" value="{{learner.LearnerMiddleName}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Gender*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="Gender" value="{{learner.Gender}}"   />
+
+
+                    </div>
+                    
+                    <div>
+                        <label>
+                            <b>Date of birth*</b>
+                        </label><br/>
+                        <input class="form-control" required type="date" name="DOB" value="{{ learner.DOB|date:'Y-m-d' }}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Home Language*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="HomeLanguage" value="{{learner.HomeLanguage}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Equity Code*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="EquityCode" value="{{learner.EquityCode}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Home Address1*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerHomeAddress1" value="{{learner.LearnerHomeAddress1}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Home Address2<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerHomeAddress2" value="{{learner.LearnerHomeAddress2}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Municipality<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="Municipality" value="{{learner.Municipality}}"  />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Postal code<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerHomePostalCode" value="{{learner.LearnerHomePostalCode}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>STATSSAArea<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="STATSSAArea" value="{{learner.STATSSAArea}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Phone Number<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerCellPhoneNumber" value="{{learner.LearnerCellPhoneNumber}}"/>
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Fax Number<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerFaxNumber" value="{{learner.LearnerFaxNumber}}" />
+                    </div>
+
+                    <div>
+                        <label>
+                           <b>Learner Email Address*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerEmailAddress" value="{{learner.LearnerEmailAddress}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Province*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="Province" value="{{learner.Province}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Disability*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="Disability"  value="{{learner.Disability}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last School Name*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="LastSchoolName" value="{{learner.LastSchoolName}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last School EMISNo*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="LastSchoolEMISNo" value="{{learner.LastSchoolEMISNo}}" />
+                    </div>
+                    <div>
+                        <label>
+                            <b>Last School Year*</b>
+                        </label><br/>
+                        <input required placeholder="YYYY" class="form-control" type="number" min="1900" max="2100" name="LastSchoolYear" value="{{learner.LastSchoolYear}}" />
+                    </div>  
+                    <div>
+                        <label>
+                           <b>Degree Title*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="DegreeTitle" value="{{learner.DegreeTitle}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Field Of Study*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="FieldOfStudy" value="{{learner.FieldOfStudy}}"/>
+                    </div>
+                    <div>
+                        <label>
+                           <b>NQF Level*<b>
+                        </label><br/>
+                        <input required class="form-control" type="number" name="NQFLevel" value="{{ learner.NQFLevel }}" />
+                    </div>
+                    <div>
+
+                        <label>
+                           <b>RACE*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="RACE" value="{{learner.RACE}}" />
+                    </div>
+                    
+                    <div>
+                        <label>
+                           <b>Institution*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="Institution" value="{{learner.Institution}}" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Major Subjects<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" value="None" name="MajorSubjects" >{{learner.MajorSubjects}}</textarea>
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Experience<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" value="None" name="Experience" >{{learner.Experience}}</textarea>
+                    </div>
+                    
+
+                    <div>
+                        <br/>
+                        <input class="form-control btn btn-success" type="submit" value="Save changes"  />
+                    </div>
+                    
+                    
+                </div>
+            </form>
+        </div>
+       
+    </div>
+{% endblock %}

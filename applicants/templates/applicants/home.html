@@ -1,0 +1,48 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+
+
+    {% load static %}
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    
+   <div class="container">
+        <h1>
+            Welcome  the capture app
+        </h1>
+
+        <hr/>
+        {% comment %} <a href="{% url 'download_excel' %}" class="btn btn-default btn-info">
+            Download spreadsheet
+        </a> {% endcomment %}
+   </div>
+
+   
+   
+
+
+
+ 
+   
+
+
+
+
+
+{% endblock %}

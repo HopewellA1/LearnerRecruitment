@@ -1,0 +1,188 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+
+
+    {% load static %}
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+    <form method="POST" action="{% url 'LPO1' %}">
+        {% csrf_token %}
+
+    <B>
+   <div class="container">
+        <h1 align="center">
+            Add form and the list from database
+        </h1>
+      
+        <br>
+        <br>
+
+            
+
+<div class="row">
+    <div class="col">
+    <label class="form-label" for="LearnerId">Leraner ID</label>
+      <input type="text" class="form-control"  name="IdNumber" placeholder="Learner Id number" aria-label="  Learner Id ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="DateOfBirth">Date Of Birth</label>
+      <input type="text" class="form-control" name="DateOfBirth"   placeholder="Date Of Birth" aria-label="Date Of Birth">
+    </div>
+  </div>
+
+<br>
+
+  <div class="row">
+    <div class="col">
+        <label class="form-label" for="Gender">Gender </label>
+      <input type="text" class="form-control" name = "Gender" placeholder=" Gender" aria-label="Gender">
+    </div>
+    <div class="col">
+        <label class="form-label" for="EquityCode">Equity Code</label>
+      <input type="text" class="form-control"  name= "EquityCode" placeholder="Equity Code" aria-label="Equity Code">
+    </div>
+  </div>
+  
+  <br>
+
+  <div class="row">
+    <div class="col">
+        <label class="form-label" for="Nationality">Nationality </label>
+      <input type="text" class="form-control" name = "Nationality" placeholder="First name" aria-label="Nationality">
+    </div>
+    <div class="col">
+        <label class="form-label" for="HomeLanguage">Home Language</label>
+      <input type="text" class="form-control" name = "HomeLanguage" placeholder="Home Language " aria-label="HomeLanguage">
+    </div>
+  </div>
+
+<br>
+
+  <div class="row">
+    <div class="col">
+        <label class="form-label" for="LearnerSurname">Surname  </label>
+      <input type="text" class="form-control" name = "LearnerSurname" placeholder="Surname" aria-label="LearnerSurname ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="LearnerFirstname"> First Name</label>
+      <input type="text" class="form-control" name= "LearnerFirstname" placeholder="First Name " aria-label=" LearnerFirstname">
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col">
+        <label class="form-label" for="LearnerMiddleName"> Middle Name </label>
+      <input type="text" class="form-control" name ="LearnerMiddleName" placeholder="First name" aria-label=" LearnerMiddleName ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="HomeAddress1">Home Address 1</label>
+      <input type="text" class="form-control" name = "HomeAddress1" placeholder="Home Address 1" aria-label="HomeAddress1">
+    </div>
+  </div>
+
+<br>
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="HomeAddress2">Home Address 2</label>
+      <input type="text" class="form-control" name= "HomeAddress2" placeholder="Home Address 2" aria-label=" HomeAddress2 ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="HomeAddress3">Home Address 3 </label>
+      <input type="text" class="form-control" name = "HomeAddress3" placeholder="Home Address 3" aria-label="HomeAddress3">
+    </div>
+  </div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="PostalCode">Postal Code </label>
+      <input type="text" class="form-control" name = "PostalCode" placeholder=" Postal Code" aria-label=" PostalCode ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="STATSSAarea">STATSSA area   </label>
+      <input type="text" class="form-control" name = "STATSSAarea" placeholder="STATSSA area  " aria-label="STATSSAarea">
+    </div>
+  </div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="PhoneNo">Phone Number</label>
+      <input type="text" class="form-control" name= "PhoneNo" placeholder="Phone Number" aria-label=" PhoneNo ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="FaxNo">Fax Number</label>
+      <input type="text" class="form-control" name = "FaxNo" placeholder="Fax Number" aria-label="FaxNo">
+    </div>
+  </div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="Email">Email </label>
+      <input type="text" class="form-control" name = "Email" placeholder="Email " aria-label=" Email ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="Province">Province  </label>
+      <input type="text" class="form-control" name = "Province" placeholder="Province  " aria-label=" Province">
+    </div>
+  </div>
+
+<br>
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="Disability"> Disability  </label>
+      <input type="text" class="form-control" name = "Disability" placeholder="Disability " aria-label=" Disability ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="LastSchoolEMISNO">Last School EMIS NO  </label>
+      <input type="text" class="form-control" name = "LastSchoolEMISNO" placeholder="Last School EMIS NO" aria-label="LastSchoolEMISNO">
+    </div>
+  </div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="LastSChoolName"> Last School Name   </label>
+      <input type="text" class="form-control" name = "LastSChoolName" placeholder="Last School Name  " aria-label=" LastSChoolName ">
+    </div>
+    <div class="col">
+        <label class="form-label" for="LastSchoolYear">Last School Year </label>
+      <input type="text" class="form-control" name = "LastSchoolYear" placeholder="Last School Year" aria-label="LastSchoolYear ">
+    </div>
+  </div>
+
+
+  <br>
+</B>
+<div class="col-md-12 mb-12">
+
+
+    <input class="btn btn-default btn-primary" style="width:100%" type="submit" value="Save and continue"/> 
+    </div>
+</div>
+
+</form>
+
+{% endblock %}

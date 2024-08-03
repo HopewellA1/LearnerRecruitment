@@ -1,0 +1,353 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+
+
+    {% load static %}
+    <style>
+
+        td, tr, th{
+            border:solid 1px
+        }
+        #tablHolder{
+            padding:1rem
+        }
+        #innerManu{
+            display:flex;
+            justify-content:end
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    
+   <div class="container">
+        <div>
+            <h1>
+                {{Category.categoryName}} Learners
+             </h1>
+        </div>
+        <hr/>
+        <div id="innerManu">
+            
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+                    New student
+                </a>
+            </div>
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                    download excel sheet
+                </a>
+            </div>
+        </div>
+
+      
+        <div id="addformHolder"  hidden>
+            
+            <form method="post"  >
+                {% csrf_token %}
+
+                <div>
+                    <div>
+                        <label>
+                           <b> ID number*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="LearnerIDNumber" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>First name*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerFirstName" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last name*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerSurname" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Midle name<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerMiddleName" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Gender*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="Gender" />
+
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Date of birth*<b>
+                        </label><br/>
+                        <input class="form-control" required type="date" name="DOB" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Home Language*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="HomeLanguage" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Equity Code*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="EquityCode" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Home Address1*<b>
+                        </label><br/>
+                        <input class="form-control" required type="text" name="LearnerHomeAddress1" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Home Address2<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerHomeAddress2" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Municipality<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="Municipality" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Postal code<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerHomePostalCode" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>STATSSAArea<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="STATSSAArea" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Phone Number<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerCellPhoneNumber" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Fax Number<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerFaxNumber" />
+                    </div>
+
+                    <div>
+                        <label>
+                           <b>Learner Email Address*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="LearnerEmailAddress" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Province*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" name="Province" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Disability*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="Disability"/>
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last School Name*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="LastSchoolName" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Last School EMISNo*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="LastSchoolEMISNo" />
+                    </div>
+                    <div>
+                        <label>
+                            <b>Last School Year*</b>
+                        </label><br/>
+                        <input required placeholder="YYYY" class="form-control" type="number" min="1900" max="2100" name="LastSchoolYear"/>
+                    </div>  
+                    <div>
+                        <label>
+                           <b>Degree Title*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="DegreeTitle" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Field Of Study*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="FieldOfStudy" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>NQF Level*<b>
+                        </label><br/>
+                        <input required class="form-control" type="number" value="None" name="NQFLevel" />
+                    </div>
+                    <div>
+
+                        <label>
+                           <b>RACE*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="RACE" />
+                    </div>
+                    
+                    <div>
+                        <label>
+                           <b>Institution*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="None" name="Institution" />
+                    </div>
+                    <div>
+                        <label>
+                           <b>Major Subjects<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" value="None" name="MajorSubjects" ></textarea>
+                    </div>
+                    <div>
+                        <label>
+                           <b>Learner Experience<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" value="None" name="Experience" ></textarea>
+                    </div>
+                    <div>
+                        <br/>
+                        <input class="form-control btn btn-success" type="submit" value="Save learner information"  />
+                    </div>
+                    
+                    
+                </div>
+            </form>
+        </div>
+        <br/>
+        <div class="table-responsive">
+           
+            <table class="table table-bordered">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID number</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Gender</th>
+                    <th>Degree Title</th>
+                    <th>Institution</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in learners %}
+                    <tr >
+                        <td>
+                            {{learner.LearnerIDNumber}}
+                        </td>
+                        <td>
+                            {{learner.LearnerFirstName}}
+                        </td>
+                        <td>
+                            {{learner.LearnerSurname}}
+                        </td>
+                        <td>
+                            {{learner.Gender}}
+                        </td>
+                        <td>
+                            {{learner.DegreeTitle }}
+                        </td>
+                        <td>
+                            {{learner.Institution}}
+                        </td>
+                        <td>
+                            {{learner.Status}}
+                        </td>
+                    
+                        <td>
+                            <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                View
+                            </a> 
+                            <!--If the user is staff-->
+                            {% if user.is_staff %}
+                                |
+                                <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                                    Edit
+                                </a> |
+                                <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
+                                    Delete
+                                </a>
+                            {% endif %}
+                            
+
+                            <!--If the user is staff-->
+                        </td>
+                        
+
+        
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+
+            </table>
+
+        </div>
+
+   </div>
+
+   <script>
+        let addformHolder = document.getElementById("addformHolder")
+        let innerManu = document.getElementById("innerManu")
+
+        function studentSwitch(state){
+            if(state){
+                innerManu.innerHTML = `<a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+                                            New student
+                                        </a>`
+                addformHolder.hidden = true
+            }
+            else{
+                innerManu.innerHTML = `<a class="btn btn-warning" style="color:white" onclick="studentSwitch(true)">
+                    Close
+                </a>`
+                addformHolder.hidden =false
+            }
+            console.log("Hello world: ", addformHolder.hidden )
+            
+        }
+        console.log(addformHolder.hidden )
+   </script>
+
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

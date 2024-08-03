@@ -1,0 +1,411 @@
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+    {% load static %}
+    <style>
+
+        #innerManu{
+            display:flex;
+            justify-content:end
+        }
+        .about-section {
+            padding: 5px;
+            text-align: center;
+            background-color: #474e5d;
+            color: white;
+          }
+    </style>
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <div>
+            <h1>
+                {{Category.categoryName}} Learner
+            </h1>
+            <br/>
+
+        </div>
+        <hr/>
+       
+        <!--If the user is staff-->
+   
+            
+        <div id="innerManu">
+            
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                    Back to Learners
+                </a>
+            </div>
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                    Edit Learner
+                </a>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h1>{{learner.LearnerFirstName}} {{learner.LearnerMiddleName}} {{learner.LearnerSurname}}</h1>
+            <p>
+                {{learner.DegreeTitle}}
+            </p>
+        </div>
+        <div style="padding:1rem; display:flex; justify-content:center; flex-direction:column" class="coll">
+            <p>
+                If you are sur eyou want to delete this learner click below
+            </p>
+            
+            <form method="post" >
+                {% csrf_token %}
+
+                <input type="hidden" value="{{learner.ApplicantId}}" name="learnerId" />
+
+                <input type="submit" value="Confirm Delete" class="btn btn-outline-success"/>
+            </form>
+        </div>
+
+        <div style="padding:1rem">
+
+            <p >
+                
+
+                <div>
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                ID number:
+                            </th>
+                            <td>
+                                {{learner.LearnerIDNumber}}
+                            </td>
+                                
+                        </tr>
+
+                        <tr>
+                            <th>
+                                First name:
+                            </th>
+                            <td>
+                                {{learner.LearnerFirstName}}
+                            </td>
+                                
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Last name: 
+                            </th>
+                            <td>
+                                {{learner.LearnerSurname}}
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Learner Middle Name: 
+                            </th>
+                            <td>
+                                {{learner.LearnerMiddleName}}
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Gender: 
+                            </th>
+                            <td>
+                                {{learner.Gender}}
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Date of birth: 
+                            </th>
+                            <td>
+                                {{ learner.DOB|date:'Y-m-d' }}
+                            </td>
+                                
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Home Language: 
+                            </th>
+                            <td>
+                                {{ learner.HomeLanguage}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Equity Code: 
+                            </th>
+                            <td>
+                                {{ learner.EquityCode}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Learner Home Address 1: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerHomeAddress1}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Learner Home Address 2: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerHomeAddress2}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Municipality: 
+                            </th>
+                            <td>
+                                {{ learner.Municipality}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Postal Code: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerHomePostalCode}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Nationalit yCode: 
+                            </th>
+                            <td>
+                                {{ learner.NationalityCode}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                STATS SA Area: 
+                            </th>
+                            <td>
+                                {{ learner.STATSSAArea}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Phone number: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerCellPhoneNumber}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Learner Fax Number: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerFaxNumber}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Learner Email Address: 
+                            </th>
+                            <td>
+                                {{ learner.LearnerEmailAddress}}
+                            </td>
+                              
+                            
+                        </tr>
+                        <tr>
+                            <th>
+                                Province: 
+                            </th>
+                            <td>
+                                {{ learner.Province}}
+                            </td>
+                              
+                            
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Disability: 
+                            </th>
+                            <td>
+                                {{ learner.Disability}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Last School Name: 
+                            </th>
+                            <td>
+                                {{ learner.LastSchoolName}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Last School EMISNo: 
+                            </th>
+                            <td>
+                                {{ learner.LastSchoolEMISNo}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Last School Year: 
+                            </th>
+                            <td>
+                                {{ learner.LastSchoolYear}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Degree Title: 
+                            </th>
+                            <td>
+                                {{ learner.DegreeTitle}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Field Of Study: 
+                            </th>
+                            <td>
+                                {{ learner.FieldOfStudy}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                NQF Level: 
+                            </th>
+                            <td>
+                                {{ learner.NQFLevel}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Institution: 
+                            </th>
+                            <td>
+                                {{ learner.Institution}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                RACE: 
+                            </th>
+                            <td>
+                                {{ learner.RACE}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Major Subjects: 
+                            </th>
+                            <td>
+                                {{ learner.MajorSubjects}}
+                            </td>
+ 
+                        </tr>
+                        <tr>
+                            <th>
+                                Experience: 
+                            </th>
+                            <td>
+                                {{ learner.Experience}}
+                            </td>
+ 
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Status: 
+                            </th>
+                            <td>
+                                {{ learner.Status}}
+                            </td>
+ 
+                        </tr>
+                    </table>
+                    
+                    <div style="padding:1rem; display:flex; justify-content:center; flex-direction:column" class="coll">
+                        <p>
+                            If you are sur eyou want to delete this learner click below
+                        </p>
+                        
+                        <form method="post" >
+                            {% csrf_token %}
+
+                            <input type="hidden" value="{{learner.ApplicantId}}" name="learnerId" />
+
+                            <input type="submit" value="Confirm Delete" class="btn btn-outline-success"/>
+                        </form>
+                    </div>
+
+                    
+       
+                    
+         
+
+                   
+                    
+                    
+                </div>
+            </p>
+        </div>
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
