@@ -1,4 +1,4 @@
-#!C:\Users\yonel\learnerManagement\env\Scripts\python.exe
+#!C:\Users\yonel\OneDrive\learnerManagement\env\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'autobahn==22.7.1','console_scripts','xbrnetwork-ui'
 import re
 import sys
