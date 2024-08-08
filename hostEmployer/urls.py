@@ -22,5 +22,17 @@ from . import views
 
 urlpatterns = [
     path('SelectCompany', views.SelectCompany, name="SelectCompany"),
+    path('addManagement/<int:CompanyId>', views.addManagement, name="addManagement"),
+    path('departments/<int:CompanyId>', views.departments, name="departments"),
+    path('DepartmentLearners/<int:departmentId>', views.DepartmentLearners, name="DepartmentLearners"),
+    path('companyDashboard', views.companyDashboard, name="companyDashboard" ),
+    path('selectCategory/<int:departmentId>', views.selectCategory, name="selectCategory"),
+    path('selectLearner/<int:departmentId>/<int:categoryId>', views.selectLearner, name="selectLearner"),
+    path('ConfirmLearner/<int:learnerId>/<int:departmentId>/', views.ConfirmLearner, name="ConfirmLearner"),
+    path('confirmRemoval/<int:learnerId>',  views.confirmRemoval, name="confirmRemoval"),
+    path('companyDetails/<int:companyId>', views.companyDetails, name="companyDetails"),
+    path('EditCompany/<int:companyId>', views.EditCompany, name="EditCompany"),
+    path('departmentDetails/<int:departmentId>', views.departmentDetails, name="departmentDetails"),
+    path('CompanyLearners/<int:CompanyId>', views.CompanyLearners, name="CompanyLearners")
    
 ]

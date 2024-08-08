@@ -8,6 +8,11 @@
         #Companyholder{
             box-shadow: 10px 10px lightblue;
           }
+        #innerManu{
+                display:flex;
+                justify-content:end
+            }
+    
     </style>
 
     {% if messages  %}
@@ -24,18 +29,136 @@
         {% endfor %}
     {% endif %}
 
+    <div class='container' style="padding:1rem">
+        <h1>
+            Recruiting  Companies
+        </h1>
+    </div>
+    <div id="innerManu" class="row">
+        {% if user.is_staff == False %}   
+            <div style="padding:0.5rem">
+                <a onclick="formSwitch(true)" class="btn btn-info" style="color:white" id="initAdd">
+                    Add new Company
+                </a>
+            </div>
+        {% endif %}
+       
+    </div>
+
     <div class="container">
+        <div id="addCompHolder" hidden>
+            <form  method="post" >
+                {% csrf_token %}
+
+                <div style="padding:1rem; border:solid 1px; border-radius:12px">
+                    <div style="display:flex; justify-content:end">
+                        <a onclick="formSwitch(false)"  class="btn btn-outline-warning">
+                            Close
+                        </a>
+                    </div>
+
+                    <div>
+                        <label>
+                           <b>Company Name*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Name" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company Phone*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Phone" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company Email*<b>
+                        </label><br/>
+                        <input class="form-control" type="email" required name="Email" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company address*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Address" />
+
+                    </div>
+
+                    <div style="padding:1rem; display:flex;justify-content: center">
+                  
+                        <input class="btn btn-success" type="submit" required value="Save information" />
+
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </div>
+
+
+
 
         <div class="row">
-
-            <div id="Companyholder" class="card">
-                <div class="card-header">
-                    Company name
+            {% for company in companies %}
+                <div style="padding:0.5rem">
+                    <div id="Companyholder" class="card">
+                        <div class="card-header">
+                            {{company.Name}}
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                Added by: {{company.user.first_name}} {{company.user.last_name}}<br/>
+                                Email: {{company.user.email}}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                {% if user.is_staff %}  
+                                    <div style='padding:0.5rem'>
+                                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                                            More Details
+                                        </a>
+                                    </div>
+                                    
+                                {% else %}
+                                    <div style='padding:0.5rem'>
+                                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                                            More Details
+                                        </a>
+                                    </div>
+                                    <div  style='padding:0.5rem'>
+                                        <a href="{% url 'addManagement' CompanyId=company.CompanyId %}" class="btn btn-info">
+                                            Join
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+          
+            {% endfor %}
 
         </div>
     </div>
 
+    <script>
+        let initAdd = document.getElementById("initAdd")
+        let addCompHolder = document.getElementById("addCompHolder")
+        
+
+        function formSwitch(state){
+            if(state){
+                addCompHolder.hidden = false
+
+            }
+            else{
+                addCompHolder.hidden = true
+            }
+        }
+    </script>
 
 {% endblock %}

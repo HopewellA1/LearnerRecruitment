@@ -57,7 +57,7 @@
     <div class="wrapper" style="background-color:white;" >
         <!-- Sidebar Holder -->
     
-        <nav id="sidebar"  style="background-color:white;border:solid 1px black; ">
+        {% comment %} <nav id="sidebar"  style="background-color:white;border:solid 1px black; ">
             <div   class="sidebar-header" style="background-color:white;">
                 <img style="width:inherit;width:100%;border-radius:12px" src="{% static 'manageProfile/images/umgeniProfile.png' %}"/>
                 
@@ -66,7 +66,7 @@
 
            
             
-        </nav>
+        </nav> {% endcomment %}
 
         <!-- Page Content Holder -->
         <div id="content" >
@@ -97,7 +97,12 @@
                                 
                                 
                                
-                                
+                                <li class="nav-item">
+
+                                    <a style="color: #4DA7F4;" href="{% url 'SelectCompany' %}"  class="nav-link" >
+                                        Companies
+                                    </a>
+                                </li>
                               
                                 <li class="nav-item">
 
@@ -109,9 +114,10 @@
                             
                                 <li class="nav-item">
 
-                                    <a style="color: #4DA7F4;" href="{% url 'SelectCompany' %}"  class="nav-link" >
-                                        Select Company
+                                    <a style="color: #4DA7F4;" href="{% url 'companyDashboard' %}"  class="nav-link" >
+                                        Dashboard
                                     </a>
+
                                 </li>
                             {% endif %}
                             

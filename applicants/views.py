@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import openpyxl
 from openpyxl.styles import PatternFill
 from io import BytesIO
 from .models import *
 from django.contrib import messages
+import pandas as pd
+from django.core.files.storage import FileSystemStorage
 
 def home(request):
     
@@ -368,3 +371,68 @@ def download_excel(request, categoryId):
     response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename='+Category.categoryName+'.xlsx'
     return response
+
+
+
+def save_excel_to_db(request):
+    user = request.user
+    try:
+        Category = get_object_or_404(category, pk = int(request.POST["categoryId"]))
+    except:
+        messages.error(request, "The category you tried to load learners to was not found.")
+        return redirect("home")
+    # Read the Excel file from the file-like object
+    df = pd.read_excel(request.FILES["excelData"])
+    df.columns = df.columns.str.strip()
+    # print("Name | Midle name | Last name | Id number | Gender | phoneNumber | alternativeNumber | emailAddress | physicalAddress | munisipal | degreeTittle | fieldOfStudy | nqfLevel | race | Institution | Experience")
+    # print()
+    numLearners = 0
+    numThere = 0
+    # Iterate over the DataFrame rows
+    for index, row in df.iterrows():
+
+        try:
+            is_learneron  = get_object_or_404(Learner,LearnerIDNumber = row['IDENTITY \nNUMBER'] )
+            numThere += 1
+        except:
+            learner = Learner.objects.create(
+                user = user,
+                category = Category,
+                Gender =  row['GENDER'],
+                LearnerIDNumber = row['IDENTITY \nNUMBER'],
+                HomeLanguage = "Zulu",
+                LearnerSurname = row['SURNAME'],
+                LearnerFirstName = row['SURNAME'],
+                LearnerMiddleName = row['ALTENATIVE Name'],
+                LearnerHomeAddress1 = row['PHYSICAL\nADDRESS'],
+                Municipality = row['MUNICIPALITY'],
+                LearnerHomePostalCode = "N/A",
+                STATSSAArea = "N/A",
+                LearnerCellPhoneNumber = str(row['ALTENATIVE \nNUMBER'])+" / "+ str(row['ALTENATIVE \nNUMBER']),
+                LearnerFaxNumber = "N/A",
+                LearnerEmailAddress = row['EMAIL \nADDRESS'],
+                Province = "N/A",
+                Disability = "None",
+                LastSchoolEMISNo = "N/A",
+                LastSchoolName = "N/A",
+                #LastSchoolYear = "N/A",
+                DegreeTitle = row['Degree Title'],
+                FieldOfStudy =  row['Field of Study'],
+                NQFLevel = row['NQF Level'],
+                Institution = row['Institution'],
+                RACE = row['RACE'],
+                MajorSubjects = "N/A",
+                Experience = row['Experience'],
+            )
+            numLearners += 1
+
+        
+        # stringPrint = f"{first_name} | {midle_name} | {last_name} | {ID_number} | {gender} | {phoneNumber} | {alternativeNumber} | {emailAddress} | {physicalAddress} | {munisipal} {degreeTittle} | {fieldOfStudy} | {nqfLevel} | {race} | {Institution} | {Experience}"
+        # print(stringPrint)
+        # print()
+        pass
+    messages.success(request, f"{numLearners} learner(s) have been added to the database.")
+    if numThere > 0:
+        messages.warning(request, f"{numThere} learner(s) have been already added.")
+    return redirect("Learners", categoryId =Category.categoryId)
+    

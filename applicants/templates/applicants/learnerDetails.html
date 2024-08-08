@@ -45,17 +45,54 @@
    
             
         <div id="innerManu">
-            
-            <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
-                    Back to Learners
-                </a>
-            </div>
-            <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
-                    Edit Learner
-                </a>
-            </div>
+            {% if selectState %}
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId  %}">
+                        Back to Learners
+                    </a>
+                </div>
+
+            {% elif is_remove %}
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                        Go to learner details
+                    </a>
+                </div>
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
+                        Back to Learners
+                    </a>
+                </div>
+            {% else %}
+
+                {% if user.is_staff %}
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                            Back to Learners
+                        </a>
+                    </div>
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                            Edit Learner
+                        </a>
+                    </div>
+                {% else %}
+                    {% if learner.Status == "Recruited"%}
+             
+                    
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
+                            Go to Learners
+                        </a>
+                    </div>
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-danger" href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
+                            Remove
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
         </div>
 
         <div class="about-section">
@@ -65,7 +102,28 @@
             </p>
         </div>
 
+        {% if selectState %}
+            <div style="padding:1rem">
+                <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
+                    {% csrf_token %}
+                    <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
 
+
+                </form>
+            </div>
+        {% endif %}
+
+        {% if is_remove %}
+            <div style="padding:1rem">
+                <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
+                    {% csrf_token %}
+                    <input type="submit" class="bt btn-outline-success" value="Confirm Learner Removal"/>
+
+
+                </form>
+            </div>
+
+        {% endif %}
         <div style="padding:1rem">
 
             <p >
@@ -365,10 +423,35 @@
                     
                     
        
+                    {% if selectState %}
                     
+                        <div style="padding:1rem">
+                           
+                            <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
+                                {% csrf_token %}
+                               
+                                <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
+            
+            
+                            </form>
+                        </div>
+        
+        
+        
+                    {% endif %}
          
+                    {% if is_remove %}
+                        <div style="padding:1rem">
+                            <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
+                                {% csrf_token %}
+                                <input type="submit" class="bt btn-outline-success" value="Confirm Learner Removal"/>
 
-                   
+
+                            </form>
+                        </div>
+
+                    {% endif %}
+                            
                     
                     
                 </div>

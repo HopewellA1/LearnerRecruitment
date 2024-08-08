@@ -1,0 +1,172 @@
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+    {% load static %}
+
+
+    <style>
+
+    </style>
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+
+
+    <div class="container">
+        <div style="padding:1rem; display:flex; justify-content:space-between" class="row"> 
+            <div>
+
+                <h2>
+                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        {{company.Name}} Departments
+
+                    </a>
+                </h1>
+            </div>
+            <div class="row">
+                <div style='padding:0.5rem'>
+                    <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        Company details
+                    </a>
+                </div>
+
+                {% if exac%}
+                    <div style='padding:0.5rem'>
+                        <a class="btn btn-info" style="color:white" onclick="formSwitch(true)">
+                            New Department
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <hr/>
+        <div style="padding:1rem;" id="addDepHiolder" hidden>
+
+            
+            <form  method="post" >
+                {% csrf_token %}
+
+                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                    <div style="display:flex; justify-content:end">
+                        <a class="btn btn-warning" style="color:white" onclick="formSwitch(false)">
+                            Close form
+                        </a>
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Department Name<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Name" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Description<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" max="300" required name="Description"></textarea>
+
+                    </div>
+                    
+                    <div style="padding:1rem; display:flex;justify-content: center">
+                  
+                        <input class="btn btn-success" type="submit" required value="Save information" />
+
+                    </div>
+                    
+                </div>
+
+            </form>
+        </div>
+        <div>
+            <div class="row">
+
+                <!--The for loop starts-->
+               {% if departments %}
+                    {% for department in departments %}
+                    
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-header">
+                                    {{department.department.Name}} Department
+
+
+                                </div>
+                                <div class="card-body">
+                                    Learners: {{department.numLearners}}
+                                    <hr/>
+                                    {{department.department.Description}}
+                                </div>
+                                <div class="card-footer">
+                                
+                                    <div class="row" style="display:flex; color:white; justify-content:center">
+                                        
+                                        <div style="padding:0.5rem">
+                                            <a class="btn btn-info" href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                                Details
+                                            </a>
+                                        </div>
+                                     
+                                        <div style="padding:0.5rem">
+                                            <a class="btn btn-info" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+                                                Learners
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        Added by:<a href="{% url 'home' %}">
+                                                    {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
+
+                                                </a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            
+                    {% endfor %}
+
+                {% else %}
+                        <div style="display:flex; justify-content:center; width:100%">
+                            <p style="border:solid 1px red; padding:1rem; border-radius:12px">
+                                No departments please add a new one by clicking on  "New Department" above.
+                            </p>
+                        </div>
+                {% endif %}
+                <!--The for loop ends-->
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let addDepHiolder = document.getElementById("addDepHiolder")
+
+        function formSwitch(state){
+            if(state){
+                addDepHiolder.hidden = false
+            }
+            else{
+                addDepHiolder.hidden = true
+            }
+        }
+
+    </script>
+
+{% endblock %}

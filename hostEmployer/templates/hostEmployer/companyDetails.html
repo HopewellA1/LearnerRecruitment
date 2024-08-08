@@ -1,0 +1,227 @@
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+    {% load static %}
+    <style>
+
+        #innerManu{
+            display:flex;
+            justify-content:end
+        }
+        .about-section {
+            padding: 5px;
+            text-align: center;
+            background-color: #474e5d;
+            color: white;
+          }
+    </style>
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        
+        <!--If the user is staff-->
+   
+            
+        <div id="innerManu" class="row">
+            <div style='padding:0.5rem'>
+                <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                    Departments
+                </a>
+            </div>
+            <div style='padding:0.5rem'>
+                <a class="btn btn-info" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                    Company Learners
+                </a>
+            </div>
+            {% if exac %}
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                        Go to Dashboard
+                    </a>
+
+                </div>
+            {% endif %}
+
+            {% if exac %}
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
+                        Edit Details
+                    </a>
+
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="about-section">
+            <h1>{{company.Name}}</h1>
+            <p>
+                {{company.Address}}
+            </p>
+        </div>
+
+        {% if selectState %}
+            <div style="padding:1rem">
+                <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
+                    {% csrf_token %}
+                    <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
+
+
+                </form>
+            </div>
+        {% endif %}
+
+        {% if is_remove %}
+            <div style="padding:1rem">
+                <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
+                    {% csrf_token %}
+                    <input type="submit" class="bt btn-outline-success" value="Confirm Learner Removal"/>
+
+
+                </form>
+            </div>
+
+        {% endif %}
+        <div style="padding:1rem">
+
+            <p >
+                
+
+                <div>
+                    <div>
+                        <h2>{{company.Name}} Deatails</h2>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Company Name:
+                            </th>
+                            <td>
+                                {{company.Name}}
+                            </td>
+                                
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Address:
+                            </th>
+                            <td>
+                                {{company.Address}}
+                            </td>
+                                
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Company Email: 
+                            </th>
+                            <td>
+                                {{ company.Email }}
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Added By: 
+                            </th>
+                            <td>
+                                {{company.user.first_name}} {{company.user.last_name}}<br/>
+                                ({{company.user.email}})
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Learners Recruited: 
+                            </th>
+                            <td>
+                                {{numLearners}}
+                            </td>
+                                
+                        </tr>
+                        <tr>
+                            <th>
+                                Managers Recruiting: 
+                            </th>
+                            <td>
+                                {{numManagers}}
+                            </td>
+                                
+                        </tr>
+                       
+                 
+                    </table>
+                    <hr/>
+                    <div>
+                        <h2>
+                            Managers
+                        </h2>
+
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Gender
+                            </th>
+                            <th>
+                                Position
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Phone
+                            </th>
+                        </tr>
+                        {% for manager  in All_Exacs %}
+                        <tr>
+                            <td>
+                                {{manager.FirstName}} {{manager.LastName}} 
+                            </td>
+                            <td>
+                                {{manager.Gender}}
+                            </td>
+                            <td>
+                                {{manager.Position}}
+                            </td>
+                            <td>
+                                {{manager.EmailAddress}}
+                            </td>
+                            <td>
+                                {{manager.PhoneNumber}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    
+                    
+                </div>
+            </p>
+        </div>
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
