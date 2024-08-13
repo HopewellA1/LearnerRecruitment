@@ -1,11 +1,27 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import openpyxl
 from openpyxl.styles import PatternFill
 from io import BytesIO
 from .models import *
 from django.contrib import messages
+import pandas as pd
+from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
+from docx import Document
+from docx.shared import Inches
+from docx.enum.section import WD_ORIENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+
+def searchLeaners(request, searchLocation):
+    
+    pass
+    
+    
+    
 
 def home(request):
     
@@ -290,56 +306,83 @@ def download_excel(request, categoryId):
     Learners = Learner.objects.filter(category = Category)
     # Define the headers and dummy data
     headers = [ 
-                'Learner ID Number',
-                'Date of birth','Gender',
-                'Equity Code',
-                'Nationality Code',
-                'Home Language',
-                'Learner Surname',
-                'Learner First Name',
-                'Learner Middle Name',
-                'Learner Home Address1',
-                'Learner Home Address2',
-               
-                'Learner Home Postal Code',
-                'STATSSA Area',
-                'Learner Cell PhoneNumber',
-                'LearnerEmailAddress',
-                'Learner Fax Number',
-                'Province',
-                'Disability',
-                'LastSchool EMIS No',
-                'Last School Name',
-                'Last School Year'
-                ]
+                    'Learner ID Number',
+                    'Date of birth','Gender',
+                    'Equity Code',
+                    'Nationality Code',
+                    'Home Language',
+                    'Learner Surname',
+                    'Learner First Name',
+                    'Learner Middle Name',
+                    'RACE',
+                    'Learner Home Address1',
+                    'Learner Home Address2',
+                
+                    'Learner Home Postal Code',
+                    'STATSSA Area',
+                    'Learner Cell PhoneNumber',
+                    'LearnerEmailAddress',
+                    'Learner Fax Number',
+                    'Province',
+                    'Disability',
+                    'LastSchool EMIS No',
+                    'Last School Name',
+                    'Last School Year', 
+                    'Degree Title',
+                    'Institution',
+                    'Field Of Study',
+                    'NQF Level',
+                    'Experience',
+                    'Status',
+                    'Company',
+                    'Department'
+        ]
     data = []
     for learner in Learners:
+        
+        if learner.Department:
+            DepartmentName = learner.Department.Name
+            CompanyName = learner.Department.Company.Name
+            
+        else:
+            DepartmentName = "N/A"
+            CompanyName = "N/A"
+        
         data.append(
             [ 
-                learner.LearnerIDNumber,
-                learner.DOB,
-                learner.Gender,
-                learner.EquityCode,
-                learner.NationalityCode,
-                learner.HomeLanguage,
-                learner.LearnerSurname,
-                learner.LearnerFirstName,
-                learner.LearnerMiddleName,
-                learner.LearnerHomeAddress1,
-                learner.LearnerHomeAddress2,
-               
-                learner.LearnerHomePostalCode,
-                learner.STATSSAArea,
-                learner.LearnerCellPhoneNumber,
-                learner.LearnerFaxNumber,
-                learner.LearnerEmailAddress,
-                learner.Province,
-                learner.Disability,
-                learner.LastSchoolEMISNo,
-                learner.LastSchoolName,
-                learner.LastSchoolYear      
-            ]
-        )
+                    learner.LearnerIDNumber,
+                    learner.DOB,
+                    learner.Gender,
+                    learner.EquityCode,
+                    learner.NationalityCode,
+                    learner.HomeLanguage,
+                    learner.LearnerSurname,
+                    learner.LearnerFirstName,
+                    learner.LearnerMiddleName,
+                    learner.RACE,
+                    learner.LearnerHomeAddress1,
+                    learner.LearnerHomeAddress2,
+                    learner.LearnerHomePostalCode,
+                    learner.STATSSAArea,
+                    learner.LearnerCellPhoneNumber,
+                    learner.LearnerFaxNumber,
+                    learner.LearnerEmailAddress,
+                    learner.Province,
+                    learner.Disability,
+                    learner.LastSchoolEMISNo,
+                    learner.LastSchoolName,
+                    learner.LastSchoolYear,
+                    learner.DegreeTitle,
+                    learner.Institution,
+                    learner.FieldOfStudy,
+                    learner.NQFLevel,
+                    learner.Experience,
+                    learner.Status,
+                    CompanyName,
+                    DepartmentName,
+                        
+                ]
+            )
     
     # data = [
     #     ['John', 'A.', 'Doe', 'Male', '123-456-7890', 'john.doe@example.com'],
@@ -368,3 +411,67 @@ def download_excel(request, categoryId):
     response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename='+Category.categoryName+'.xlsx'
     return response
+
+
+def save_excel_to_db(request):
+    user = request.user
+    try:
+        Category = get_object_or_404(category, pk = int(request.POST["categoryId"]))
+    except:
+        messages.error(request, "The category you tried to load learners to was not found.")
+        return redirect("home")
+    # Read the Excel file from the file-like object
+    df = pd.read_excel(request.FILES["excelData"])
+    df.columns = df.columns.str.strip()
+    # print("Name | Midle name | Last name | Id number | Gender | phoneNumber | alternativeNumber | emailAddress | physicalAddress | munisipal | degreeTittle | fieldOfStudy | nqfLevel | race | Institution | Experience")
+    # print()
+    numLearners = 0
+    numThere = 0
+    # Iterate over the DataFrame rows
+    for index, row in df.iterrows():
+
+        try:
+            is_learneron  = get_object_or_404(Learner,LearnerIDNumber = row['IDENTITY \nNUMBER'] )
+            numThere += 1
+        except:
+            learner = Learner.objects.create(
+                user = user,
+                category = Category,
+                Gender =  row['GENDER'],
+                LearnerIDNumber = row['IDENTITY \nNUMBER'],
+                HomeLanguage = "Zulu",
+                LearnerSurname = row['SURNAME'],
+                LearnerFirstName =  row['NAME'],
+                LearnerMiddleName = row['ALTENATIVE Name'],
+                LearnerHomeAddress1 = row['PHYSICAL\nADDRESS'],
+                Municipality = row['MUNICIPALITY'],
+                LearnerHomePostalCode = "N/A",
+                STATSSAArea = "N/A",
+                LearnerCellPhoneNumber = str(row['ALTENATIVE \nNUMBER'])+" / "+ str(row['ALTENATIVE \nNUMBER']),
+                LearnerFaxNumber = "N/A",
+                LearnerEmailAddress = row['EMAIL \nADDRESS'],
+                Province = "N/A",
+                Disability = "None",
+                LastSchoolEMISNo = "N/A",
+                LastSchoolName = "N/A",
+                #LastSchoolYear = "N/A",
+                DegreeTitle = row['Degree Title'],
+                FieldOfStudy =  row['Field of Study'],
+                NQFLevel = row['NQF Level'],
+                Institution = row['Institution'],
+                RACE = row['RACE'],
+                MajorSubjects = "N/A",
+                Experience = row['Experience'],
+            )
+            numLearners += 1
+
+        
+        # stringPrint = f"{first_name} | {midle_name} | {last_name} | {ID_number} | {gender} | {phoneNumber} | {alternativeNumber} | {emailAddress} | {physicalAddress} | {munisipal} {degreeTittle} | {fieldOfStudy} | {nqfLevel} | {race} | {Institution} | {Experience}"
+        # print(stringPrint)
+        # print()
+        pass
+    messages.success(request, f"{numLearners} learner(s) have been added to the database.")
+    if numThere > 0:
+        messages.warning(request, f"{numThere} learner(s) have been already added.")
+    return redirect("Learners", categoryId =Category.categoryId)
+    

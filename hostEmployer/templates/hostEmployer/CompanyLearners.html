@@ -1,0 +1,229 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+
+
+
+    {% load static %}
+    <style>
+
+        #tablHolder{
+            padding:1rem
+        }
+        #innerManu{
+            display:flex;
+            justify-content:space-between
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    
+   <div class="container">
+        <div style="display:flex; justify-content:space-between">
+        
+            <h1>
+                {{company.Name}} Learners
+            </h1>
+
+        </div>
+        <hr/>
+        <div id="innerManu">
+            <div>
+                <div style="padding:0.5rem">
+                    <form   method="post" action="{% url 'SearchLearners' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="space" value="Company" />
+                        <input type="hidden" name="companyId" value="{{company.CompanyId}}"/>
+                        <div class="row" style="display:flex; justify-content:end">
+                            <div>
+                                <input type="text" name="Searched" style="min-width:400px" class="form-control" />
+                            </div>
+                            <div>
+                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
+                                {% if isSearch %}
+                                    <a href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}" class="btn btn-success">
+                                        Refresh
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        {{company.Name}} Company   
+                    </a>
+                </div>
+    
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?companyId={{company.CompanyId}}">
+                        download excel sheet
+                    </a>
+                </div>
+                {% if exac %}
+    
+    
+                    
+                    <div class="row">
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                                Company Dashboard
+                            </a>
+                        </div>
+    
+                       <div style="padding:0.5rem" >
+                            <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                                Add learners
+                            </a>
+                        </div>
+                    </div>
+                    
+                {% endif %}
+            </div>
+
+        </div>
+
+    
+        <br/>
+        <div class="table-responsive">
+           
+            <table class="table table-bordered" style="width:100%">
+
+            <thead class="thead-dark">
+                <tr>
+                    {% if user.is_staff %}
+                        <th>ID number</th>
+                    {% endif %}
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Gender</th>
+                    <th>Degree Title</th>
+                    <th>Institution</th>
+                    <th>Department</th>
+                    <th>Manager</th>
+                    <th>Manager Position</th>
+                    <th>Manager Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in learners %}
+                    <tr >
+                        {% if user.is_staff %}
+                        <td>
+                            {{learner.LearnerIDNumber}}
+                        </td>
+                        {% endif %}
+                        <td>
+                            {{learner.LearnerFirstName}}
+                        </td>
+                        <td>
+                            {{learner.LearnerSurname}}
+                        </td>
+                        <td>
+                            {{learner.Gender}}
+                        </td>
+                        <td>
+                            {{learner.DegreeTitle }}
+                        </td>
+                        <td>
+                            {{learner.Institution}}
+                        </td>
+                        <td>
+                            <div >
+                                <a  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
+                                    {{learner.Department.Name}}
+                                </a>
+                            </div>
+                           
+                        </td>
+                        <td>
+                            {{learner.Exac.FirstName}}
+                            {{learner.Exac.LastName}}
+                        </td>
+                        <td>
+                            {{learner.Exac.Position}}
+                          
+                        </td>
+
+                        <td>
+                            {{learner.Exac.EmailAddress}}
+                           
+                        </td>
+                        <td>
+                             {{learner.Status}}
+                        </td>
+                    
+                        <td>
+                            
+                            <!--If the user is staff-->
+                            {% if user.is_staff %}
+                                <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                    View
+                                </a> 
+                                |
+                                <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                                    Edit
+                                </a> |
+                                <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
+                                    Delete
+                                </a>
+                            {% else %}
+                                {% if selectState %}
+                                    {% if learner.Status == "Available" %}
+                                        <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
+                                            select Learner
+                                        </a>
+                                    {% endif %}
+
+                                {% else %}
+                                    <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
+                                        Remove
+                                    </a> |
+                                    <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                        View
+                                    </a>
+                                {% endif %}
+                            {% endif  %}
+                            
+
+                            <!--If the user is staff-->
+                        </td>
+                        
+
+        
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+
+            </table>
+
+        </div>
+
+   </div>
+
+
+
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

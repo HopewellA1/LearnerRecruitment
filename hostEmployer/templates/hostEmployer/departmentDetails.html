@@ -1,0 +1,242 @@
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+    {% load static %}
+
+
+    <style>
+
+    </style>
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+
+
+    <div class="container">
+        <div style="padding:1rem; display:flex; justify-content:space-between" class="row"> 
+            <div>
+
+                <h2>
+                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        {{company.Name}} Departments
+
+                    </a>
+                </h1>
+            </div>
+            <div class="row">
+                <div style='padding:0.5rem'>
+                    <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Departments
+                    </a>
+                </div>
+                <div style='padding:0.5rem'>
+                    <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        Company details
+                    </a>
+                </div>
+
+                {% if exac %}
+                    {% if exac == department.Exac %}
+                        <div style='padding:0.5rem'>
+                            <a class="btn btn-info" style="color:white" onclick="formSwitch(true)">
+                                Edit Department details
+                            </a>
+                        </div>
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+        <hr/>
+
+        <div id="depInfoHolder" style="padding:1rem; " >
+            
+            <h2>
+                Department Name: {{department.Name}} </br>
+
+
+            </h2>
+            <label>
+                Department Manager
+            </label>
+            <table class="table">
+                <tr/>
+                    <td>
+                        First name:
+                    </td>
+                    <td>
+                        {{department.Exac.FirstName}}
+                    <td>
+                </tr>
+                <tr/>
+                    <td>
+                        Last name:
+                    </td>
+                    <td>
+                        {{department.Exac.LastName}}
+                    <td>
+                </tr>
+                <tr/>
+                    <td>
+                        Position:
+                    </td>
+                    <td>
+                        {{department.Exac.Position}}
+                    <td>
+                </tr>
+
+
+            <table>
+           
+
+
+         
+            <h4>
+                Department Description
+            </h4>
+            <br/>
+            <p>
+                {{department.Description}}
+            </p>
+
+        </div>
+        <div style="padding:1rem;" id="addDepHiolder" hidden>
+
+            
+            <form  method="post">
+                {% csrf_token %}
+
+                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                    <div style="display:flex; justify-content:end">
+                        <a class="btn btn-warning" style="color:white" onclick="formSwitch(false)">
+                            Close form
+                        </a>
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Department Name<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Name" value="{{department.Name}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Description<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" max="300" required name="Description">{{department.Description}}</textarea>
+
+                    </div>
+                    
+                    <div style="padding:1rem; display:flex;justify-content: center">
+                  
+                        <input class="btn btn-success" type="submit" required value="Save Changes" />
+
+                    </div>
+                    
+                </div>
+
+            </form>
+        </div>
+        <div>
+            <div style="padding:1rem">
+                <h3>
+                    Other Departments
+                </h3>
+            </div>
+            <div class="row">
+
+                <!--The for loop starts-->
+               {% if otherDepartments %}
+
+
+                    {% for department in otherDepartments %}
+                    
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-header">
+                                    {{department.department.Name}} Department
+
+
+                                </div>
+                                <div class="card-body">
+                                    Learners: {{department.numLearners}}
+                                    <hr/>
+                                    {{department.department.Description}}
+                                </div>
+                                <div class="card-footer">
+                                
+                                    <div class="row" style="display:flex; color:white; justify-content:center">
+                                        
+                                            <div style="padding:0.5rem">
+                                                <a class="btn btn-info" href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                                    Details
+                                                </a>
+                                            </div>
+                                   
+                                        <div style="padding:0.5rem">
+                                            <a class="btn btn-info" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+                                                Learners
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        Added by:<a href="{% url 'home' %}">
+                                                    {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
+
+                                                </a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            
+                    {% endfor %}
+
+                {% else %}
+                        <div style="display:flex; justify-content:center; width:100%">
+                            <p style="border:solid 1px red; padding:1rem; border-radius:12px">
+                                No departments please add a new one by clicking on  "New Department" above.
+                            </p>
+                        </div>
+                {% endif %}
+                <!--The for loop ends-->
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let addDepHiolder = document.getElementById("addDepHiolder")
+        let depInfoHolder = document.getElementById("depInfoHolder")
+        function formSwitch(state){
+            if(state){
+                addDepHiolder.hidden = false
+                depInfoHolder.hidden = true
+            }
+            else{
+                addDepHiolder.hidden = true
+                depInfoHolder.hidden = false
+
+            }
+        }
+
+    </script>
+
+{% endblock %}

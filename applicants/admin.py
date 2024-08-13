@@ -6,5 +6,5 @@ admin.site.register(category)
 admin.site.register(Learner)
 admin.site.register(Company)
 admin.site.register(Exac)
-admin.site.register(Depertment)
+admin.site.register(Department)
 

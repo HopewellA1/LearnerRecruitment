@@ -1,0 +1,76 @@
+
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+    
+    {% load static %}
+    <style>
+
+        #tablHolder{
+            padding:1rem
+        }
+        #innerManu{
+            display:flex;
+            justify-content:space-between
+        }
+    </style>
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    
+    <div class="container">
+        <div id="innerManu">
+            <div style="padding:0.5rem">
+                <h1>
+                    Categories
+                </h1>
+            </div>
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white" href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
+                    Back to Learners
+                </a>
+            </div>
+        </div>
+        
+        <hr/>
+
+        <div class="row">
+            {% for category in categories%}
+                <a href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=category.categoryId  %}">
+                    <div style="padding:0.5rem"> 
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>
+                                    {{category.categoryName}}
+                                </h2>
+                                <hr/>
+                                <p>
+                                    {{category.description}}
+                                </p>
+                                <p>
+                                    code: {{category.code}}
+                            </div>  
+        
+        
+                        </div>  
+                    </div>
+                </a>
+            {% endfor %} 
+        </div>
+    </div>
+
+
+
+{% endblock %}

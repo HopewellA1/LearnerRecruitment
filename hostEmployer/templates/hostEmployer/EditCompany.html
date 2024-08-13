@@ -1,0 +1,97 @@
+{% extends "applicants/base.html" %}
+
+
+{% block content %}
+    {% load static %}
+
+    <style>
+        #Companyholder{
+            box-shadow: 10px 10px lightblue;
+          }
+        #innerManu{
+                display:flex;
+                justify-content:end
+            }
+    
+    </style>
+
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+    <div id="innerManu" class="row">
+            
+       
+        <div style="padding:0.5rem">
+            <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                Back to details
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="addCompHolder">
+            <form  method="post" >
+                {% csrf_token %}
+
+                <div style="padding:1rem; border:solid 1px; border-radius:12px">
+                   
+                    <div>
+                        <label>
+                           <b>Company Name*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" value="{{company.Name}}" required name="Name" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company Phone*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required value="{{company.Phone}}" name="Phone" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company Email*<b>
+                        </label><br/>
+                        <input class="form-control" type="email" required value="{{company.Email}}" name="Email" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Company address*<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required value="{{company.Address}}" name="Address" />
+
+                    </div>
+
+                    <div style="padding:1rem; display:flex;justify-content: center">
+                  
+                        <input class="btn btn-success" type="submit" required value="Save Changes" />
+
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+
+    </div>
+
+
+{% endblock %}
