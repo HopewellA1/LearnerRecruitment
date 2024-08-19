@@ -126,7 +126,7 @@ def DepartmentLearners(request,departmentId):
         department = get_object_or_404(Department, pk = departmentId)
     except:
         messages.error(request, "The department you are trying to access was not found.")
-        return redirect("home")
+        return redirect("companyDashboard")
     company = department.Company
     try:
         exac = get_object_or_404(Exac, user = request.user)
@@ -402,6 +402,37 @@ def getCompanyLearners(CompanyId):
         for learner in Learner.objects.filter(Department = dep):
             learners.append(learner)
     return learners
+
+@login_required 
+def Searchbar(request, **kwargs):
+    if request.method == "POST":
+        Learners = []
+        companyId = request.POST.get('companyId')
+        
+        if companyId:
+            company = get_object_or_404(Company, pk = companyId)
+            Searched = request.POST['Searched'].strip()
+            print("Searched: ", Searched)
+            firstNameSearch = Learner.objects.filter(
+                Company = company,
+                LearnerFirstName__contains=Searched,
+                LearnerSurname__contains=Searched,
+                NQFLevel__contains=Searched,
+                                                    )
+       
+        
+        for learner in firstNameSearch:
+            Learners.append(learner)
+        
+            
+        print("Learners: ", Learners)
+        return render(request, 'hostEmployer/Searchbar.html', {'searched': Searched, 'Learners': Learners})
+    else:
+        return render(request, 'hostEmployer/Searchbar.html', {'searched': '', 'Learners': []})
+
+
+    
+    
     
         
         
