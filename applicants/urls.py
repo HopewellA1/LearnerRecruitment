@@ -16,5 +16,6 @@ urlpatterns = [
     path('learnerDetails/<int:learnerId>', views.learnerDetails, name="learnerDetails"),
     path('deleteLearner/<int:learnerId>', views.deleteLearner, name="deleteLearner"),
     path('save_excel_to_db', views.save_excel_to_db, name="save_excel_to_db"),
+    path('save_excel_to_db', views.save_excel_to_db, name="save_excel_to_db"),
    
 ]

@@ -1,0 +1,28 @@
+{% extends "applicants/base.html" %}
+{% block content %}
+<center>
+    {%if searched %}
+
+        <h1>Results Found {{Learners}}</h1>
+        <br/>
+        {%for Learner in Learners%}
+        <h2> <a href= ""/CompanyLearners/  {{Learners}}</a></h2>
+           <br/>
+        {%endfor%}
+
+    {% else %}
+
+        <h1>Results Not Found, Search Again!<h1>
+
+        <nav class="navbar navbar-light bg-light" align='center'>
+            <div class="container d-flex justify-content-center">
+            <form method="GET" action="{% url 'Searchbar'%}"class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name = serached>
+              <button class="btn btn-outline-secondary my-2    my-sm-0" type="submit">Searched</button>
+            </form>
+          </nav>
+
+    {% endif %}
+</center>
+
+{% endblock %}

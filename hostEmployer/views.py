@@ -3,12 +3,14 @@ from django.contrib import messages
 from django.shortcuts import render,redirect, get_object_or_404
 from applicants.models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 import openpyxl
 from openpyxl.styles import PatternFill
 from django.contrib.sites.shortcuts import get_current_site
 from io import BytesIO
 from django.http import HttpResponse
 from django.db.models import Q
+
 
 
 @login_required
@@ -131,7 +133,10 @@ def DepartmentLearners(request,departmentId):
         department = get_object_or_404(Department, pk = departmentId)
     except:
         messages.error(request, "The department you are trying to access was not found.")
-        return redirect("home")
+
+        return redirect("companyDashboard")
+      
+    
     company = department.Company
     try:
         exac = get_object_or_404(Exac, user = request.user)
@@ -408,6 +413,36 @@ def getCompanyLearners(CompanyId):
             learners.append(learner)
     return learners
 
+@login_required 
+def Searchbar(request, **kwargs):
+    if request.method == "POST":
+        Learners = []
+        companyId = request.POST.get('companyId')
+        
+        if companyId:
+            company = get_object_or_404(Company, pk = companyId)
+            Searched = request.POST['Searched'].strip()
+            print("Searched: ", Searched)
+            firstNameSearch = Learner.objects.filter(
+                Company = company,
+                LearnerFirstName__contains=Searched,
+                LearnerSurname__contains=Searched,
+                NQFLevel__contains=Searched,
+                                                    )
+       
+        
+        for learner in firstNameSearch:
+            Learners.append(learner)
+        
+            
+        print("Learners: ", Learners)
+        return render(request, 'hostEmployer/Searchbar.html', {'searched': Searched, 'Learners': Learners})
+    else:
+        return render(request, 'hostEmployer/Searchbar.html', {'searched': '', 'Learners': []})
+
+
+    
+    
 
 def download_departmentExcel(request):
     departmentId = request.GET.get('departmentId')
