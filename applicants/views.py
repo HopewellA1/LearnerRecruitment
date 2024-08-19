@@ -9,6 +9,22 @@ from .models import *
 from django.contrib import messages
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
+<<<<<<< HEAD
+=======
+from django.db.models import Q
+from docx import Document
+from docx.shared import Inches
+from docx.enum.section import WD_ORIENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+
+def searchLeaners(request, searchLocation):
+    
+    pass
+    
+    
+    
+>>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
 
 def home(request):
     
@@ -293,56 +309,83 @@ def download_excel(request, categoryId):
     Learners = Learner.objects.filter(category = Category)
     # Define the headers and dummy data
     headers = [ 
-                'Learner ID Number',
-                'Date of birth','Gender',
-                'Equity Code',
-                'Nationality Code',
-                'Home Language',
-                'Learner Surname',
-                'Learner First Name',
-                'Learner Middle Name',
-                'Learner Home Address1',
-                'Learner Home Address2',
-               
-                'Learner Home Postal Code',
-                'STATSSA Area',
-                'Learner Cell PhoneNumber',
-                'LearnerEmailAddress',
-                'Learner Fax Number',
-                'Province',
-                'Disability',
-                'LastSchool EMIS No',
-                'Last School Name',
-                'Last School Year'
-                ]
+                    'Learner ID Number',
+                    'Date of birth','Gender',
+                    'Equity Code',
+                    'Nationality Code',
+                    'Home Language',
+                    'Learner Surname',
+                    'Learner First Name',
+                    'Learner Middle Name',
+                    'RACE',
+                    'Learner Home Address1',
+                    'Learner Home Address2',
+                
+                    'Learner Home Postal Code',
+                    'STATSSA Area',
+                    'Learner Cell PhoneNumber',
+                    'LearnerEmailAddress',
+                    'Learner Fax Number',
+                    'Province',
+                    'Disability',
+                    'LastSchool EMIS No',
+                    'Last School Name',
+                    'Last School Year', 
+                    'Degree Title',
+                    'Institution',
+                    'Field Of Study',
+                    'NQF Level',
+                    'Experience',
+                    'Status',
+                    'Company',
+                    'Department'
+        ]
     data = []
     for learner in Learners:
+        
+        if learner.Department:
+            DepartmentName = learner.Department.Name
+            CompanyName = learner.Department.Company.Name
+            
+        else:
+            DepartmentName = "N/A"
+            CompanyName = "N/A"
+        
         data.append(
             [ 
-                learner.LearnerIDNumber,
-                learner.DOB,
-                learner.Gender,
-                learner.EquityCode,
-                learner.NationalityCode,
-                learner.HomeLanguage,
-                learner.LearnerSurname,
-                learner.LearnerFirstName,
-                learner.LearnerMiddleName,
-                learner.LearnerHomeAddress1,
-                learner.LearnerHomeAddress2,
-               
-                learner.LearnerHomePostalCode,
-                learner.STATSSAArea,
-                learner.LearnerCellPhoneNumber,
-                learner.LearnerFaxNumber,
-                learner.LearnerEmailAddress,
-                learner.Province,
-                learner.Disability,
-                learner.LastSchoolEMISNo,
-                learner.LastSchoolName,
-                learner.LastSchoolYear      
-            ]
-        )
+                    learner.LearnerIDNumber,
+                    learner.DOB,
+                    learner.Gender,
+                    learner.EquityCode,
+                    learner.NationalityCode,
+                    learner.HomeLanguage,
+                    learner.LearnerSurname,
+                    learner.LearnerFirstName,
+                    learner.LearnerMiddleName,
+                    learner.RACE,
+                    learner.LearnerHomeAddress1,
+                    learner.LearnerHomeAddress2,
+                    learner.LearnerHomePostalCode,
+                    learner.STATSSAArea,
+                    learner.LearnerCellPhoneNumber,
+                    learner.LearnerFaxNumber,
+                    learner.LearnerEmailAddress,
+                    learner.Province,
+                    learner.Disability,
+                    learner.LastSchoolEMISNo,
+                    learner.LastSchoolName,
+                    learner.LastSchoolYear,
+                    learner.DegreeTitle,
+                    learner.Institution,
+                    learner.FieldOfStudy,
+                    learner.NQFLevel,
+                    learner.Experience,
+                    learner.Status,
+                    CompanyName,
+                    DepartmentName,
+                        
+                ]
+            )
     
     # data = [
     #     ['John', 'A.', 'Doe', 'Male', '123-456-7890', 'john.doe@example.com'],
@@ -373,7 +416,10 @@ def download_excel(request, categoryId):
     return response
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
 def save_excel_to_db(request):
     user = request.user
     try:
@@ -402,7 +448,11 @@ def save_excel_to_db(request):
                 LearnerIDNumber = row['IDENTITY \nNUMBER'],
                 HomeLanguage = "Zulu",
                 LearnerSurname = row['SURNAME'],
+<<<<<<< HEAD
                 LearnerFirstName = row['SURNAME'],
+=======
+                LearnerFirstName =  row['NAME'],
+>>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
                 LearnerMiddleName = row['ALTENATIVE Name'],
                 LearnerHomeAddress1 = row['PHYSICAL\nADDRESS'],
                 Municipality = row['MUNICIPALITY'],
