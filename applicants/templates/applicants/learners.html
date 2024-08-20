@@ -119,6 +119,15 @@
    <div class="container">
         <div style="display:flex; justify-content:space-between">
             {% if Category %}
+
+                <h1>
+                    {{Category.categoryName}} Learners
+                </h1>
+            {% else %}
+
+                <h1>
+                    {{department.Name}} department Learners
+                </h1>
                 <div>
 
                     <div>
@@ -139,6 +148,7 @@
                     </div>
                     
                 </div>
+
             {% endif %}
 
             {% if selectState %}
@@ -152,6 +162,68 @@
 
         </div>
         <hr/>
+        <div id="innerManu">
+            {% if user.is_staff %}
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+                    Add Learner   
+                </a>
+            </div>
+
+            <div style="padding:0.5rem">
+                <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                    download excel sheet
+                </a>
+            </div>
+            {% endif %}
+            {% if exac %}
+
+
+                
+                <div class="row">
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                            Company Dashboard
+                        </a>
+                    </div>
+
+                   <div style="padding:0.5rem" >
+                        <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                            Add learners
+                        </a>
+                    </div>
+                </div>
+                
+            {% endif %}
+
+        </div>
+        {% if user.is_staff %}
+            <div>
+            <form method="post" action="{% url 'save_excel_to_db' %}"  enctype="multipart/form-data">
+                {% csrf_token %}
+                    <input type="hidden" value="{{Category.categoryId}}" name="categoryId"/>
+                    <div>
+                        
+                        <div style="padding:0.5rem">
+                            <label>
+                            <b>Load learners using excel spreadsheet<b>
+                            </label><br/>
+                            <input  style="padding:0.5rem; height:50px" class="form-control" type="file" required name="excelData" />
+
+                            
+
+                        </div>
+                        <div style="padding:0.5rem">
+                            <input class="btn btn-outline-success" style="width:100%" type="submit" value="Upload file"/>
+                        </div>
+
+                    </div>
+            </form>
+            </div>
+
+        {% endif %}
+      
+=======
         
         <div id="innerManu" class="row">
            
@@ -226,8 +298,6 @@
             </div>
 
         </div>
-     
-       
         <div id="addformHolder"  hidden>
             <div style="padding:0.5rem;display:flex; justify-content:end" >
                 <a class="btn btn-warning" style="color:white" onclick="studentSwitch(true)">
@@ -516,6 +586,11 @@
                                 <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
                                     Edit
                                 </a> |
+
+                                <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
+                                    Delete
+                                </a>
+
                                 {% if learner.Status == "Available" %}
                                     <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
                                         Delete

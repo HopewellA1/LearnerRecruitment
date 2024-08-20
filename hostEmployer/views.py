@@ -3,12 +3,14 @@ from django.contrib import messages
 from django.shortcuts import render,redirect, get_object_or_404
 from applicants.models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 import openpyxl
 from openpyxl.styles import PatternFill
 from django.contrib.sites.shortcuts import get_current_site
 from io import BytesIO
 from django.http import HttpResponse
 from django.db.models import Q
+
 
 
 @login_required
@@ -132,7 +134,10 @@ def DepartmentLearners(request,departmentId):
         department = get_object_or_404(Department, pk = departmentId)
     except:
         messages.error(request, "The department you are trying to access was not found.")
-        return redirect("home")
+
+        return redirect("companyDashboard")
+      
+    
     company = department.Company
     try:
         exac = get_object_or_404(Exac, user = request.user)
@@ -413,7 +418,7 @@ def getCompanyLearners(CompanyId):
             learners.append(learner)
     return learners
 
-@login_required
+
 def download_departmentExcel(request):
     departmentId = request.GET.get('departmentId')
     companyId = request.GET.get('companyId')

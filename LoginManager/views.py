@@ -176,7 +176,7 @@ def loginuser(request):
             login(request,user) 
             if user.is_active == False:
                 messages.error(request, f"Hello {user.username}, please login to your email and activate your account. Verification email sent to {user.email}") 
-            return redirect('home')
+            return redirect('companyDashboard')
 # my recent activity is reserting the passord and maybe email      
 def resetPassword(request, **kwargs):
         user = request.user
