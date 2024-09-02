@@ -14,7 +14,6 @@
         }
         #innerManu{
             display:flex;
-            justify-content:end
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -43,6 +42,7 @@
         </div>
         <hr/>
         <div id="innerManu">
+
             {% if user.is_staff %}
             <div style="padding:0.5rem">
                 <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
@@ -78,10 +78,81 @@
 
         </div>
 
+
     
         <br/>
         <div class="table-responsive">
-           
+            
+            <nav class="navbar navbar-light bg-light">
+            
+                <form method="post" action="{% url 'Searchbar' %}?companyId={{company.CompanyId}}" class="form-inline">
+                    {% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="Searched">
+                    <input class="btn-outline-secondary my-2 my-sm-0" type="submit" value="Search" />
+                </form>
+            </nav>
+            
+            <div>
+                <div style="padding:0.5rem">
+                    <form   method="post" action="{% url 'SearchLearners' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="space" value="Company" />
+                        <input type="hidden" name="companyId" value="{{company.CompanyId}}"/>
+                        <div class="row" style="display:flex; justify-content:end">
+                            <div>
+                                <input type="text" name="Searched" style="min-width:400px" class="form-control" />
+                            </div>
+                            <div>
+                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
+                                {% if isSearch %}
+                                    <a href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}" class="btn btn-success">
+                                        Refresh
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        {{company.Name}} Company   
+                    </a>
+                </div>
+    
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?companyId={{company.CompanyId}}">
+                        download excel sheet
+                    </a>
+                </div>
+                {% if exac %}
+    
+    
+                    
+                    <div class="row">
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                                Company Dashboard
+                            </a>
+                        </div>
+    
+                       <div style="padding:0.5rem" >
+                            <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                                Add learners
+                            </a>
+                        </div>
+                    </div>
+                    
+                {% endif %}
+            </div>
+
+        </div>
+
+    
+        <br/>
+        <div class="table-responsive">
+
             <table class="table table-bordered" style="width:100%">
 
             <thead class="thead-dark">
