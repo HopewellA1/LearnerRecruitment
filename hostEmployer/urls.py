@@ -34,7 +34,7 @@ urlpatterns = [
     path('EditCompany/<int:companyId>', views.EditCompany, name="EditCompany"),
     path('departmentDetails/<int:departmentId>', views.departmentDetails, name="departmentDetails"),
     path('CompanyLearners/<int:CompanyId>', views.CompanyLearners, name="CompanyLearners"),
-    path('Searchbar', views.Searchbar, name="Searchbar"),
+    
     path('download_departmentExcel/', views.download_departmentExcel, name="download_departmentExcel"),
     path('SearchLearners', views.SearchLearners, name="SearchLearners")
    
