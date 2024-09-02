@@ -5,6 +5,7 @@ logs/
 *.env.*
 *.env2.*
 .env
+*.gitignore.*
 
 # macOS specific
 *.DS_Store*
