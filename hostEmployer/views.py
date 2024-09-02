@@ -586,7 +586,10 @@ def download_departmentExcel(request):
         
 @login_required 
 def SearchLearners(request):
-    Searched = request.POST["Searched"].strip()
+    try:
+        Searched = request.POST["Searched"].strip()
+    except:
+       Searched = ''
     if request.method == "POST":
         Learners = []
         if request.POST["space"] == "Company":

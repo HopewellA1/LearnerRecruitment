@@ -1,7 +1,7 @@
 {% autoescape off %}
 Hi {{ user.first_name }} {{ user.last_name }},
 
-Welcome to Umgeni Water for capture! Please click the link below to activate your email address and complete your registration:
+please check your email to active your account:
 http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 
 If you did not sign up for an account with us, please ignore this email.
