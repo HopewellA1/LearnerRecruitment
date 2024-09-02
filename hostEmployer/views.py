@@ -127,6 +127,7 @@ def departments(request, CompanyId):
         )
         messages.success(request, "Department added, you may add learners to department")
         return redirect("departments",CompanyId = company.CompanyId )
+    
 @login_required   
 def DepartmentLearners(request,departmentId):
     try:
@@ -173,7 +174,7 @@ def selectCategory(request, departmentId):
     }
     return render(request, 'hostEmployer/selectCategory.html', payload)
 
-
+@login_required
 def selectLearner(request, departmentId, categoryId):
     try:
         department = get_object_or_404(Department, pk = departmentId)  
@@ -193,6 +194,7 @@ def selectLearner(request, departmentId, categoryId):
 
         return render(request, 'applicants/learners.html', payload)
 
+@login_required
 def ConfirmLearner(request, learnerId, departmentId):
     try:
         department = get_object_or_404(Department, pk = departmentId)  
@@ -275,6 +277,7 @@ def calcList(list):
 
 #compnay CRUD
 
+@login_required
 def companyDetails(request, companyId):
     
     try:
@@ -310,7 +313,7 @@ def calcCompanyLeanrners(companyId):
     return nunLearners
     
     
-         
+@login_required       
 def EditCompany(request, companyId):
     try:
         company = get_object_or_404(Company, pk = companyId)
@@ -346,7 +349,7 @@ def EditCompany(request, companyId):
         return redirect("companyDetails", companyId=company.CompanyId)
          
     
-    
+@login_required   
 def departmentDetails(request, departmentId):
     
     try:
@@ -389,7 +392,9 @@ def departmentDetails(request, departmentId):
         department.save()
         messages.success(request, "Changes have been saved.")
         return redirect("departmentDetails", departmentId=department.DepartmentId)
-         
+    
+
+@login_required         
 def CompanyLearners(request, CompanyId):
     
     try:
@@ -403,7 +408,7 @@ def CompanyLearners(request, CompanyId):
     }
     return render(request, 'hostEmployer/CompanyLearners.html', payload)
     
-       
+      
 def getCompanyLearners(CompanyId):
     company = get_object_or_404(Company, pk = CompanyId) 
     learners = []
@@ -413,36 +418,6 @@ def getCompanyLearners(CompanyId):
             learners.append(learner)
     return learners
 
-@login_required 
-def Searchbar(request, **kwargs):
-    if request.method == "POST":
-        Learners = []
-        companyId = request.POST.get('companyId')
-        
-        if companyId:
-            company = get_object_or_404(Company, pk = companyId)
-            Searched = request.POST['Searched'].strip()
-            print("Searched: ", Searched)
-            firstNameSearch = Learner.objects.filter(
-                Company = company,
-                LearnerFirstName__contains=Searched,
-                LearnerSurname__contains=Searched,
-                NQFLevel__contains=Searched,
-                                                    )
-       
-        
-        for learner in firstNameSearch:
-            Learners.append(learner)
-        
-            
-        print("Learners: ", Learners)
-        return render(request, 'hostEmployer/Searchbar.html', {'searched': Searched, 'Learners': Learners})
-    else:
-        return render(request, 'hostEmployer/Searchbar.html', {'searched': '', 'Learners': []})
-
-
-    
-    
 
 def download_departmentExcel(request):
     departmentId = request.GET.get('departmentId')
