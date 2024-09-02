@@ -9,8 +9,6 @@ from .models import *
 from django.contrib import messages
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
-<<<<<<< HEAD
-=======
 from django.db.models import Q
 from docx import Document
 from docx.shared import Inches
@@ -23,8 +21,6 @@ def searchLeaners(request, searchLocation):
     pass
     
     
-    
->>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
 
 def home(request):
     
@@ -416,10 +412,6 @@ def download_excel(request, categoryId):
     return response
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
 def save_excel_to_db(request):
     user = request.user
     try:
@@ -448,11 +440,8 @@ def save_excel_to_db(request):
                 LearnerIDNumber = row['IDENTITY \nNUMBER'],
                 HomeLanguage = "Zulu",
                 LearnerSurname = row['SURNAME'],
-<<<<<<< HEAD
-                LearnerFirstName = row['SURNAME'],
-=======
+                
                 LearnerFirstName =  row['NAME'],
->>>>>>> 88e2e56b8b4d2bdf087a4d11249f6993dbacf836
                 LearnerMiddleName = row['ALTENATIVE Name'],
                 LearnerHomeAddress1 = row['PHYSICAL\nADDRESS'],
                 Municipality = row['MUNICIPALITY'],
