@@ -30,7 +30,7 @@
             <div>
 
                 <h2>
-                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}" style="color:white">
                         {{company.Name}} Departments
 
                     </a>
@@ -47,22 +47,57 @@
                         Company details
                     </a>
                 </div>
-
-                {% if exac %}
-                    {% if exac == department.Exac %}
-                        <div style='padding:0.5rem'>
-                            <a class="btn btn-info" style="color:white" onclick="formSwitch(true)">
-                                Edit Department details
-                            </a>
-                        </div>
-                    {% endif %}
-
+                
+                {% if user.is_staff != True %}
+                    <div style='padding:0.5rem'>
+                        <a class="btn btn-info" style="color:white" onclick="formSwitch(true)">
+                            Edit Department details
+                        </a>
+                    </div>
+                   
                 {% endif %}
             </div>
         </div>
         <hr/>
+        <div style="padding:1rem;" id="addDepHiolder" hidden>
 
-        <div id="depInfoHolder" style="padding:1rem; " >
+            
+            <form  method="post">
+                {% csrf_token %}
+
+                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                    <div style="display:flex; justify-content:end">
+                        <a class="btn btn-danger" style="color:white" onclick="formSwitch(false)">
+                            Close form
+                        </a>
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Department Name<b>
+                        </label><br/>
+                        <input class="form-control" type="text" required name="Name" value="{{department.Name}}" />
+
+                    </div>
+                    <div>
+                        <label>
+                           <b>Description<b>
+                        </label><br/>
+                        <textarea class="form-control" type="text" max="300" required name="Description">{{department.Description}}</textarea>
+
+                    </div>
+                    
+                    <div style="padding:1rem; display:flex;justify-content: center">
+                  
+                        <input class="btn btn-success" type="submit" required value="Save Changes" />
+
+                    </div>
+                    
+                </div>
+
+            </form>
+        </div>
+        <div id="depInfoHolder" style="padding:1rem; color:white; " >
             
             <h2>
                 Department Name: {{department.Name}} </br>
@@ -72,7 +107,7 @@
             <label>
                 Department Manager
             </label>
-            <table class="table">
+            <table class="table" style="color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);border-radius:12px">
                 <tr/>
                     <td>
                         First name:
@@ -108,49 +143,14 @@
                 Department Description
             </h4>
             <br/>
-            <p>
+            <div style="color:white; padding:0.5rem">
+                
                 {{department.Description}}
-            </p>
+                
+            </div>
 
         </div>
-        <div style="padding:1rem;" id="addDepHiolder" hidden>
-
-            
-            <form  method="post">
-                {% csrf_token %}
-
-                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
-                    <div style="display:flex; justify-content:end">
-                        <a class="btn btn-warning" style="color:white" onclick="formSwitch(false)">
-                            Close form
-                        </a>
-
-                    </div>
-                    <div>
-                        <label>
-                           <b>Department Name<b>
-                        </label><br/>
-                        <input class="form-control" type="text" required name="Name" value="{{department.Name}}" />
-
-                    </div>
-                    <div>
-                        <label>
-                           <b>Description<b>
-                        </label><br/>
-                        <textarea class="form-control" type="text" max="300" required name="Description">{{department.Description}}</textarea>
-
-                    </div>
-                    
-                    <div style="padding:1rem; display:flex;justify-content: center">
-                  
-                        <input class="btn btn-success" type="submit" required value="Save Changes" />
-
-                    </div>
-                    
-                </div>
-
-            </form>
-        </div>
+       
         <div>
             <div style="padding:1rem">
                 <h3>
@@ -166,7 +166,7 @@
                     {% for department in otherDepartments %}
                     
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
                                 <div class="card-header">
                                     {{department.department.Name}} Department
 
@@ -194,10 +194,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        Added by:<a href="{% url 'home' %}">
-                                                    {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
-
-                                                </a>
+                                        Added by {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
                                         
                                     </div>
                                 </div>
@@ -225,7 +222,7 @@
     <script>
         let addDepHiolder = document.getElementById("addDepHiolder")
         let depInfoHolder = document.getElementById("depInfoHolder")
-        function formSwitch(state){
+        function formSwitch(state){        
             if(state){
                 addDepHiolder.hidden = false
                 depInfoHolder.hidden = true

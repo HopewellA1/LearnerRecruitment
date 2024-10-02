@@ -9,12 +9,11 @@
     {% load static %}
     <style>
 
-        #tablHolder{
-            padding:1rem
-        }
+      
         #innerManu{
             display:flex;
-            justify-content:space-between
+            justify-content:space-between;
+            
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -31,113 +30,103 @@
 
         {% endfor %}
     {% endif %}
-    <div id="search" style="display:flex; justify-content:end" class="container">
-
+    <div class="container">
         {% if department %}
+        
+            <div id="search" style="display:flex; justify-content:space-between; padding:1rem; border:solid 1px white;  border-radius:12px" class="row">
+                <div style="padding:0.5rem;">
+                    <h1 style="color:azure">
+                        {{department.Name}} department learners
+                    </h1>
 
-            <div style="padding:0.5rem">
-                {% if selectState %}
-                    <form   method="post" action="{% url 'SearchLearners' %}" >
-                        {% csrf_token %}
-                        <input type="hidden" name="space" value="select"/>
-                        <input type="hidden" name="CategoryId" value="{{Category.categoryId}}"/>
-                        
-                        <input type="hidden" name="departmentId" value="{{department.DepartmentId}}"/>
-                        <div class="row" style="display:flex;">
-                            <div>
-                                <input type="text" name="Searched" style="min-width:400px" class="form-control" />
-                            </div>
-                            <div>
+                </div>
+                <div style="padding:0.5rem;" >
+                    {% if selectState %}
+                        <form   method="post" action="{% url 'SearchLearners' %}" >
+                            {% csrf_token %}
+                            <input type="hidden" name="space" value="select"/>
+                            <input type="hidden" name="CategoryId" value="{{Category.categoryId}}"/>
                             
-                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
-                                {% if isSearch %}
-                                    <a href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId %}" class="btn btn-success">
-                                        Refresh
-                                    </a>
-                                {% endif %}
+                            <input type="hidden" name="departmentId" value="{{department.DepartmentId}}"/>
+                            <div class="row" style="display:flex;">
+                                <div>
+                                    <input type="text" name="Searched" style="width:auto"  class="form-control" />
+                                </div>
+                                <div>
+                                
+                                    <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
+                                    {% if isSearch %}
+                                        <a href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId %}" class="btn btn-success">
+                                            Refresh
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                {% else %}
+                        </form>
+                    {% else %}
 
-
-                    <form   method="post" action="{% url 'SearchLearners' %}" >
-                        {% csrf_token %}
-                        <input type="hidden" name="space" value="Department"/>
-                        
-                        <input type="hidden" name="departmentId" value="{{department.DepartmentId}}"/>
-                        <div class="row" style="display:flex;">
-                            <div>
-                                <input type="text" name="Searched" style="min-width:400px" class="form-control" />
-                            </div>
-                            <div>
+                        <!--when we a looking at department learner-->
+                        <form   method="post" action="{% url 'SearchLearners' %}"  >
+                            {% csrf_token %}
+                            <input type="hidden" name="space" value="Department"/>
                             
-                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
-                                {% if isSearch %}
-                                    <a href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}" class="btn btn-success">
-                                        Refresh
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </form>
-                {% endif %}
-                
-            </div>
+                            <input type="hidden" name="departmentId" value="{{department.DepartmentId}}"/>
+                            <div class="row" style="display:flex;">
+                                <div style="padding:0.5rem; with:500px" class="row">
 
-        {% endif %}
 
-        {% if Category %}
-            {% if user.is_staff %}
-                <div style="padding:0.5rem">
-                    <form   method="post" action="{% url 'SearchLearners' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="space" value="Pool"/>
-                        <input type="hidden" name="CategoryId" value="{{Category.categoryId}}"/>
-                        <div class="row" style="display:flex; justify-content:end">
-                            <div>
-                                <input type="text" name="Searched" placeholder="Search: Name,Status, Degree Title, ,Institution" style="min-width:400px" class="form-control" />
+                                <div style="padding:0.5rem">
+                                        <input type="text" name="Searched" style="min-width:100%"  class="form-control" />
+                                </div>
+                                    <div style="padding:0.5rem">
+                                
+                                        <div >
+                                            <input type="submit" class="btn btn-default btn-outline-info"   value="Search" style="color:white; border:solid white"/>
+                                        </div>
+                                        {% if isSearch %}
+                                        <div style="padding:0.5rem">
+                                            <a href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}" class="btn btn-success">
+                                                Refresh
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            
                             </div>
-                            <div>
-                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
-                                {% if isSearch %}
-                                    <a href="{% url 'Learners' categoryId=Category.categoryId %}" class="btn btn-success">
-                                        Refresh
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    {% endif %}
+                    
                 </div>
 
-            {% endif %}
-
+            </div>
         {% endif %}
-
     </div>
-    
-   <div class="container">
+
+   <div  class="container">
         <div style="display:flex; justify-content:space-between">
             {% if Category %}
 
-                <h1>
+                <h1 style="color:white">
                     {{Category.categoryName}} Learners
                 </h1>
             {% elif department %}
-
-                <h1>
-                    {{department.Name}} department Learners
-                </h1>
-
-                <div>
+            
+                {% if selectState == True %}
+                    <h1>
+                        {{department.Name}} department Learners
+                    </h1>
 
                     <div>
-                        <h1>
-                            {{Category.categoryName}} Learners
-                        </h1>
+
+                        <div style="color:white">
+                            <h1>
+                                {{Category.categoryName}} Learners
+                            </h1>
+                        </div>
+                
                     </div>
-             
-                </div>
+                {% endif %}
             {% else %}
 
                 <div class="row" style="padding:1rem; display:flex; justify-content:space-between;">
@@ -162,87 +151,103 @@
             {% endif %}
 
         </div>
-        <hr/>
 
         <div id="innerManu">
+           
             {% if user.is_staff %}
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
-                        Add Learner   
-                    </a>
-                </div>
-
                 {% if Category %}
+                
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
-                            download excel sheet
-                        </a>
+                        <form   method="post" action="{% url 'SearchLearners' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="space" value="Pool"/>
+                            <input type="hidden" name="CategoryId" value="{{Category.categoryId}}"/>
+                            <div class="row" style="display:flex; justify-content:end">
+                                <div style="padding:1rem">
+                                    <input type="text" name="Searched" placeholder="Search: Name,Status, Degree Title, Institution" style="min-width:400px" class="form-control" />
+                                </div>
+                                <div  class="row"  style="padding:0.5rem" >
+                                    <div style="padding:0.5rem">
+                                        <input id="txtSearch" type="submit" id="btnSubSearch" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
+                                    </div>
+                                    <div style="padding:0.5rem; ">
+                                        <a onclick="filterS('Available')" style="color:white; border:solid white" class="btn  btn-outline-info" >
+                                            Available	
+                                        </a>
+
+                                        <script>
+                                            let txtSearch = document.getElementById("txtSearch");
+                                            let btnSubSearch = document.getElementById("btnSubSearch");
+                                            function filterS(filter){
+                                               
+                                                txtSearch.value = filter;
+                                                console.log("filter: ", txtSearch.value)
+                                                console.log(txtSearch)
+                                                //btnSubSearch.click()
+
+                                            }
+                                        </script>
+
+                                    </div>
+                                    <div style="padding:0.5rem">
+                                        {% if isSearch %}
+                                            <a href="{% url 'Learners' categoryId=Category.categoryId %}" style="border:solid" class="btn btn-success">
+                                                Refresh
+                                            </a>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                   <div class="row" style="padding:1rem">
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                                download excel sheet
+                            </a>
+                        </div>
+                    
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+                                Add Learner   
+                            </a>
+                        </div>
+                   </div>
                 {% endif %}
+                
+
+               
             {% endif %}
            
 
         </div>
-        {% if user.is_staff %}
-            <div>
-            <form method="post" action="{% url 'save_excel_to_db' %}"  enctype="multipart/form-data">
-                {% csrf_token %}
-                    <input type="hidden" value="{{Category.categoryId}}" name="categoryId"/>
-                    <div>
-                        
-                        <div style="padding:0.5rem">
-                            <label>
-                            <b>Load learners using excel spreadsheet<b>
-                            </label><br/>
-                            <input  style="padding:0.5rem; height:50px" class="form-control" type="file" required name="excelData" />
-
-                            
-
-                        </div>
-                        <div style="padding:0.5rem">
-                            <input class="btn btn-outline-success" style="width:100%" type="submit" value="Upload file"/>
-                        </div>
-
-                    </div>
-            </form>
-            </div>
-
-        {% endif %}
+        
 
         
         <div id="innerManu" class="row">
            
             <div class="row" style="padding:1rem; display:flex;">
                
-                {% if user.is_staff %}
+            
                     {% if Category %}
-                        
-                        <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
-                                Add Learner   
-                            </a>
-                        </div>
-                        <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
-                                download excel sheet
-                            </a>
-                        </div>
-                        
-                    {% endif %}
-                {% else %}
-                    {% if Category %}
-                        <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
-                                download excel sheet
-                            </a>
-                        </div>
+                       {% if user.is_staff == False %}
+                        {% if selectState == false %}
+                            <div style="padding:0.5rem">
+                                <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                                    download excel sheet
+                                </a>
+                            </div>
+                        {% endif %}
+                       {% endif %}
 
                     
 
                     {% endif %}
                     {% if exac %}
 
-
+                        
                         
                     
                         <div style="padding:0.5rem">
@@ -256,17 +261,18 @@
                                 Add learners
                             </a>
                         </div>
-        
+                        {% if selectState == false %}
+                            <div style="padding:0.5rem">
+                                <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
+                                    download excel sheet 
+                                </a>
+                            </div>
+                    {% endif %}
                             
                     {% endif %}
-                {% endif %}
+              
                 {% if department %}
-                    
-                    <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
-                            download excel sheet
-                        </a>
-                    </div>
+                   
 
                     <div style="padding:0.5rem">
                         <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
@@ -301,15 +307,15 @@
                                 
                                 <div style="padding:0.5rem">
                                     <label>
-                                    <b>Load learners using excel spreadsheet<b>
+                                    <b>Load learners using excel spreadsheet <b>
                                     </label><br/>
                                     <input  style="padding:0.5rem; height:50px" class="form-control" type="file" required name="excelData" />
 
                                     
 
                                 </div>
-                                <div style="padding:0.5rem">
-                                    <input class="btn btn-outline-success" style="width:100%" type="submit" value="Upload file"/>
+                                <div style="padding:0.5rem; color:white;">
+                                    <input class="btn btn-outline-success" style="width:100%; border:solid 1px white; color:white" type="submit" value="Upload file"/>
                                 </div>
 
                             </div>
@@ -323,179 +329,179 @@
 
                 <div>
                     <div>
-                        <label>
-                           <b> ID number*<b>
+                        <label class="field">
+                           ID number*
                         </label><br/>
                         <input class="form-control" type="text" required name="LearnerIDNumber" />
 
                     </div>
                     <div>
-                        <label>
-                           <b>First name*<b>
+                        <label class="field">
+                           First name*
                         </label><br/>
                         <input class="form-control" required type="text" name="LearnerFirstName" />
 
                     </div>
                     <div>
-                        <label>
-                           <b>Last name*<b>
+                        <label class="field">
+                           Last name*
                         </label><br/>
                         <input class="form-control" required type="text" name="LearnerSurname" />
 
                     </div>
                     <div>
-                        <label>
-                           <b>Midle name<b>
+                        <label class="field">
+                            Midle name
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerMiddleName" />
 
                     </div>
                     <div>
-                        <label>
-                           <b>Gender*<b>
+                        <label class="field">
+                           Gender*
                         </label><br/>
                         <input class="form-control" required type="text" name="Gender" />
 
 
                     </div>
                     <div>
-                        <label>
-                           <b>Date of birth*<b>
+                        <label class="field">
+                           Date of birth*
                         </label><br/>
                         <input class="form-control" required type="date" name="DOB" />
                     </div>
                     <div>
-                        <label>
-                           <b>Home Language*<b>
+                        <label class="field">
+                           Home Language*
                         </label><br/>
                         <input class="form-control" required type="text" name="HomeLanguage" />
                     </div>
                     <div>
-                        <label>
-                           <b>Equity Code*<b>
+                        <label class="field">
+                           Equity Code*
                         </label><br/>
                         <input class="form-control" required type="text" name="EquityCode" />
                     </div>
                     <div>
-                        <label>
-                           <b>Learner Home Address1*<b>
+                        <label class="field">
+                           Learner Home Address1*
                         </label><br/>
                         <input class="form-control" required type="text" name="LearnerHomeAddress1" />
                     </div>
                     <div>
-                        <label>
-                           <b>Learner Home Address2<b>
+                        <label class="field">
+                           Learner Home Address2
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerHomeAddress2" />
                     </div>
                     <div>
-                        <label>
-                           <b>Municipality<b>
+                        <label class="field">
+                           Municipality
                         </label><br/>
                         <input class="form-control" type="text" name="Municipality" />
                     </div>
                     <div>
-                        <label>
-                           <b>Postal code<b>
+                        <label class="field">
+                           Postal code
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerHomePostalCode" />
                     </div>
                     <div>
-                        <label>
-                           <b>STATSSAArea<b>
+                        <label class="field">
+                           STATSSA Area
                         </label><br/>
                         <input class="form-control" type="text" name="STATSSAArea" />
                     </div>
                     <div>
-                        <label>
-                           <b>Phone Number<b>
+                        <label class="field">
+                           Phone Number
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerCellPhoneNumber" />
                     </div>
                     <div>
-                        <label>
-                           <b>Learner Fax Number<b>
+                        <label class="field">
+                           Learner Fax Number
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerFaxNumber" />
                     </div>
 
                     <div>
-                        <label>
-                           <b>Learner Email Address*<b>
+                        <label class="field">
+                           Learner Email Address*
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerEmailAddress" />
                     </div>
                     <div>
-                        <label>
-                           <b>Province*<b>
+                        <label class="field">
+                           Province*
                         </label><br/>
                         <input class="form-control" type="text" name="Province" />
                     </div>
                     <div>
-                        <label>
-                           <b>Disability*<b>
+                        <label class="field">
+                           Disability*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="Disability"/>
                     </div>
                     <div>
-                        <label>
-                           <b>Last School Name*<b>
+                        <label class="field">
+                           Last School Name*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="LastSchoolName" />
                     </div>
                     <div>
-                        <label>
-                           <b>Last School EMISNo*<b>
+                        <label class="field">
+                           Last School EMISNo*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="LastSchoolEMISNo" />
                     </div>
                     <div>
-                        <label>
-                            <b>Last School Year*</b>
+                        <label class="field">
+                            Last School Year*
                         </label><br/>
                         <input required placeholder="YYYY" class="form-control" type="number" min="1900" max="2100" name="LastSchoolYear"/>
                     </div>  
                     <div>
-                        <label>
-                           <b>Degree Title*<b>
+                        <label class="field">
+                           Degree Title*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="DegreeTitle" />
                     </div>
                     <div>
-                        <label>
-                           <b>Field Of Study*<b>
+                        <label class="field">
+                           Field Of Study*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="FieldOfStudy" />
                     </div>
                     <div>
-                        <label>
-                           <b>NQF Level*<b>
+                        <label class="field">
+                           NQF Level*
                         </label><br/>
                         <input required class="form-control" type="number" value="None" name="NQFLevel" />
                     </div>
                     <div>
 
-                        <label>
-                           <b>RACE*<b>
+                        <label class="field">
+                           RACE*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="RACE" />
                     </div>
                     
                     <div>
-                        <label>
-                           <b>Institution*<b>
+                        <label class="field">
+                           Institution*
                         </label><br/>
                         <input class="form-control" type="text" value="None" name="Institution" />
                     </div>
                     <div>
-                        <label>
-                           <b>Major Subjects<b>
+                        <label class="field">
+                           Major Subjects
                         </label><br/>
                         <textarea class="form-control" type="text" value="None" name="MajorSubjects" ></textarea>
                     </div>
                     <div>
-                        <label>
-                           <b>Learner Experience<b>
+                        <label class="field">
+                           Learner Experience
                         </label><br/>
                         <textarea class="form-control" type="text" value="None" name="Experience" ></textarea>
                     </div>
@@ -508,153 +514,164 @@
                 </div>
             </form>
         </div>
-        <br/>
+        {% if selectState or user.is_staff %}
+           <div>
 
-        <br/>
-        <br/>
-        <div>
-            <h3>
-                Available Learners
-            </h3>
-        </div> 
-        <div class="table-responsive" >
-   
-            <table class="table table-bordered" >
-        
-                <thead class="thead-dark">
-                    <tr>
-                        {% if user.is_staff %}
-                            <th>ID number</th>
-                        {% endif %}
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Gender</th>
-                        <th>Degree Title</th>
-                        <th>Location</th>
-                        <th>Institution</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for learner in learners %}
-                        {% if learner.Status == "Available" %}
-                            <tr >
-                                {% if user.is_staff %}
-                                <td>
-                                    {{learner.LearnerIDNumber}}
-                                </td>
-                                {% endif %}
-                                <td>
-                                    {{learner.LearnerFirstName}}
-                                </td>
-                                <td>
-                                    {{learner.LearnerSurname}}
-                                </td>
-                                <td>
-                                    {{learner.Gender}}
-                                </td>
-                                <td>
-                                    {{learner.DegreeTitle }}
-                                </td>
-                                <td>
-                                    {{learner.Municipality}}
-                                    {{learner.LearnerHomeAddress1}}
-                                </td>
-                                <td>
-                                    {{learner.Institution}}
-                                </td>
-                                <td>
-                                    {%if  learner.Status == "Recruited" %}
-                                    <i class="text-danger">{{learner.Status}}</i>    by:<br/>
-                                                Company:{{learner.Exac.Company.Name }}<br/>
-                                                Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
-                                                Manager email:{{learner.Exac.EmailAddress}} 
-                                    {% elif learner.Status == "Available" %}
-                                        <i class="text-success">{{learner.Status}}</i> 
-        
-                                    {% endif %}
-                                </td>
-                            
-                                <td>
-                                    
-                                    <!--If the user is staff-->
-                                    {% if user.is_staff %}
-                                        <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                            View
-                                        </a> 
-                                        |
-                                        <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
-                                            Edit
-                                        </a> |
-        
-                                        <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
-                                            Delete
-                                        </a>
-        
-                                        {% if learner.Status == "Available" %}
-                                            <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
-                                                Delete
-                                            </a>
-                                        {% endif %}
-        
-                                    {% else %}
-                                        {% if selectState %}
-                                            {% if learner.Status == "Available" %}
-                                                <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
-                                                    select Learner
-                                                </a>
-                                            {% endif %}
-        
-                                        {% else %}
-                                            <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
-                                                Remove
-                                            </a> |
-                                            <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                                View
-                                            </a>
-                                        {% endif %}
-                                    {% endif  %}
-                                    
-        
-                                    <!--If the user is staff-->
-                                </td>
-                                
-        
+                <div style="color:white">
+                    <h3>
+                        Available Learners
+                    </h3>
+                </div>
                 
+                <div class="table-responsive" >
+        
+                    <table class="table table-bordered"  style="color:white; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
+                
+                        <thead style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                            <tr>
+                                {% if user.is_staff %}
+                                    <th>ID number</th>
+                                {% endif %}
+                                <th>First name</th>
+                                <th>Last name</th>
+                               
+                                <th>Degree Title</th>
+                                <th>Field Of Study</th>
+                                <th>Location</th>
+                                <th>Institution</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-        
-            </table>
-        
-        </div>
-        <div>
+                        </thead>
+                        <tbody style="font-weight:normal; font-size:18px">
+                            {% for learner in learners %}
+                                {% if learner.Status == "Available" %}
+                                    <tr >
+                                        {% if user.is_staff %}
+                                        <td>
+                                            {{learner.LearnerIDNumber}}
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            {{learner.LearnerFirstName}}
+                                        </td>
+                                        <td>
+                                            {{learner.LearnerSurname}}
+                                        </td>
+                                       
+                                        <td>
+                                            {{learner.DegreeTitle }}
+                                        </td>
+                                        <td>
+                                           {{ learner.FieldOfStudy}}
+                                        </td>
+                                        <td>
+                                            {{learner.Municipality}}
+                                            {{learner.LearnerHomeAddress1}}
+                                        </td>
+                                        <td>
+                                            {{learner.Institution}}
+                                        </td>
+                                        <td>
+                                            {%if  learner.Status == "Recruited" %}
+                                            <i class="text-danger">{{learner.Status}}</i>    by:<br/>
+                                                        Company:{{learner.Exac.Company.Name }}<br/>
+                                                        Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
+                                                        Manager email:{{learner.Exac.EmailAddress}} 
+                                            {% elif learner.Status == "Available" %}
+                                                <label style="border:solid 1px; padding:0.25rem; background-color:white; border-radius:12px">
+                                                    <i class="text-success">{{learner.Status}}</i>
+                                                </label> 
+                
+                                            {% endif %}
+                                        </td>
+                                    
+                                        <td>
+                                            
+                                            <!--If the user is staff-->
+                                            {% if user.is_staff %}
+                                                <div style="padding:0.25rem">
+                                                    <a class="btn btn-info" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                        View
+                                                    </a> 
+                                                </div>    
+
+                                                <div style="padding:0.25rem">
+                                                    <a  class="btn btn-warning" href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                                                        Edit
+                                                    </a> 
+                                                </div>
+                                                
+                
+                                                {% if learner.Status == "Available" %}
+                                                    <div style="padding0.25rem">    
+                                                        <a class="btn btn-danger" href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
+                                                                Delete
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                
+                                            {% else %}
+                                                {% if selectState %}
+                                                    {% if learner.Status == "Available" %}
+                                                        <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
+                                                            select Learner
+                                                        </a>
+                                                    {% endif %}
+                
+                                                {% else %}
+                                                    <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
+                                                        Remove
+                                                    </a> 
+                                                    <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                        View
+                                                    </a>
+                                                {% endif %}
+                                            {% endif  %}
+                                            
+                
+                                            <!--If the user is staff-->
+                                        </td>
+                                        
+                
+                        
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                
+                    </table>
+                
+                </div>
+           </div>
+        {% endif %} 
+        <div style="color:azure">
             <h3>
                 Recruited Learners
             </h3>
-       </div>   
+       </div>  
+        
         <div class="table-responsive" >
            
-            <table class="table table-bordered" >
+            <table class="table table-bordered"  style=" background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
 
-                <thead class="thead-dark">
+                <thead class="" style=" background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white">
                     <tr>
                         {% if user.is_staff %}
                             <th>ID number</th>
                         {% endif %}
                         <th>First name</th>
                         <th>Last name</th>
-                        <th>Gender</th>
+                       
                         <th>Degree Title</th>
+                        <th>Field Of Study</th>
                         <th>Location</th>
                         <th>Institution</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="color:azure; font-weight:normal; font-size:18px">
                     {% for learner in learners %}
                         {% if learner.Status == "Recruited" %}
                             <tr >
@@ -669,12 +686,13 @@
                                 <td>
                                     {{learner.LearnerSurname}}
                                 </td>
-                                <td>
-                                    {{learner.Gender}}
-                                </td>
+                               
                                 <td>
                                     {{learner.DegreeTitle }}
                                 </td>
+                                <td>
+                                    {{ learner.FieldOfStudy}}
+                                 </td>
                                 <td>
                                     {{learner.Municipality}}
                                 </td>
@@ -683,7 +701,7 @@
                                 </td>
                                 <td>
                                     {%if  learner.Status == "Recruited" %}
-                                    <i class="text-danger">{{learner.Status}}</i>    by:<br/>
+                                    <i class="text-warning">{{learner.Status}}</i>    by:<br/>
                                                 Company:{{learner.Exac.Company.Name }}<br/>
                                                 Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
                                                 Manager email:{{learner.Exac.EmailAddress}} 
@@ -697,24 +715,10 @@
                                     
                                     <!--If the user is staff-->
                                     {% if user.is_staff %}
-                                        <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                        <a class="btn btn-outline-info" style="color:white; border:solid white" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
                                             View
                                         </a> 
-                                        |
-                                        <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
-                                            Edit
-                                        </a> |
-
-                                        <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
-                                            Delete
-                                        </a>
-
-                                        {% if learner.Status == "Available" %}
-                                            <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
-                                                Delete
-                                            </a>
-                                        {% endif %}
-
+                                       
                                     {% else %}
                                         {% if selectState %}
                                             {% if learner.Status == "Available" %}
@@ -724,12 +728,16 @@
                                             {% endif %}
 
                                         {% else %}
-                                            <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
-                                                Remove
-                                            </a> |
-                                            <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                                View
-                                            </a>
+                                            <div style="padding:0.5rem">
+                                                <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}"  class="btn btn-outline-warning btndanger" style=" border:solid " >
+                                                    Remove
+                                                </a> 
+                                            </div>
+                                            <div style="padding:0.5rem">
+                                                <a class="btn btn-outline-info" style="color:white; border:solid white" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                    View
+                                                </a>
+                                            </div>
                                         {% endif %}
                                     {% endif  %}
                                     
@@ -767,13 +775,26 @@
             else{
                 addformHolder.hidden =false
             }
-            console.log("Hello world: ", addformHolder.hidden )
-            
+           
         }
-        console.log(addformHolder.hidden )
+        
    </script>
 
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+
+    .btndanger:hover{
+        border:solid white;
+        background-color:red;
+        color:white
+    }
+    .field{
+        color:white;
+        font-weight:normal;
+        font-size:18px
+    }
+</style>
 {% endblock %}

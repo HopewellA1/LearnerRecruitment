@@ -83,14 +83,14 @@
         <br/>
         <div class="table-responsive">
             
-            <nav class="navbar navbar-light bg-light">
+            {% comment %} <nav class="navbar navbar-light bg-light">
             
                 <form method="post" action="{% url 'Searchbar' %}?companyId={{company.CompanyId}}" class="form-inline">
                     {% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="Searched">
                     <input class="btn-outline-secondary my-2 my-sm-0" type="submit" value="Search" />
                 </form>
-            </nav>
+            </nav> {% endcomment %}
             
             <div>
                 <div style="padding:0.5rem">

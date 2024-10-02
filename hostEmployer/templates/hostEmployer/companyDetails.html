@@ -8,7 +8,7 @@
 
         #innerManu{
             display:flex;
-            justify-content:end
+            justify-content:space-between
         }
         .about-section {
             padding: 5px;
@@ -37,42 +37,43 @@
    
             
         <div id="innerManu" class="row">
-            <div style='padding:0.5rem'>
-                <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                    Departments
-                </a>
+            <div style=" color:white; display:flex; padding:0.5rem">
+                <h1>{{company.Name}}</h1>
+                
             </div>
-            <div style='padding:0.5rem'>
-                <a class="btn btn-info" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
-                    Company Learners
-                </a>
-            </div>
-            {% if exac %}
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
-                        Go to Dashboard
+            <div style='padding:0.5rem; ' class="row">
+                <div style='padding:0.5rem'>
+                    <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Departments
                     </a>
-
                 </div>
-            {% endif %}
-
-            {% if exac %}
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
-                        Edit Details
+                <div style='padding:0.5rem'>
+                    <a class="btn btn-info" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                        Company Learners
                     </a>
-
                 </div>
-            {% endif %}
+                {% if exac %}
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                            Go to Dashboard
+                        </a>
+    
+                    </div>
+                {% endif %}
+    
+                {% if exac %}
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
+                            Edit Details
+                        </a>
+    
+                    </div>
+                {% endif %}
+            </div>  
 
         </div>
 
-        <div class="about-section">
-            <h1>{{company.Name}}</h1>
-            <p>
-                {{company.Address}}
-            </p>
-        </div>
+        
 
         {% if selectState %}
             <div style="padding:1rem">
@@ -102,10 +103,10 @@
                 
 
                 <div>
-                    <div>
-                        <h2>{{company.Name}} Details</h2>
+                    <div style="color:white">
+                        <h2>Basic Details</h2>
                     </div>
-                    <table class="table">
+                    <table class="table" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
                         <tr>
                             <th>
                                 Company Name:
@@ -154,6 +155,7 @@
                             </td>
                                 
                         </tr>
+                       
                         <tr>
                             <th>
                                 Managers Recruiting: 
@@ -163,17 +165,26 @@
                             </td>
                                 
                         </tr>
+                        <tr>
+                            <th>
+                                Compony Phone:
+                            </th>
+                            <td>
+                                {{company.Phone}}
+                            </td>
+                                
+                        </tr>
                        
                  
                     </table>
                     <hr/>
-                    <div>
+                    <div style="color:white">
                         <h2>
                             Managers
                         </h2>
 
                     </div>
-                    <table class="table">
+                    <table class="table" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
                         <tr>
                             <th>
                                 Name

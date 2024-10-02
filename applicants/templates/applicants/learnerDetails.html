@@ -8,7 +8,7 @@
 
         #innerManu{
             display:flex;
-            justify-content:end
+            justify-content:space-between
         }
         .about-section {
             padding: 5px;
@@ -39,92 +39,91 @@
             <br/>
 
         </div>
-        <hr/>
+        
        
         <!--If the user is staff-->
    
             
         <div id="innerManu">
-            {% if selectState %}
+            <div>
+                {% if is_remove %}
+                    <div style="padding:1rem">
+                        <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
+                            {% csrf_token %}
+                            <input type="submit" class="bt btn-warning btndanger"style="color:white" value="Confirm Learner Removal"/>
+                        </form>
+                    </div>
+
+                {% endif %}
+            </div>
+            <div class="row">
+                {% if selectState %}
                 <div style="padding:0.5rem">
                     <a class="btn btn-info" style="color:white"  href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId  %}">
                         Back to Learners
                     </a>
                 </div>
 
-            {% elif is_remove %}
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                        Go to learner details
-                    </a>
-                </div>
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
-                        Back to Learners
-                    </a>
-                </div>
-            {% else %}
-
-                {% if user.is_staff %}
+                {% elif is_remove %}
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                            Go to learner details
+                        </a>
+                    </div>
+                    <div style="padding:0.5rem">
+                        <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
                             Back to Learners
                         </a>
                     </div>
-                    <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
-                            Edit Learner
-                        </a>
-                    </div>
                 {% else %}
-                    {% if learner.Status == "Recruited"%}
-             
-                    
-                    <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
-                            Go to Learners
-                        </a>
-                    </div>
-                    <div style="padding:0.5rem">
-                        <a class="btn btn-danger" href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
-                            Remove
-                        </a>
-                    </div>
+
+                    {% if user.is_staff %}
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                                Back to Learners
+                            </a>
+                        </div>
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                                Edit Learner
+                            </a>
+                        </div>
+                    {% else %}
+                        {% if learner.Status == "Recruited"%}
+                
+                        
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
+                                Go to Learners
+                            </a>
+                        </div>
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-danger" href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
+                                Remove
+                            </a>
+                        </div>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
+            </div>
+           
         </div>
 
-        <div class="about-section">
-            <h1>{{learner.LearnerFirstName}} {{learner.LearnerMiddleName}} {{learner.LearnerSurname}}</h1>
-            <p>
-                {{learner.DegreeTitle}}
-            </p>
-        </div>
+        
 
         {% if selectState %}
             <div style="padding:1rem">
                 <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
                     {% csrf_token %}
-                    <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
+                    <input type="submit" class="bt btn-outline-danger" value="Confirm Recruitment"/>
 
 
                 </form>
             </div>
         {% endif %}
 
-        {% if is_remove %}
-            <div style="padding:1rem">
-                <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
-                    {% csrf_token %}
-                    <input type="submit" class="bt btn-outline-success" value="Confirm Learner Removal"/>
-
-
-                </form>
-            </div>
-
-        {% endif %}
-        <div style="padding:1rem">
+        
+        <div style="padding:1rem; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white">
 
             <p >
                 
@@ -132,293 +131,309 @@
                 <div>
 
                     <table class="table">
-                        <tr>
-                            <th>
-                                ID number:
-                            </th>
-                            <td>
-                                {{learner.LearnerIDNumber}}
-                            </td>
-                                
-                        </tr>
+                        
+                        <thead style="">
+                            <div style="border:solid 1px white; padding:1rem; display:flex; justify-content:center; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
+                                <div style="flex-direction:column; display:flex; justify-content:center">
+                                   <center style="color:white">
+                                        <h1>{{learner.LearnerFirstName}}  {{learner.LearnerSurname}}</h1>
+                                        <label>
+                                            {{learner.DegreeTitle}}
+                                        </label>
+                                   </center>
+                                </div>
+                            </div>
+                        </thead>
 
-                        <tr>
-                            <th>
-                                First name:
-                            </th>
-                            <td>
-                                {{learner.LearnerFirstName}}
-                            </td>
+                        <tbody style="color:white">
+                            <tr>
+                                <th>
+                                    ID number:
+                                </th>
+                                <td>
+                                    {{learner.LearnerIDNumber}}
+                                </td>
+                                    
+                            </tr>
+    
+                            <tr>
+                                <th>
+                                    First name:
+                                </th>
+                                <td>
+                                    {{learner.LearnerFirstName}}
+                                </td>
+                                    
+                            </tr>
+    
+                            <tr>
+                                <th>
+                                    Last name: 
+                                </th>
+                                <td>
+                                    {{learner.LearnerSurname}}
+                                </td>
+                                    
+                            </tr>
+                            <tr>
+                                <th>
+                                    Learner Middle Name: 
+                                </th>
+                                <td>
+                                    {{learner.LearnerMiddleName}}
+                                </td>
+                                    
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gender: 
+                                </th>
+                                <td>
+                                    {{learner.Gender}}
+                                </td>
+                                    
+                            </tr>
+                            <tr>
+                                <th>
+                                    Date of birth: 
+                                </th>
+                                <td>
+                                    {{ learner.DOB|date:'Y-m-d' }}
+                                </td>
+                                    
+                            </tr>
+    
+                            <tr>
+                                <th>
+                                    Home Language: 
+                                </th>
+                                <td>
+                                    {{ learner.HomeLanguage}}
+                                </td>
+                                  
                                 
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Last name: 
-                            </th>
-                            <td>
-                                {{learner.LearnerSurname}}
-                            </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Equity Code: 
+                                </th>
+                                <td>
+                                    {{ learner.EquityCode}}
+                                </td>
+                                  
                                 
-                        </tr>
-                        <tr>
-                            <th>
-                                Learner Middle Name: 
-                            </th>
-                            <td>
-                                {{learner.LearnerMiddleName}}
-                            </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Learner Home Address 1: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerHomeAddress1}}
+                                </td>
+                                  
                                 
-                        </tr>
-                        <tr>
-                            <th>
-                                Gender: 
-                            </th>
-                            <td>
-                                {{learner.Gender}}
-                            </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Learner Home Address 2: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerHomeAddress2}}
+                                </td>
+                                  
                                 
-                        </tr>
-                        <tr>
-                            <th>
-                                Date of birth: 
-                            </th>
-                            <td>
-                                {{ learner.DOB|date:'Y-m-d' }}
-                            </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Municipality: 
+                                </th>
+                                <td>
+                                    {{ learner.Municipality}}
+                                </td>
+                                  
                                 
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Home Language: 
-                            </th>
-                            <td>
-                                {{ learner.HomeLanguage}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Equity Code: 
-                            </th>
-                            <td>
-                                {{ learner.EquityCode}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Learner Home Address 1: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerHomeAddress1}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Learner Home Address 2: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerHomeAddress2}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Municipality: 
-                            </th>
-                            <td>
-                                {{ learner.Municipality}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Postal Code: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerHomePostalCode}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Nationalit yCode: 
-                            </th>
-                            <td>
-                                {{ learner.NationalityCode}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                STATS SA Area: 
-                            </th>
-                            <td>
-                                {{ learner.STATSSAArea}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Phone number: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerCellPhoneNumber}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Learner Fax Number: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerFaxNumber}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Learner Email Address: 
-                            </th>
-                            <td>
-                                {{ learner.LearnerEmailAddress}}
-                            </td>
-                              
-                            
-                        </tr>
-                        <tr>
-                            <th>
-                                Province: 
-                            </th>
-                            <td>
-                                {{ learner.Province}}
-                            </td>
-                              
-                            
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Disability: 
-                            </th>
-                            <td>
-                                {{ learner.Disability}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Last School Name: 
-                            </th>
-                            <td>
-                                {{ learner.LastSchoolName}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Last School EMISNo: 
-                            </th>
-                            <td>
-                                {{ learner.LastSchoolEMISNo}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Last School Year: 
-                            </th>
-                            <td>
-                                {{ learner.LastSchoolYear}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Degree Title: 
-                            </th>
-                            <td>
-                                {{ learner.DegreeTitle}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Field Of Study: 
-                            </th>
-                            <td>
-                                {{ learner.FieldOfStudy}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                NQF Level: 
-                            </th>
-                            <td>
-                                {{ learner.NQFLevel}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Institution: 
-                            </th>
-                            <td>
-                                {{ learner.Institution}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                RACE: 
-                            </th>
-                            <td>
-                                {{ learner.RACE}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Major Subjects: 
-                            </th>
-                            <td>
-                                {{ learner.MajorSubjects}}
-                            </td>
- 
-                        </tr>
-                        <tr>
-                            <th>
-                                Experience: 
-                            </th>
-                            <td>
-                                {{ learner.Experience}}
-                            </td>
- 
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Status: 
-                            </th>
-                            <td>
-                                {{ learner.Status}}
-                            </td>
- 
-                        </tr>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Postal Code: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerHomePostalCode}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    Nationality: 
+                                </th>
+                                <td>
+                                    {{ learner.NationalityCode}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    STATS SA Area: 
+                                </th>
+                                <td>
+                                    {{ learner.STATSSAArea}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    Phone number: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerCellPhoneNumber}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    Learner Fax Number: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerFaxNumber}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    Learner Email Address: 
+                                </th>
+                                <td>
+                                    {{ learner.LearnerEmailAddress}}
+                                </td>
+                                  
+                                
+                            </tr>
+                            <tr>
+                                <th>
+                                    Province: 
+                                </th>
+                                <td>
+                                    {{ learner.Province}}
+                                </td>
+                                  
+                                
+                            </tr>
+    
+                            <tr>
+                                <th>
+                                    Disability: 
+                                </th>
+                                <td>
+                                    {{ learner.Disability}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Last School Name: 
+                                </th>
+                                <td>
+                                    {{ learner.LastSchoolName}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Last School EMISNo: 
+                                </th>
+                                <td>
+                                    {{ learner.LastSchoolEMISNo}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Last School Year: 
+                                </th>
+                                <td>
+                                    {{ learner.LastSchoolYear}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Degree Title: 
+                                </th>
+                                <td>
+                                    {{ learner.DegreeTitle}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Field Of Study: 
+                                </th>
+                                <td>
+                                    {{ learner.FieldOfStudy}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    NQF Level: 
+                                </th>
+                                <td>
+                                    {{ learner.NQFLevel}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Institution: 
+                                </th>
+                                <td>
+                                    {{ learner.Institution}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    RACE: 
+                                </th>
+                                <td>
+                                    {{ learner.RACE}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Major Subjects: 
+                                </th>
+                                <td>
+                                    {{ learner.MajorSubjects}}
+                                </td>
+     
+                            </tr>
+                            <tr>
+                                <th>
+                                    Experience: 
+                                </th>
+                                <td>
+                                    {{ learner.Experience}}
+                                </td>
+     
+                            </tr>
+    
+                            <tr>
+                                <th>
+                                    Status: 
+                                </th>
+                                <td>
+                                    {{ learner.Status}}
+                                </td>
+     
+                            </tr>
+                        </tbody>
                     </table>
                     
                     
@@ -444,7 +459,7 @@
                         <div style="padding:1rem">
                             <form method="post" action="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}">
                                 {% csrf_token %}
-                                <input type="submit" class="bt btn-outline-success" value="Confirm Learner Removal"/>
+                                <input type="submit" class="bt btn-warning btndanger"style="color:white" value="Confirm Learner Removal"/>
 
 
                             </form>
@@ -459,10 +474,13 @@
         </div>
 
     </div>
+    <style>
 
-
-
-
-
+        .btndanger:hover{
+            border:solid white;
+            background-color:red;
+            color:white
+        }
+    </style>
 
 {% endblock %}

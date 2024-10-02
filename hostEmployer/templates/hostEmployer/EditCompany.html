@@ -45,7 +45,7 @@
             <form  method="post" >
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px">
+                <div style="padding:1rem; border:solid 1px; border-radius:12px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white">
                    
                     <div>
                         <label>
@@ -75,6 +75,7 @@
                         <input class="form-control" type="text" required value="{{company.Address}}" name="Address" />
 
                     </div>
+                    
 
                     <div style="padding:1rem; display:flex;justify-content: center">
                   

@@ -6,7 +6,9 @@
 
 
     <style>
-
+        .gradientColor:{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+      }
     </style>
     {% if messages  %}
         {% for message in messages %}
@@ -30,7 +32,7 @@
             <div>
 
                 <h2>
-                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}" style="color:white">
                         {{company.Name}} Departments
 
                     </a>
@@ -59,9 +61,9 @@
             <form  method="post" >
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                <div style="padding:1rem; border:solid 1px; border-radius:12px;color:white" >
                     <div style="display:flex; justify-content:end">
-                        <a class="btn btn-warning" style="color:white" onclick="formSwitch(false)">
+                        <a class="btn btn-danger" style="color:white" onclick="formSwitch(false)">
                             Close form
                         </a>
 
@@ -99,13 +101,13 @@
                     {% for department in departments %}
                     
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-header">
+                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                                <div class="card-header" style="color:white">
                                     {{department.department.Name}} Department
 
 
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body"  style="color:white">
                                     Learners: {{department.numLearners}}
                                     <hr/>
                                     {{department.department.Description}}
@@ -126,8 +128,8 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div>
-                                        Added by:<a href="{% url 'home' %}">
+                                    <div  style="color:white">
+                                        Added by:<a href="{% url 'home' %}"  style="color:white">
                                                     {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
 
                                                 </a>
@@ -141,8 +143,8 @@
                     {% endfor %}
 
                 {% else %}
-                        <div style="display:flex; justify-content:center; width:100%">
-                            <p style="border:solid 1px red; padding:1rem; border-radius:12px">
+                        <div style="display:flex; justify-content:center; width:100%;">
+                            <p style="border:solid 1px red; padding:1rem; border-radius:12px; color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
                                 No departments please add a new one by clicking on  "New Department" above.
                             </p>
                         </div>

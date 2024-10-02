@@ -48,11 +48,22 @@
   <link href="{% static 'manageProfile/css1/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{% static 'manageProfile/css1/responsive.css' %}" rel="stylesheet" />
+<style>
+    .wrapper{
+        background-image: url('{% static "manageProfile/images/bck-1.jpg" %}');
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+       
+      }
 
+      
+
+    </style>
   
 </head>
 
-<body>
+<body class="body">
 
     <div class="wrapper" style="background-color:white;" >
         <!-- Sidebar Holder -->
@@ -71,12 +82,12 @@
         <!-- Page Content Holder -->
         <div id="content" >
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-radius:30px">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-radius:30px;background: linear-gradient(to top, #09203f 0%, #537895 100%);">
                 
-                <div class="container-fluid" style="color: black;">
+                <div class="container-fluid" style="color: white;">
                
                    
-                    <a class="nav-link" href="{% url 'home' %}" style="color: #FF69B4;"> <img style="width:inherit;width:50px;border-radius:12px" src="{% static 'manageProfile/images/umgeniProfile.png' %}"/></a>
+                    <a class="nav-link" href="{% url 'home' %}" style="color: white;"> <img style="width:inherit;width:50px;border-radius:12px" src="{% static 'manageProfile/images/umgeniProfile.png' %}"/></a>
                     
             
                     
@@ -99,14 +110,14 @@
                                
                                 <li class="nav-item">
 
-                                    <a style="color: #4DA7F4;" href="{% url 'SelectCompany' %}"  class="nav-link" >
+                                    <a style="color: white;" href="{% url 'SelectCompany' %}"  class="nav-link" >
                                         Companies
                                     </a>
                                 </li>
                               
                                 <li class="nav-item">
 
-                                    <a style="color: #4DA7F4;" href="{% url 'learnercategories' %}"  class="nav-link" >
+                                    <a style="color: white;" href="{% url 'learnercategories' %}"  class="nav-link" >
                                         Learner categories
                                     </a>
                                 </li>
@@ -114,7 +125,7 @@
                             
                                 <li class="nav-item">
 
-                                    <a style="color: #4DA7F4;" href="{% url 'companyDashboard' %}"  class="nav-link" >
+                                    <a style="color: white;" href="{% url 'companyDashboard' %}"  class="nav-link" >
                                         Dashboard
                                     </a>
 
@@ -122,20 +133,20 @@
                             {% endif %}
                             
                             <li class="nav-item">
-                                <a style="color: #4DA7F4;"  class="nav-link" href="{% url 'account' %}">{{user}}</a>
+                                <a style="color: white;"  class="nav-link" href="{% url 'account' %}">{{user}}</a>
                             </li>
                             <li class="nav-item">
-                                <a style="color: #4DA7F4;" class="nav-link" href="{% url 'logoutuser' %}">logout</a>
+                                <a style="color: white;" class="nav-link" href="{% url 'logoutuser' %}">logout</a>
                                 
                             </li>
                         {% else %}
 
                             <li class="nav-item">
                                 
-                                <a style="color: #4DA7F4;" class="nav-link" href="{% url 'Signup' %}"><b>Signup</b></a>
+                                <a style="color: white;" class="nav-link" href="{% url 'Signup' %}"><b>Signup</b></a>
                             </li>
                             <li class="nav-item">
-                                <a style="color: #4DA7F4;" class="nav-link" href="{% url 'login' %}"><b>Login</b></a>
+                                <a style="color: white;" class="nav-link" href="{% url 'login' %}"><b>Login</b></a>
                             </li>
 
                         {% endif %}    
@@ -148,25 +159,22 @@
             
            
             <br>
-            {% block content %}
+           
+
+                {% block content %}
 
 
 
-            {% endblock %}
+                {% endblock %}
+           
+            
        
             <br>
 
             <!-- footer section -->
-            <footer class="footer_section" style="height:auto;margin-bottom:0px;width: 100%; margin-top: 10px;border-radius:30px">
-                <div class="container" style="margin-bottom:0px;padding:1rem">
-                    <center>
-                        <b class="text-center">
-                            <p style="color:blue;">
-                                &copy; <span id="displayYear"></span><b> All Rights Reserved by </b>
-                                <a href="#"><b>Umgeni Water Services</b></a>
-                            </p>
-                        </b>
-                    </center>
+            <footer class="footer_section backgroundHolder" style="height:auto;margin-bottom:0px;width: 100%; margin-top: 10px;border-radius:30px">
+                <div class="container" style="margin-bottom:0px;padding:1rem; height:200px">
+                    
                 </div>
             </footer>
             <!-- footer section -->
@@ -227,6 +235,25 @@
 
     </script> {% endcomment %}
   {% endif %}
+
+
+
+  <style>
+
+    .backgroundHolder{
+        background-image: url('{% static "manageProfile/images/UWS-Email-Signature-Banner.gif" %}');
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        position: relative;
+       // bottom:-200px
+
+      }
+
+      
+
+
+  </style>
 </body>
 
 </html>

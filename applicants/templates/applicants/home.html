@@ -22,22 +22,37 @@
     {% endif %}
 
     <div class="container text-center">
-        <h1>
+        <h1 style=' color:white'>
             Graduates Placement Program
         </h1>
-
         <hr/>
-        {% comment %} <a href="{% url 'download_excel' %}" class="btn btn-default btn-info">
-            Download spreadsheet
-        </a> {% endcomment %}
    </div>
+   {% if user.is_authenticated == False %}
+        <div class="justify-content-center mt-5" style="padding:1rem; display:flex; justify-content:center">
+            <div class="row">
+                <!-- Login Button -->
+                <div style="padding:0.5rem">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                </div>
+                <!-- Sign Up Button -->
+                <div style="padding:0.5rem">
+                    <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div style="padding:2rem; font-size:20px; display:flex; justify-content:center; flex-direction:column; color:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
 
-<div class="row justify-content-center mt-5">
-    <div class="container text-center mt-5">
-        <!-- Login Button -->
-        <a href="{% url 'login' %}" class="btn btn-primary btn-lg mr-2">Login</a>
-        <!-- Sign Up Button -->
-        <a href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+        <p style=" color:white">
+            
+            <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
+
+
+        </p>
+        <p style="color:white">
+           <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
+
+        </p>
     </div>
 {% endblock %}
 
