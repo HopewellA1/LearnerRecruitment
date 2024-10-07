@@ -6,7 +6,7 @@
 
     <style>
         #Companyholder{
-            box-shadow: 10px 10px lightblue;
+            box-shadow: 10px 10px linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
           }
         #innerManu{
                 display:flex;
@@ -29,7 +29,7 @@
         {% endfor %}
     {% endif %}
 
-    <div class='container' style="padding:1rem">
+    <div class='container' style="padding:1rem; color:white">
         <h1>
             Recruiting  Companies
         </h1>
@@ -103,18 +103,18 @@
 
         <div class="row">
             {% for company in companies %}
-                <div style="padding:0.5rem">
-                    <div id="Companyholder" class="card">
-                        <div class="card-header">
+                <div style="padding:0.5rem; ">
+                    <div id="Companyholder" class="card" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                        <div class="card-header" style =" color:white" >
                             {{company.Name}}
                         </div>
-                        <div class="card-body">
-                            <p>
+                        <div class="card-body"  >
+                            <p style =" color:white" >
                                 Added by: {{company.user.first_name}} {{company.user.last_name}}<br/>
                                 Email: {{company.user.email}}
                             </p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%) ;">
                             <div class="row">
                                 {% if user.is_staff %}  
                                     <div style='padding:0.5rem'>
