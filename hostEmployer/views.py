@@ -150,7 +150,8 @@ def DepartmentLearners(request,departmentId):
            "learners": learners,
             "department": department,
             "company":company,
-            "exac": exac
+            "exac": exac,
+            "recruited":True
         }
         
         return render(request, 'applicants/learners.html', payload)

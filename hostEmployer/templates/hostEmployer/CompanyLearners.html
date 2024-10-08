@@ -14,6 +14,7 @@
         }
         #innerManu{
             display:flex;
+            justify-content:space-between
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,113 +42,68 @@
 
         </div>
         <hr/>
-        <div id="innerManu">
+        <div id="innerManu" class="row">
 
-            {% if user.is_staff %}
-            <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
-                    {{company.Name}} Company   
-                </a>
-            </div>
+            <div class="row">
 
-            <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white"  href="#">
-                    download excel sheet
-                </a>
-            </div>
-            {% endif %}
-            {% if exac %}
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                        {{company.Name}} Company   
+                    </a>
+                </div>
 
+                <div style="padding:0.5rem">
+                    <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?companyId={{company.CompanyId}}">
+                        download excel sheet
+                    </a>
+                </div>
+                {% if exac %}
 
-                
-                <div class="row">
                     <div style="padding:0.5rem">
                         <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
                             Company Dashboard
                         </a>
                     </div>
 
-                   <div style="padding:0.5rem" >
+                    <div style="padding:0.5rem" >
                         <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                             Add learners
                         </a>
                     </div>
-                </div>
-                
-            {% endif %}
-
-        </div>
-
-
-    
-        <br/>
-        <div class="table-responsive">
-            
-            {% comment %} <nav class="navbar navbar-light bg-light">
-            
-                <form method="post" action="{% url 'Searchbar' %}?companyId={{company.CompanyId}}" class="form-inline">
-                    {% csrf_token %}
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="Searched">
-                    <input class="btn-outline-secondary my-2 my-sm-0" type="submit" value="Search" />
-                </form>
-            </nav> {% endcomment %}
-            
-            <div>
-                <div style="padding">
-                    <form   method="post" action="{% url 'SearchLearners' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="space" value="Company" />
-                        <input type="hidden" name="companyId" value="{{company.CompanyId}}"/>
-                        <div class="row" style="display:flex; justify-content:end">
-                            <div style="padding:0.9rem">
-                                <input type="text" name="Searched" style="min-width:400px" class="form-control" />
-                            </div>
-                            <div  style="padding:1rem">
-                                <input type="submit" class="btn btn-default btn-outline-info" value="Search"/>
-                                {% if isSearch %}
-                                    <a href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}" class="btn btn-success">
-                                        Refresh
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white" href="{% url 'companyDetails' companyId=company.CompanyId %}">
-                        {{company.Name}} Company   
-                    </a>
-                </div>
-    
-                <div style="padding:0.5rem"; " padding: 10px 20px;"; " position: relative;">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?companyId={{company.CompanyId}}">
-                        download excel sheet
-                    </a>
-                </div>
-                {% if exac %}
-    
-    
-                    
-                    <div class="row">
-                        <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
-                                Company Dashboard
-                            </a>
-                        </div>
-    
-                       <div style="padding:0.5rem" >
-                            <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
-                                Add learners
-                            </a>
-                        </div>
-                    </div>
+                   
                     
                 {% endif %}
             </div>
 
+            <div>
+              
+                <form   method="post" action="{% url 'SearchLearners' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="space" value="Company" />
+                    <input type="hidden" name="companyId" value="{{company.CompanyId}}"/>
+                    <div class="row" style="display:flex; ">
+                        <div style="padding:0.5rem">
+                            <input type="text" name="Searched"  class="form-control" />
+                        </div>
+                        <div  style="padding:0.5rem">
+                            <input type="submit" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
+                            {% if isSearch %}
+                                <a href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}" class="btn btn-success">
+                                    Refresh
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+
+           
+           
+
         </div>
+
+
 
     
         <br/>
