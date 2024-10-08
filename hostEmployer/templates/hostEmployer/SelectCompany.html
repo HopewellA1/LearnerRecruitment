@@ -50,36 +50,37 @@
             <form  method="post" >
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px">
+                <div style="padding:1rem; border:solid 1px; border-radius:12px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%,
+                             rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%)">
                     <div style="display:flex; justify-content:end">
-                        <a onclick="formSwitch(false)"  class="btn btn-outline-warning">
+                        <a onclick="formSwitch(false)"  class="btn btn-outline-warning" style="color:white">
                             Close
                         </a>
                     </div>
 
                     <div>
-                        <label>
+                        <label style="color:white">
                            <b>Company Name*<b>
                         </label><br/>
                         <input class="form-control" type="text" required name="Name" />
 
                     </div>
                     <div>
-                        <label>
+                        <label  style="color:white">
                            <b>Company Phone*<b>
                         </label><br/>
                         <input class="form-control" type="text" required name="Phone" />
 
                     </div>
                     <div>
-                        <label>
+                        <label style="color:white">
                            <b>Company Email*<b>
                         </label><br/>
                         <input class="form-control" type="email" required name="Email" />
 
                     </div>
                     <div>
-                        <label>
+                        <label  style="color:white">
                            <b>Company address*<b>
                         </label><br/>
                         <input class="form-control" type="text" required name="Address" />

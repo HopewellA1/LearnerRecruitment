@@ -159,7 +159,7 @@
              rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%)";>
 
             <thead  style =  " background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%,
-             rgb(162, 182, 223) 100%)";  >
+             rgb(162, 182, 223) 100%); color:white">
                 <tr>
                     {% if user.is_staff %}
                         <th>ID number</th>
@@ -178,7 +178,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="color:white">
                 {% for learner in learners %}
                     <tr >
                         {% if user.is_staff %}
@@ -207,7 +207,7 @@
                         </td>
                         <td>
                             <div >
-                                <a  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
+                                <a style="color:white" href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
                                     {{learner.Department.Name}}
                                 </a>
                             </div>
@@ -234,16 +234,11 @@
                             
                             <!--If the user is staff-->
                             {% if user.is_staff %}
-                                <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                    View
-                                </a> 
-                                |
-                                <a href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
-                                    Edit
-                                </a> |
-                                <a href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
-                                    Delete
-                                </a>
+                           <div style="padding:0.25rem">
+                            <a class="btn btn-info" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                View
+                            </a> 
+                        </div> 
                             {% else %}
                                 {% if selectState %}
                                     {% if learner.Status == "Available" %}
