@@ -514,9 +514,8 @@
                 </div>
             </form>
         </div>
-        {% if selectState or user.is_staff %}
+        {% if selectState or user.is_staff and department == None %}
            <div>
-
                 <div style="color:white">
                     <h3>
                         Available Learners
