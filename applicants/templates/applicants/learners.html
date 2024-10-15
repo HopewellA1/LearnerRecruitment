@@ -616,8 +616,8 @@
                                             {% else %}
                                                 {% if selectState %}
                                                     {% if learner.Status == "Available" %}
-                                                        <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
-                                                            select Learner
+                                                        <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}" class="btn btn-primary" style="color:white; border:solid white">
+                                                            select 
                                                         </a>
                                                     {% endif %}
                 

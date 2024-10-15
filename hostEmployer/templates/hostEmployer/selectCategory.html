@@ -48,36 +48,50 @@
 
         <div class="row">
             {% for category in categories%}
-                <a href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=category.categoryId  %}">
-                    <div style="padding:0.5rem"> 
-                        <div class="card" style= "background:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
-                            <div class="card-body" style= "background:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white " >
-                                <h2>
-                                    {{category.categoryName}}
-                                </h2>
-
-                            </div>  
-                           
-                            <div class="card-footer" >
-                              
-                                <p style="color:white">
-                                    {{category.description}}
-                                </p>
-                                <p style="color:white">
-                                    code: {{category.code}}
-                                </p>
-                            </div>  
-                        </div> 
-                             
+                <div style="padding:0.5rem">
+                    <div class="card" style="max-width:300px" onclick="gocateg('{{category.categoryId}}')">
+                        <div class="card-header">
+                            <h2>
+                                {{category.categoryName}}
+                            </h2>
+                        </div>
+                        <div class="card-body ">
+                            {{category.description}}           
+                        
+                        </div>
+                        <div class="card-footer">
+                            <h4>
+                                {{category.code}}
+                        </div>
         
-        
-                       
                     </div>
-                </a>
-            {% endfor %} 
+                </div>
+                <a   id="btngocateg{{category.categoryId}}" href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=category.categoryId  %}" hidden> </a>
+                <script>
+                    
+                    function gocateg(id){
+                        let btngocateg = document.getElementById("btngocateg"+id);
+                        btngocateg.click()
+                    }
+                </script>
+            {% endfor %}
+    
         </div>
+
+       
     </div>
 
 
+    <style>
+        .card:hover{
+            cursor: pointer;
+            background: linear-gradient(to top, #09203f 0%, #537895 100%);
+            height:auto
 
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+           color:white
+        }
+    </style>
 {% endblock %}

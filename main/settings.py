@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from decouple import config
+from django.core.management.utils import get_random_secret_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1o8)=2&rqi$v$838uz1l*j4d@7^846&6^vrr(jq1=-rooowe-&'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = config("DEBUG", "False") == "True"
+ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS").split(",")
+CSRF_TRUSTED_ORIGINS =config("Django_CSRF_TRUSTED_ORIGINS").split(",")
 
 
 # Application definition
@@ -79,10 +80,26 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': config("DATABASE_HOST"), 
+        'NAME': config("DATABASE_NAME"), 
+        'USER': config("DATABASE_USER"),       
+        'PASSWORD':config("DATABASE_PASSWORD") ,   
+        'PORT': config("DATABASE_PORT"),              
+        'OPTIONS': {
+            'ssl': {
+                 'ssl_mode': config("DATABASE_ssl_mode"),
+            }
+        },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -132,9 +149,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'livesoundsmusic@gmail.com'
-EMAIL_FROM = 'livesoundsmusic@gmail.com'
-EMAIL_HOST_PASSWORD = 'fesezjwkjjjuyzen'
-EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_FROM = config("EMAIL_FROM")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
