@@ -14,6 +14,7 @@ from docx import Document
 from docx.shared import Inches
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from django.conf import settings
 
 
 def searchLeaners(request, searchLocation):
@@ -23,7 +24,7 @@ def searchLeaners(request, searchLocation):
     
 
 def home(request):
-    
+    print("Debug: ", settings.DEBUG)
     return render(request, 'applicants/home.html')
 
 
