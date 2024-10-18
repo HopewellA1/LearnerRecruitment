@@ -19,12 +19,14 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+from LoginManager.views import loginuser
 
 urlpatterns = [
     path('', include('applicants.urls')),
     path('LoginManager/', include('LoginManager.urls')),
     path('hostEmployer/', include('hostEmployer.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/login/', loginuser, name='login'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

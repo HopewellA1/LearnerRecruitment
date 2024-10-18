@@ -54,12 +54,22 @@
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat;
+        
        
       }
 
-      
+      @media only screen and (max-width: 600px){
+        .wrapper{
+            background-image: url('{% static "manageProfile/images/bck-1.jpg" %}');
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: repeat;
+            
+           
+          }
+      }
 
-    </style>
+</style>
   
 </head>
 

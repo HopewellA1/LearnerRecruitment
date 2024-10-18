@@ -72,7 +72,7 @@ class Learner(models.Model):
     LastSchoolEMISNo = models.CharField(max_length=30, blank=False, null=False)
     LastSchoolName = models.CharField(max_length=100)
     LastSchoolYear = models.IntegerField(blank=True, null=True)
-    DegreeTitle = models.CharField(max_length=50, null=True)
+    DegreeTitle = models.CharField(max_length=200, null=True)
     FieldOfStudy = models.CharField(max_length=60)
     NQFLevel = models.CharField(max_length=5)
     RACE = models.CharField(max_length=40)

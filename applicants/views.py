@@ -76,7 +76,7 @@ def learnercategories(request ):
         return render(request, 'applicants/learnercategories.html', payload)
     
         
-    
+@login_required   
 def Learners(request, categoryId):
     Category = get_object_or_404(category, pk= categoryId)
     
@@ -321,11 +321,11 @@ def download_excel(request, categoryId):
                     'Learner Home Postal Code',
                     'STATSSA Area',
                     'Learner Cell PhoneNumber',
-                    'LearnerEmailAddress',
+                    'Learner Email Address',
                     'Learner Fax Number',
                     'Province',
                     'Disability',
-                    'LastSchool EMIS No',
+                    'Last School EMIS No',
                     'Last School Name',
                     'Last School Year', 
                     'Degree Title',
@@ -365,8 +365,9 @@ def download_excel(request, categoryId):
                     learner.LearnerHomePostalCode,
                     learner.STATSSAArea,
                     learner.LearnerCellPhoneNumber,
-                    learner.LearnerFaxNumber,
+                   
                     learner.LearnerEmailAddress,
+                    learner.LearnerFaxNumber,
                     learner.Province,
                     learner.Disability,
                     learner.LastSchoolEMISNo,
@@ -429,16 +430,16 @@ def save_excel_to_db(request):
     numThere = 0
     # Iterate over the DataFrame rows
     for index, row in df.iterrows():
-
+        print("row: ", row)
         try:
-            is_learneron  = get_object_or_404(Learner,LearnerIDNumber = row['IDENTITY \nNUMBER'] )
+            is_learneron  = get_object_or_404(Learner,LearnerIDNumber = "".join([char for char in str(row['IDENTITY \nNUMBER']) if char.isdigit()]) )
             numThere += 1
         except:
             learner = Learner.objects.create(
                 user = user,
                 category = Category,
                 Gender =  row['GENDER'],
-                LearnerIDNumber = row['IDENTITY \nNUMBER'],
+                LearnerIDNumber = "".join([char for char in str(row['IDENTITY \nNUMBER']) if char.isdigit()]) ,
                 HomeLanguage = "Zulu",
                 LearnerSurname = row['SURNAME'],
                 
@@ -476,3 +477,6 @@ def save_excel_to_db(request):
         messages.warning(request, f"{numThere} learner(s) have been already added.")
     return redirect("Learners", categoryId =Category.categoryId)
     
+def filterDigits(string):
+    
+    pass
