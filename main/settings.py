@@ -128,12 +128,11 @@ MEDIA_URL = 'media/'
 
 # Directory where static files will be collected by collectstatic (for production use)
 
-# Optional: Define additional static file directories (used during development)
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static", 
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
