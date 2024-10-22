@@ -32,7 +32,7 @@ from django.contrib.auth.tokens import default_token_generator
 def ActivationEmail(request, user, to_email):
     mail_subject = "Activate your account."
     message = render_to_string("LoginManager/ActivationTemplate.html",{
-        'user':user.username,
+        'user':user,
         'domain': get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
