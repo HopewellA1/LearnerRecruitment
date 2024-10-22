@@ -30,7 +30,7 @@ from django.contrib.auth.tokens import default_token_generator
 
 #User = get_user_model()
 def ActivationEmail(request, user, to_email):
-    mail_subject = "Acivate your account."
+    mail_subject = "Activate your account."
     message = render_to_string("LoginManager/ActivationTemplate.html",{
         'user':user.username,
         'domain': get_current_site(request).domain,
@@ -39,11 +39,9 @@ def ActivationEmail(request, user, to_email):
         "protocol": 'https' if request.is_secure() else 'http'
     })
     print(to_email)
-    if send_mail(mail_subject,f"{message}"  ,'',[f'{to_email}'], fail_silently=False,
-    ):
-       return True
-    else:
-        return False  
+    
+    return send_mail(mail_subject,f"{message}"  ,'',[f'{to_email}'], fail_silently=False)
+
 
 def ResertEmail(request, user, to_email):
     print(f"To user: {user.username}")
