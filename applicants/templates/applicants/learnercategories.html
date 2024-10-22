@@ -31,7 +31,7 @@
         <div class="row">
             {% for category in categories%}
                 <a href="{% url 'Learners' categoryId=category.categoryId  %}">
-                    <div style="padding:0.5rem"> 
+                    <div class= "col-md-12 d-flex"" style="padding:0.5rem"> 
                         <div class="card btn" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white">
                             <div class="card-body" >
                                 <h2 style="color:white">
@@ -52,9 +52,5 @@
             {% endfor %} 
         </div>
     </div>
-
-
-
-   
 
 {% endblock %}
