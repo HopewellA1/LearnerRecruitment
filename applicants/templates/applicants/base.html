@@ -50,16 +50,44 @@
   <link href="{% static 'manageProfile/css1/responsive.css' %}" rel="stylesheet" />
 <style>
     .wrapper{
+       
+        
         background-image: url('{% static "manageProfile/images/bck-1.jpg" %}');
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat;
-       
+        background-color: linear-gradient(to top, #09203f 0%, #537895 100%);
       }
 
-      
+      {% comment %} @media only screen and (max-width: 600px){
+        .wrapper{
+         
+            background-image: url('{% static "manageProfile/images/bck-1.jpg" %}');
+            background-size: inherit; 
+            background-position: center; 
+            background-repeat: repeat;
+            
+           
+          }
+      } {% endcomment %}
 
-    </style>
+      @media only screen and (min-width: 391px) and (max-width: 992px) {
+        .wrapper {
+            background-image: url('{% static "manageProfile/images/bck-1.jpg" %}');
+            background-size: inherit; 
+            background-position: center; 
+            background-repeat: repeat;
+           background-color: linear-gradient(to top, #09203f 0%, #537895 100%);
+        }
+    }
+
+    @media only screen and (max-width: 390px) {
+        .wrapper {
+            background: linear-gradient(to top, #09203f 0%, #537895 100%);
+        }
+    }
+
+</style>
   
 </head>
 

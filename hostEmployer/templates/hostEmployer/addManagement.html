@@ -24,25 +24,25 @@
             <form  method="post" >
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px">
+                <div style="" class="fromCard">
                 
                     <div>
                         <label>
-                           <b>First Name*<b>
+                           First Name*
                         </label><br/>
                         <input class="form-control" type="text" required name="FirstName" value="{{user.first_name}}" />
 
                     </div>
                     <div>
                         <label>
-                           <b>Last Name<b>
+                           Last Name
                         </label><br/>
                         <input class="form-control" type="text" required name="LastName" value="{{user.last_name}}"/>
 
                     </div>
                     <div>
                         <label>
-                           <b>Gender*<b>
+                           Gender*
                         </label><br/>
                         <select class="form-control"  required name="Gender" >
                             <option value="Male">
@@ -63,21 +63,21 @@
                     </div>
                     <div>
                         <label>
-                           <b>Position*<b>
+                           Position*
                         </label><br/>
                         <input class="form-control" type="text" required name="Position" placeholder="e.g CEO"/>
 
                     </div>
                     <div>
                         <label>
-                           <b>Email Address*<b>
+                           Email Address*
                         </label><br/>
                         <input class="form-control" type="email" required name="EmailAddress" value="{{user.email}}"/>
 
                     </div>
                     <div>
                         <label>
-                           <b>Phone number*<b>
+                           Phone number*
                         </label><br/>
                         <input class="form-control" type="text" required name="PhoneNumber" />
 
@@ -85,7 +85,7 @@
 
                     <div>
                         <label>
-                           <b>Address*<b>
+                           Address*
                         </label><br/>
                         <input class="form-control" type="text" required name="Address" />
 
@@ -109,6 +109,22 @@
 
 
     </div>
+
+
+    <style>
+
+        .fromCard{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            color:white;
+            padding:1rem; 
+            border:solid 1px; 
+            border-radius:12px;
+            
+        }
+        .fromCard>div{
+            font-weight:normal;
+        }
+    </style>
 
 
 {% endblock %}

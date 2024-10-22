@@ -18,7 +18,7 @@
 
         {% endfor %}
     {% endif %}
-
+<!--  style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white"-->
 
     <div class="container">
 
@@ -28,8 +28,10 @@
             </h1>
         </div>
         <hr style="color:white;"/>
+
         <div class="row">
             {% for category in categories%}
+
                 <a href="{% url 'Learners' categoryId=category.categoryId  %}">
                     <div class= "col-md-12 d-flex"" style="padding:0.5rem"> 
                         <div class="card btn" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white">
@@ -44,13 +46,47 @@
                                 <p style="color:white">
                                     code: {{category.code}}
                             </div>  
+                <div style="padding:0.5rem">
+                    <div class="card" style="max-width:300px" onclick="gocateg('{{category.categoryId}}')">
+                        <div class="card-header">
+                            <h2>
+                                {{category.categoryName}}
+                            </h2>
+                        </div>
+                        <div class="card-body ">
+                            {{category.description}}           
+                        
+                        </div>
+                        <div class="card-footer">
+                            <h4>
+                                {{category.code}}
+                        </div>
         
-        
-                        </div> 
                     </div>
-                </a>
-            {% endfor %} 
+                </div>
+                <a   id="btngocateg{{category.categoryId}}" href="{% url 'Learners' categoryId=category.categoryId  %}" hidden> </a>
+                <script>
+                    
+                    function gocateg(id){
+                        let btngocateg = document.getElementById("btngocateg"+id);
+                        btngocateg.click()
+                    }
+                </script>
+            {% endfor %}
+    
         </div>
     </div>
 
+    <style>
+        .card:hover{
+            cursor: pointer;
+            background: linear-gradient(to top, #09203f 0%, #537895 100%);
+            height:auto
+
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+           color:white
+        }
+    </style>
 {% endblock %}

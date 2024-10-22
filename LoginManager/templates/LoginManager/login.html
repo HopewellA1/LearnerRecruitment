@@ -19,15 +19,15 @@
     {% endif %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
-        <center>
+        <center style="color:white">
             <h2>Login</h2> 
         </center>
 
-        <div class="text-center">
-            Need an account? Sign Up<a href="{% url 'Signup' %}" style="color:blue"> here</a>
+        <div class="text-center" style="color:white">
+            Need an account? Sign Up<a href="{% url 'Signup' %}" > here</a>
         </div>
-        <div class="text-center">
-            forgot password? Reset<a href="{% url 'reset_password' %}" style="color:blue"> here</a>
+        <div class="text-center " style="color:white">
+            forgot password? Reset<a href="{% url 'reset_password' %}" > here</a>
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
         <form method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label for="email">email</label>
+                <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" id="email">
             </div>
             <div class="form-group">
@@ -52,13 +52,21 @@
         </form>
         <hr>
      
-        <div class="text-center">
-            Need an account? Sign Up<a href="{% url 'Signup' %}" style="color:blue"> here</a>
+        <div class="text-center" style="color:white">
+            Need an account? Sign Up<a href="{% url 'Signup' %}" > here</a>
         </div>
-        <div class="text-center">
-            forgot password? Reset<a href="{% url 'reset_password' %}" style="color:blue"> here</a>
+        <div class="text-center" style="color:white">
+            forgot password? Reset<a href="{% url 'reset_password' %}" > here</a>
         </div>
     </div>
 </div>
+
+<style>
+
+    label{ 
+        color:white;
+
+    }
+</style>
 
 {% endblock %}
