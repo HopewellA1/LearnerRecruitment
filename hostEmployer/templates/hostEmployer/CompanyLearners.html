@@ -34,7 +34,7 @@
 
     
    <div class="container">
-        <div style="display:flex; justify-content:space-between">
+        <div style="display:flex; justify-content:space-between; color:white">
         
             <h1>
                 {{company.Name}} Learners
@@ -42,7 +42,7 @@
 
         </div>
         <hr/>
-        <div id="innerManu" class="row">
+        <div id="innerManu" class="row container" >
 
             <div class="row">
 
@@ -83,7 +83,7 @@
                     <input type="hidden" name="companyId" value="{{company.CompanyId}}"/>
                     <div class="row" style="display:flex; ">
                         <div style="padding:0.5rem">
-                            <input type="text" name="Searched"  class="form-control" />
+                            <input type="text" name="Searched" placeholder="Search" class="form-control" />
                         </div>
                         <div  style="padding:0.5rem">
                             <input type="submit" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
@@ -103,131 +103,103 @@
 
         </div>
 
+        <div>
+            
 
+            <div id="RecruitedHolder"  >
+                <hr/ style="border:solid; color:white">
+                 
+               <div style="color:white; display:flex;justify-content:space-between">
+                <div>
+                    <h3>
+                        {{department.Name}} Recruited Learners
+                    </h3>
+                </div>
+                
+            </div>
+                <div class="row">
+                    {% if learners %}
+                        {% for learner in learners %}
+                            <div style="padding:0.5rem">
+                                <div class="card" style="padding:0.5rem; max-width:250px; height:500px; font-size:16px;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white; ">
+                                    <div style="padding:0.5rem" class="card-card-header">
+                                        <h4>
 
-    
-        <br/>
-        <div class="table-responsive" style =  " background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%,
-         rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%)";>
+                                            {{learner.LearnerFirstName}}  {{learner.LearnerSurname}}
+                                        </h4>
+                                    </div>
+                                    <div class="card-body" style="padding:0.5rem; font-weight:normal; overflow-y:hidden; overflow-y:auto">
+                                        {% if user.is_staff %}
+                                            Id number: {{learner.LearnerIDNumber}}<br/>
+                                        {% endif %}
+                                        Degree Title: {{learner.DegreeTitle }}<br/>
+                                        Field Of Study:	{{ learner.FieldOfStudy}}<br/>
+                                        NQF Level: {{learner.NQFLevel }}<br/>
+                                        Institution:  {{learner.Institution}}<br/>
+                                        Location:<br/>
+                                        {{learner.Municipality}}
+                                        {{learner.LearnerHomeAddress1}}<br/>
+                                        Status: 
+                                        
+                                        <i style=" background-color:white; border-radius:12px; padding:0.23rem" class="text-warning"><b>{{learner.Status}}</b></i>   <br/>
+                                                    Company: {{learner.Exac.Company.Name }}<br/>
+                                                    Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
+                                                    Manager email:<br/>{{learner.Exac.EmailAddress}} 
+                                       
 
-            <table class="table table-bordered" style="width:100%"; " background: linear-gradient(to top, rgb(12, 52, 131) 0%,
-             rgb(162, 182, 223) 100%,
-             rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%)";>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            {% if user.is_staff %}
+                                                <div style="padding:0.25rem">
+                                                    <a class="btn btn-info" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                        View
+                                                    </a> 
+                                                </div>    
 
-            <thead  style =  " background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%,
-             rgb(162, 182, 223) 100%); color:white">
-                <tr>
-                    {% if user.is_staff %}
-                        <th>ID number</th>
-                    {% endif %}
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Field Of Study</th>
-                    <th>Degree Title</th>
-                    <th>Location</th>
-                    <th>Institution</th>
-                    <th>Department</th>
-                    <th>Manager</th>
-                    <th>Manager Position</th>
-                    <th>Manager Email</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody style="color:white">
-                {% for learner in learners %}
-                    <tr >
-                        {% if user.is_staff %}
-                        <td>
-                            {{learner.LearnerIDNumber}}
-                        </td>
-                        {% endif %}
-                        <td>
-                            {{learner.LearnerFirstName}}
-                        </td>
-                        <td>
-                            {{learner.LearnerSurname}}
-                        </td>
-                        <td>
-                            {{learner.Gender}}
-                        </td>
-                        <td>
-                            {{learner.DegreeTitle }}
-                        </td>
-                        <td>
-                            {{learner.Municipality}}
-                            {{learner.LearnerHomeAddress1}}
-                        </td>
-                        <td>
-                            {{learner.Institution}}
-                        </td>
-                        <td>
-                            <div >
-                                <a style="color:white" href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
-                                    {{learner.Department.Name}}
-                                </a>
-                            </div>
-                           
-                        </td>
-                        <td>
-                            {{learner.Exac.FirstName}}
-                            {{learner.Exac.LastName}}
-                        </td>
-                        <td>
-                            {{learner.Exac.Position}}
-                          
-                        </td>
-
-                        <td>
-                            {{learner.Exac.EmailAddress}}
-                           
-                        </td>
-                        <td>
-                             {{learner.Status}}
-                        </td>
-                    
-                        <td>
-                            
-                            <!--If the user is staff-->
-                            {% if user.is_staff %}
-                           <div style="padding:0.25rem">
-                            <a class="btn btn-info" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                View
-                            </a> 
-                        </div> 
-                            {% else %}
-                                {% if selectState %}
-                                    {% if learner.Status == "Available" %}
-                                        <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
-                                            select Learner
-                                        </a>
-                                    {% endif %}
-
-                                {% else %}
-                                    <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
-                                        Remove
-                                    </a> |
-                                    <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
-                                        View
-                                    </a>
-                                {% endif %}
-                            {% endif  %}
-                            
-
-                            <!--If the user is staff-->
-                        </td>
-                        
-
+                                                <div style="padding:0.25rem">
+                                                    <a  class="btn btn-warning" href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                                                        Edit
+                                                    </a> 
+                                                </div>
+                                                
+                
+                                                {% if learner.Status == "Available" %}
+                                                    <div style="padding:0.25rem">    
+                                                        <a class="btn btn-danger" href="{% url 'deleteLearner' learnerId=learner.ApplicantId %}">
+                                                                Delete
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
         
-                    </tr>
-
-                {% endfor %}
-            </tbody>
-
-            </table>
-
-        </div>
-
+                                                {% else %}
+                                                    {% if selectState %}
+                                                        {% if learner.Status == "Available" %}
+                                                            <div style="0.25rem">
+                                                                <a href="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}" class="btn btn-primary" style="color:white; border:solid white">
+                                                                    select 
+                                                                </a>
+                                                            </div>
+                                                        {% endif %}
+                    
+                                                    {% else %}
+                                                        <div style="0.25rem">
+                                                                <a href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                    {% endif %}
+                                            {% endif  %}
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>   
+       </div>
    </div>
 
 

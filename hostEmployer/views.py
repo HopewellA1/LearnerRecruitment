@@ -147,7 +147,7 @@ def DepartmentLearners(request,departmentId):
     if request.method == 'GET':
         
         payload = {
-           "learners": learners,
+           "RecruitedLearners": learners,
             "department": department,
             "company":company,
             "exac": exac,
@@ -184,13 +184,17 @@ def selectLearner(request, departmentId, categoryId):
         return redirect('companyDashboard') 
     Category = get_object_or_404(category, pk= categoryId)
     learners = Learner.objects.filter(category = Category)
+    availableLearners = Learner.objects.filter(category = Category, Status ="Available")
+    RecruitedLearners = Learner.objects.filter(category = Category, Status ="Recruited")
     if request.method == 'GET':
         
         payload = {
            "learners": learners,
             "Category": Category,
             "department": department,
-            "selectState":True
+            "selectState":True,
+            "AvailableLearners": availableLearners,
+            "RecruitedLearners": RecruitedLearners
         }
 
         return render(request, 'applicants/learners.html', payload)
