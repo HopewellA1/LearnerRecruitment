@@ -54,7 +54,7 @@ def ResertEmail(request, user, to_email):
         "protocol": 'https' if request.is_secure() else 'http'
     })
     print(to_email)
-    if send_mail(mail_subject,f"{message}"  ,'hairforyoubymandy@gmail.com',[f'{to_email}'], fail_silently=False,
+    if send_mail(mail_subject,f"{message}"  ,'',[f'{to_email}'], fail_silently=False,
     ):
         return messages.success(request,f"Click on the link that has been sent to {to_email}, to reset your password.")
     else:
