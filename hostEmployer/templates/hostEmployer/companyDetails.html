@@ -68,7 +68,7 @@
                     </div>
                 {% endif %}
     
-                {% if exac.Company == exac.Company %}
+                {% if exac %}
                     <div style="padding:0.5rem">
                         <a class="btn btn-info"  title="Edit Company Details " style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
                             Edit Details
