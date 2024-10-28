@@ -144,7 +144,7 @@
             {% if selectState %}
 
                 <div>
-                    <a class="btn btn-info" href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                    <a class="btn btn-info" title=" Go Back To Categories" href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                         Back to categories
                     </a>
                 </div>
@@ -171,7 +171,7 @@
                                         <input id="txtSearch" type="submit" id="btnSubSearch" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
                                     </div>
                                     <div style="padding:0.5rem; ">
-                                        <a onclick="filterS('Available')" style="color:white; border:solid white" class="btn  btn-outline-info" >
+                                        <a onclick="filterS('Available')" style="color:white; border:solid white" title="Available Learners" class="btn  btn-outline-info" >
                                             Available	
                                         </a>
 
@@ -204,13 +204,13 @@
                     </div>
                    <div class="row" style="padding:1rem">
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                            <a class="btn btn-info" title="Download List Of Learners" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
                                 download excel sheet
                             </a>
                         </div>
                     
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+                            <a class="btn btn-info" title="Add A New Learner" style="color:white" onclick="studentSwitch(false)">
                                 Add Learner   
                             </a>
                         </div>
@@ -251,19 +251,19 @@
                         
                     
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                            <a class="btn btn-info"  Title="Go To Company Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
                                 Company Dashboard
                             </a>
                         </div>
 
                         <div style="padding:0.5rem" >
-                            <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                            <a class="btn btn-info"  Title="Add New Learner"  style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                                 Add learners
                             </a>
                         </div>
                         {% if selectState == false %}
                             <div style="padding:0.5rem">
-                                <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
+                                <a class="btn btn-info"  Title="Download Learners List"  style="color:white"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
                                     download excel sheet 
                                 </a>
                             </div>
@@ -275,7 +275,7 @@
                    
 
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
+                        <a class="btn btn-info" style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
                             {{department.Company.Name}} departments 
                         </a>
                     </div>
@@ -351,7 +351,7 @@
                     </div>
                     <div>
                         <label class="field">
-                            Midle name
+                            Middle name
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerMiddleName" />
 
@@ -735,12 +735,12 @@
 
                                         {% else %}
                                             <div style="padding:0.5rem">
-                                                <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}"  class="btn btn-outline-warning btndanger" style=" border:solid " >
+                                                <a href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" Title="Remove Learner"  class="btn btn-outline-warning btndanger" style=" border:solid " >
                                                     Remove
                                                 </a> 
                                             </div>
                                             <div style="padding:0.5rem">
-                                                <a class="btn btn-outline-info" style="color:white; border:solid white" href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                                                <a class="btn btn-outline-info" style="color:white; border:solid white"  Title="View Learner Details"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
                                                     View
                                                 </a>
                                             </div>

@@ -20,7 +20,7 @@ def companyDashboard(request):
     try:
         exac = get_object_or_404(Exac, user = user)
     except:
-        messages.error(request, "You have not joined any company you can add your company or select below")
+        messages.error(request, "you have not joined a company, please Select or add  your company below")
         return redirect("SelectCompany")
     
     company = exac.Company
