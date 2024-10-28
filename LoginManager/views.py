@@ -135,7 +135,7 @@ def signupuser(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.create_user(first_name = request.POST["first_name"],last_name = request.POST["last_name"],username = request.POST['email'].lower(),email =request.POST['email'].lower(), password = request.POST['password1'],)# email = request.POST['email'],
-                user.is_active = True
+                user.is_active = False
                 user.save()
                 if  ActivationEmail(request, user, request.POST['email'].lower()):
                

@@ -164,23 +164,7 @@
                                     <div style="padding:0.5rem">
                                         <input id="txtSearch" type="submit" id="btnSubSearch" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
                                     </div>
-                                    <div style="padding:0.5rem;">
-                                       
-
-                                        <script>
-                                            let txtSearch = document.getElementById("txtSearch");
-                                            let btnSubSearch = document.getElementById("btnSubSearch");
-                                            function filterS(filter){
-                                               
-                                                txtSearch.value = filter;
-                                                console.log("filter: ", txtSearch.value)
-                                                console.log(txtSearch)
-                                                //btnSubSearch.click()
-
-                                            }
-                                        </script>
-
-                                    </div>
+                                   
                                     <div style="padding:0.5rem">
                                         {% if isSearch %}
                                             <a href="{% url 'Learners' categoryId=Category.categoryId %}" style="border:solid" class="btn btn-success">
@@ -203,7 +187,7 @@
                     
                         <div style="padding:0.5rem">
                             <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
-                                Add Learner   
+                                Add New Learner   
                             </a>
                         </div>
                    </div>
