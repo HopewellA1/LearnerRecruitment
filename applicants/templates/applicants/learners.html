@@ -141,7 +141,8 @@
 
             {% endif %}
 
-            
+
+        
 
         </div>
 
@@ -164,7 +165,6 @@
                                     <div style="padding:0.5rem">
                                         <input id="txtSearch" type="submit" id="btnSubSearch" class="btn btn-default btn-outline-info" style="color:white; border:solid white" value="Search"/>
                                     </div>
-                                   
                                     <div style="padding:0.5rem">
                                         {% if isSearch %}
                                             <a href="{% url 'Learners' categoryId=Category.categoryId %}" style="border:solid" class="btn btn-success">
@@ -180,13 +180,17 @@
                     </div>
                    <div class="row" style="padding:1rem">
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+
+                            <a class="btn btn-info" title="Download List Of Learners" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
                                 download excel sheet 
+
                             </a>
                         </div>
                     
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white" onclick="studentSwitch(false)">
+
+                            <a class="btn btn-info" title="Add A New Learner" style="color:white" onclick="studentSwitch(false)">
+
                                 Add New Learner   
                             </a>
                         </div>
@@ -218,12 +222,15 @@
                     {% if user.is_staff == False %}
                     {% if selectState == false %}
                         <div style="padding:0.5rem">
+
                             <a class="btn btn-info" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
                                 download excel sheet
+
                             </a>
                         </div>
                     {% endif %}
                     {% endif %}
+
 
                 
 
@@ -234,7 +241,7 @@
                     
                 
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                        <a class="btn btn-info" style="color:white" title="Go To Company Dashboard" href="{% url 'companyDashboard' %}">
                             Company Dashboard
                         </a>
                     </div>
@@ -250,6 +257,7 @@
                                 download excel sheet 
                             </a>
                         </div>
+
                     {% endif %}
                         
                 {% endif %}
@@ -258,7 +266,7 @@
                    
 
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
+                        <a class="btn btn-info" style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
                             {{department.Company.Name}} departments 
                         </a>
                     </div>
@@ -334,7 +342,7 @@
                     </div>
                     <div>
                         <label class="field">
-                            Midle name
+                            Middle name
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerMiddleName" />
 
@@ -558,6 +566,7 @@
                                                     </a>
                                                 </div>
                                             {% endif %}
+
 
                                             {% else %}
                                                 {% if selectState %}

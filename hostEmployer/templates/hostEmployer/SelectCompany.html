@@ -37,7 +37,7 @@
     <div id="innerManu" class="row">
         {% if user.is_staff == False %}   
             <div style="padding:0.5rem">
-                <a onclick="formSwitch(true)" class="btn btn-info" style="color:white" id="initAdd">
+                <a onclick="formSwitch(true)" class="btn btn-info" title="Create A New Company"style="color:white" id="initAdd">
                     Add new Company
                 </a>
             </div>
@@ -119,19 +119,19 @@
                             <div class="row">
                                 {% if user.is_staff %}  
                                     <div style='padding:0.5rem'>
-                                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                                        <a class="btn btn-info" title="Details About The Company" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
                                             More Details
                                         </a>
                                     </div>
                                     
                                 {% else %}
                                     <div style='padding:0.5rem'>
-                                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                                        <a class="btn btn-info" title="Details About The Company" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
                                             More Details
                                         </a>
                                     </div>
                                     <div  style='padding:0.5rem'>
-                                        <a href="{% url 'addManagement' CompanyId=company.CompanyId %}" class="btn btn-info">
+                                        <a href="{% url 'addManagement' CompanyId=company.CompanyId %}" title="Join The Company" class="btn btn-info">
                                             Join
                                         </a>
                                     </div>

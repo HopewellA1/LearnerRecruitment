@@ -38,13 +38,13 @@ def ActivationEmail(request, user, to_email):
         'token': account_activation_token.make_token(user),
         "protocol": 'https' if request.is_secure() else 'http'
     })
-    print(to_email)
+
     
     return send_mail(mail_subject,f"{message}"  ,'',[f'{to_email}'], fail_silently=False)
 
 
 def ResertEmail(request, user, to_email):
-    print(f"To user: {user.username}")
+
     mail_subject = "Reset your password."
     message = render_to_string("LoginManager/resertTemplate.html",{
         'user':user,
@@ -53,7 +53,8 @@ def ResertEmail(request, user, to_email):
         'token': default_token_generator.make_token(user),
         "protocol": 'https' if request.is_secure() else 'http'
     })
-    print(to_email)
+
+   
     if send_mail(mail_subject,f"{message}"  ,'',[f'{to_email}'], fail_silently=False,
     ):
         return messages.success(request,f"Click on the link that has been sent to {to_email}, to reset your password.")
@@ -92,7 +93,7 @@ def register_view(request, *args, **kwargs):
         try:
             account = Account.objects.get(email = email)
         except Exception as e:
-            print(e)
+            pass
             #raise forms.ValidationError(f"Email {email} already exists on the system.")
 
         if account:
@@ -107,7 +108,7 @@ def register_view(request, *args, **kwargs):
               #  user.save(commit=False)
                 user.save()
                 
-                print(ActivationEmail(request, user, request.POST['email'].lower()))
+                ActivationEmail(request, user, request.POST['email'].lower())
                # login(request,user)
                
                

@@ -53,20 +53,20 @@
                 </div>
 
                 <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'download_departmentExcel'   %}?companyId={{company.CompanyId}}">
+                    <a class="btn btn-info" title="Download list of learners" style="color:white"  href="{% url 'download_departmentExcel' %}?companyId={{company.CompanyId}}">
                         download excel sheet
                     </a>
                 </div>
                 {% if exac %}
 
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'companyDashboard' %}">
+                        <a class="btn btn-info" title="Go To Company Dashboard " style="color:white"  href="{% url 'companyDashboard' %}">
                             Company Dashboard
                         </a>
                     </div>
 
                     <div style="padding:0.5rem" >
-                        <a class="btn btn-info" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                        <a class="btn btn-info" title="Add New Learners" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                             Add learners
                         </a>
                     </div>

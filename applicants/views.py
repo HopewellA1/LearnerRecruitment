@@ -24,7 +24,7 @@ def searchLeaners(request, searchLocation):
     
 
 def home(request):
-    print("Debug: ", settings.DEBUG)
+   
     return render(request, 'applicants/home.html')
 
 
@@ -188,7 +188,7 @@ def editLearner(request, learnerId):
         if learner.LearnerHomeAddress2 != request.POST["LearnerHomeAddress2"]:
             learner.LearnerHomeAddress2 = request.POST["LearnerHomeAddress2"]
             numUpdate += 1
-        print("learner.Municipality: ", learner.Municipality )    
+  
         if learner.Municipality != request.POST["Municipality"]:
             learner.Municipality = request.POST["Municipality"]
             numUpdate += 1
@@ -426,13 +426,12 @@ def save_excel_to_db(request):
     # Read the Excel file from the file-like object
     df = pd.read_excel(request.FILES["excelData"])
     df.columns = df.columns.str.strip()
-    # print("Name | Midle name | Last name | Id number | Gender | phoneNumber | alternativeNumber | emailAddress | physicalAddress | munisipal | degreeTittle | fieldOfStudy | nqfLevel | race | Institution | Experience")
-    # print()
+ 
     numLearners = 0
     numThere = 0
     # Iterate over the DataFrame rows
     for index, row in df.iterrows():
-        print("row: ", row)
+       
         try:
             is_learneron  = get_object_or_404(Learner,LearnerIDNumber = "".join([char for char in str(row['IDENTITY \nNUMBER']) if char.isdigit()]) )
             numThere += 1
@@ -469,10 +468,7 @@ def save_excel_to_db(request):
             )
             numLearners += 1
 
-        
-        # stringPrint = f"{first_name} | {midle_name} | {last_name} | {ID_number} | {gender} | {phoneNumber} | {alternativeNumber} | {emailAddress} | {physicalAddress} | {munisipal} {degreeTittle} | {fieldOfStudy} | {nqfLevel} | {race} | {Institution} | {Experience}"
-        # print(stringPrint)
-        # print()
+       
         pass
     messages.success(request, f"{numLearners} learner(s) have been added to the database.")
     if numThere > 0:
