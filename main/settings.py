@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS").split(",")
 CSRF_TRUSTED_ORIGINS =config("Django_CSRF_TRUSTED_ORIGINS").split(",")
 
