@@ -81,12 +81,14 @@ def Learners(request, categoryId):
     Category = get_object_or_404(category, pk= categoryId)
     
     learners = Learner.objects.filter(category = Category) 
-    
+    AvailableLearners = Learner.objects.filter(category = Category, Status="Available") 
     if request.method == 'GET':
         
         payload = {
            "learners": learners,
-            "Category": Category
+            "Category": Category,
+            "AvailableLearners": AvailableLearners,
+            "RecruitedLearners": Learner.objects.filter(category = Category, Status="Recruited")
         }
 
         return render(request, 'applicants/learners.html', payload)

@@ -118,13 +118,17 @@
                                     <div class="row" style="display:flex; color:white; justify-content:center">
                                         
                                         <div style="padding:0.5rem">
-                                            <a class="btn btn-info" title="View Department Details " href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
-                                                Details
+
+                                            <a class="btn btn-info" title="See more details about the department." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                                More Details
+
                                             </a>
                                         </div>
                                      
                                         <div style="padding:0.5rem">
-                                            <a class="btn btn-info" title="View Learners " href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+
+                                            <a class="btn btn-info" title="View learners recruited on this department" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+
                                                 Learners
                                             </a>
                                         </div>
