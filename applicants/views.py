@@ -337,7 +337,7 @@ def download_excel(request, categoryId):
                     'Experience',
                     'Status',
                     'Company',
-                    'Department'
+                    'Division'
         ]
     data = []
     for learner in Learners:

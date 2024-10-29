@@ -36,7 +36,7 @@
             <div id="search" style="display:flex; justify-content:space-between; padding:1rem; border:solid 1px white;  border-radius:12px" class="row">
                 <div style="padding:0.5rem;">
                     <h1 style="color:azure">
-                        {{department.Name}} department learners
+                        {{department.Name}} Division learners
                     </h1>
 
                 </div>
@@ -114,7 +114,7 @@
             
                 {% if selectState == True %}
                     <h1>
-                        {{department.Name}} department Learners
+                        {{department.Name}} Division Learners
                     </h1>
 
                     <div>
@@ -133,7 +133,7 @@
 
                     <div>
                         <h1>
-                            {{department.Name}} department Learners
+                            {{department.Name}} Division Learners
                         </h1>
                     </div>
                     
@@ -267,7 +267,7 @@
 
                     <div style="padding:0.5rem">
                         <a class="btn btn-info" style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
-                            {{department.Company.Name}} departments 
+                            {{department.Company.Name}} Divisions 
                         </a>
                     </div>
 
@@ -756,9 +756,9 @@
                                         </div>
                                         <div class="card-body" style="padding:0.5rem; font-weight:normal; overflow-y:hidden; overflow-y:auto">
                                             {% if user.is_staff %}
-                                                Id number: {{learner.LearnerIDNumber}}<br/>
+                                                Id number: {{learner.LearnerIDNumber}} <br/>
                                             {% endif %}
-                                            Degree Title: {{learner.DegreeTitle }}<br/>
+                                            Degree Title: {{learner.DegreeTitle }} <br/>
                                             Field Of Study:	{{ learner.FieldOfStudy}}<br/>
                                             NQF Level: {{learner.NQFLevel }}<br/>
                                             Institution:  {{learner.Institution}}<br/>
@@ -768,7 +768,7 @@
                                             Status: 
                                             
                                             <i style=" background-color:white; border-radius:12px; padding:0.23rem" class="text-warning"><b>{{learner.Status}}</b></i>   <br/>
-                                                        Company: {{learner.Exac.Company.Name }}<br/>
+                                                        Company: {{learner.Exac }}<br/>
                                                         Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
                                                         Manager email:<br/>{{learner.Exac.EmailAddress}} 
                                            
