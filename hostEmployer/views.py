@@ -359,6 +359,7 @@ def departmentDetails(request, departmentId):
     
     try:
         department = get_object_or_404(Department, pk = departmentId)
+        
     except:
         messages.error(request, "The division you tried to access was not found.")
         return redirect("home")
@@ -371,16 +372,16 @@ def departmentDetails(request, departmentId):
     company = department.Company
     otherDepartments =[]
     Departments = Department.objects.filter(Company = company)
-    for department in Departments:
+    for department1 in Departments:
         otherDepartments.append(
             {
-               "department":  department,
-               "numLearners": calcList(Learner.objects.filter(Department=department)),
+               "department":  department1,
+               "numLearners": calcList(Learner.objects.filter(Department=department1)),
                
             }
         )
     if request.method == 'GET':
-        
+      
         payload = {
             "department": department,
             "company": company,

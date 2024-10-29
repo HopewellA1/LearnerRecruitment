@@ -62,10 +62,10 @@
         <div style="padding:1rem;" id="addDepHiolder" hidden>
 
             
-            <form  method="post">
+            <form  method="post" style="color:white">
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                <div style="padding:1rem; border:solid 1px; border-radius:12px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
                     <div style="display:flex; justify-content:end">
                         <a class="btn btn-danger" style="color:white" onclick="formSwitch(false)">
                             Close form
@@ -100,7 +100,7 @@
         <div id="depInfoHolder" style="padding:1rem; color:white; " >
             
             <h2>
-                Division Name: {{department.Name}} </br>
+                Division Name: {{department.Name}}</br>
 
 
             </h2>
@@ -132,6 +132,14 @@
                         {{department.Exac.Position}}
                     <td>
                 </tr>
+                <tr/>
+                    <td>
+                        Division Description:
+                    </td>
+                    <td>
+                        {{department.Description}}
+                    <td>
+                </tr>
 
 
             <table>
@@ -139,17 +147,11 @@
 
 
          
-            <h4>
-                Division Description
-            </h4>
-            <br/>
-            <div style="color:white; padding:0.5rem">
-                
-                {{department.Description}}
-                
-            </div>
+            
+           
 
         </div>
+        <hr style="border:solid white"/>
        
         <div>
             <div style="padding:1rem">
@@ -183,7 +185,7 @@
                                         
                                             <div style="padding:0.5rem">
                                                 <a class="btn btn-info" href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
-                                                    Details
+                                                    Details 
                                                 </a>
                                             </div>
                                    
