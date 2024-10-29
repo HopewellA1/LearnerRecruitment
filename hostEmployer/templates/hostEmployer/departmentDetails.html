@@ -97,7 +97,7 @@
 
             </form>
         </div>
-        <div id="depInfoHolder" style="padding:1rem; color:white; " >
+        <div id="depInfoHolder" style="padding:1rem; color:white; font-weight:normal" >
             
             <h2>
                 Division Name: {{department.Name}}</br>
@@ -107,7 +107,7 @@
             <label>
                 Division Manager
             </label>
-            <table class="table" style="color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);border-radius:12px">
+            <table class="table" style="color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);border-radius:12px;font-weight:normal">
                 <tr/>
                     <td>
                         First name:
@@ -168,10 +168,11 @@
                     {% for department in otherDepartments %}
                     
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);font-weight:normal">
                                 <div class="card-header">
-                                    {{department.department.Name}} Division
-
+                                    <h5>
+                                        {{department.department.Name}} Division
+                                    </h5>
 
                                 </div>
                                 <div class="card-body">

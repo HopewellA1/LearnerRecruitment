@@ -103,19 +103,21 @@
                     
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
-                                <div class="card-header" style="color:white">
-                                    {{department.department.Name}} Division
+                                <div class="card-header" style="color:white; font-weight:normal">
+                                    <h5>
+                                        {{department.department.Name}} Division
+                                    </h5>
 
 
                                 </div>
-                                <div class="card-body"  style="color:white">
+                                <div class="card-body"  style="color:white; font-weight:normal">
                                     Learners: {{department.numLearners}}
                                     <hr/>
                                     {{department.department.Description}}
                                 </div>
                                 <div class="card-footer">
                                 
-                                    <div class="row" style="display:flex; color:white; justify-content:center">
+                                    <div class="row" style="display:flex; color:white; justify-content:center; font-weight:normal">
                                         
                                         <div style="padding:0.5rem">
 
@@ -133,7 +135,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div  style="color:white">
+                                    <div  style="color:white;  font-weight:normal">
                                         Added by:<a href="{% url 'home' %}"  style="color:white">
                                                     {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
 
