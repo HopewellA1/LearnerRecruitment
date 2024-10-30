@@ -46,8 +46,10 @@
             <div style='padding:0.5rem; ' class="row">
                 {% if exac %}
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="Go To Division" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                        Departments
+
+                    <a class="btn btn-info" title="Go to Company divisions" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Divisions
+
                     </a>
                 </div>
                 <div style='padding:0.5rem'>

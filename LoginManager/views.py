@@ -146,8 +146,8 @@ def signupuser(request):
                     messages.warning(request, "Account created successfully, something went wrong while sending an activation email, please contact support.")
                 return redirect('home')
             except IntegrityError:
-                messages.error(request, "something went wrong please try again.")
-                return render(request,'LoginManager/signup.html',{'form':UserCreationForm(), 'error':'Username Already Taken'})
+                messages.error(request, "Username Already Taken")
+                return render(request,'LoginManager/signup.html',{'form':UserCreationForm()})
             
         else:
             return render(request,'LoginManager/signup.html',{'form':UserCreationForm(), 'error':'Passwords did not match'})

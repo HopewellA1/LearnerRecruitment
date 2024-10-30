@@ -81,7 +81,7 @@ def addManagement(request,CompanyId):
             Address = request.POST["Address"],   
         )
         
-        messages.success(request, 'Manager details added successfully, please add or select your department to add learners.')
+        messages.success(request, 'Manager details added successfully, please add or select your Division to add learners.')
         return redirect('departments', CompanyId = CompanyId)
     
     
@@ -125,7 +125,7 @@ def departments(request, CompanyId):
             Name = request.POST["Name"],
             Description = request.POST["Description"]   
         )
-        messages.success(request, "Department added, you may add learners to department")
+        messages.success(request, "Division added, you may add learners to Division")
         return redirect("departments",CompanyId = company.CompanyId )
     
 @login_required   
@@ -133,7 +133,7 @@ def DepartmentLearners(request,departmentId):
     try:
         department = get_object_or_404(Department, pk = departmentId)
     except:
-        messages.error(request, "The department you are trying to access was not found.")
+        messages.error(request, "The division you are trying to access was not found.")
 
         return redirect("companyDashboard")
       
@@ -165,7 +165,7 @@ def selectCategory(request, departmentId):
     try:
         department = get_object_or_404(Department, pk = departmentId)  
     except:
-        messages.error(request, 'The department you tried to access was not found')
+        messages.error(request, 'The division you tried to access was not found')
         return redirect('companyDashboard')  
     Categories = category.objects.all()
     print("Categories: ", Categories)
@@ -180,7 +180,7 @@ def selectLearner(request, departmentId, categoryId):
     try:
         department = get_object_or_404(Department, pk = departmentId)  
     except:
-        messages.error(request, 'The department you tried to access was not found')
+        messages.error(request, 'The division you tried to access was not found')
         return redirect('companyDashboard') 
     Category = get_object_or_404(category, pk= categoryId)
     learners = Learner.objects.filter(category = Category)
@@ -204,7 +204,7 @@ def ConfirmLearner(request, learnerId, departmentId):
     try:
         department = get_object_or_404(Department, pk = departmentId)  
     except:
-        messages.error(request, 'The department you tried to access was not found')
+        messages.error(request, 'The division you tried to access was not found')
         return redirect('companyDashboard')
     
     try:
@@ -227,7 +227,7 @@ def ConfirmLearner(request, learnerId, departmentId):
             "department":department,
             "selectState":True
         }
-        messages.warning(request, f"Are you sure you want to add this learner to you department({department.Name})?")
+        messages.warning(request, f"Are you sure you want to add this learner to your division({department.Name})?")
         return render(request, 'applicants/learnerDetails.html',payload )
     
     if request.method == 'POST':
@@ -237,7 +237,7 @@ def ConfirmLearner(request, learnerId, departmentId):
         learner.Department = department
         learner.save()
         
-        messages.success(request, "The Learner has been added to the department")
+        messages.success(request, "The Learner has been added to the division")
         return redirect("selectLearner", departmentId = department.DepartmentId , categoryId =learner.category.categoryId )
 @login_required      
 def confirmRemoval(request, learnerId):
@@ -259,7 +259,7 @@ def confirmRemoval(request, learnerId):
             "is_remove":True
         }
         
-        messages.warning(request, f"Are you sure you want to remove this learner from the department of {department.Name} at {department.Company.Name}")
+        messages.warning(request, f"Are you sure you want to remove this learner from the division of {department.Name} at {department.Company.Name}")
         return render(request, 'applicants/learnerDetails.html',payload)
 
     
@@ -269,7 +269,7 @@ def confirmRemoval(request, learnerId):
         learner.Exac = None
         learner.Status = "Available"
         learner.save()
-        messages.success(request, "The learner has been removed from the department")
+        messages.success(request, "The learner has been removed from the division")
         return redirect("DepartmentLearners", departmentId = department.DepartmentId )
     
 def calcList(list):
@@ -359,8 +359,9 @@ def departmentDetails(request, departmentId):
     
     try:
         department = get_object_or_404(Department, pk = departmentId)
+        
     except:
-        messages.error(request, "The department you tried to access was not found.")
+        messages.error(request, "The division you tried to access was not found.")
         return redirect("home")
    
     try:
@@ -371,16 +372,16 @@ def departmentDetails(request, departmentId):
     company = department.Company
     otherDepartments =[]
     Departments = Department.objects.filter(Company = company)
-    for department in Departments:
+    for department1 in Departments:
         otherDepartments.append(
             {
-               "department":  department,
-               "numLearners": calcList(Learner.objects.filter(Department=department)),
+               "department":  department1,
+               "numLearners": calcList(Learner.objects.filter(Department=department1)),
                
             }
         )
     if request.method == 'GET':
-        
+      
         payload = {
             "department": department,
             "company": company,
@@ -450,11 +451,11 @@ def download_departmentExcel(request):
     if departmentId:
 
 
-        print("departmentId: ", departmentId)
+      
         try:
             department = get_object_or_404(Department, pk = departmentId)
         except:
-            messages.error(request, "The department was not found.")
+            messages.error(request, "The division was not found.")
             return redirect("home")
         Learners = Learner.objects.filter(Department = department)
         
@@ -498,7 +499,7 @@ def download_departmentExcel(request):
                     'Experience',
                     'Status',
                     'Company',
-                    'Department'
+                    'Division'
         ]
         data = []
         for learner in Learners:
@@ -624,7 +625,7 @@ def SearchLearners(request):
             try:
                 department = get_object_or_404(Department,pk = int(request.POST["departmentId"]))
             except:
-                messages.error(request, "The query department was not found.")
+                messages.error(request, "The query Division was not found.")
                 return redirect("home")    
             
             

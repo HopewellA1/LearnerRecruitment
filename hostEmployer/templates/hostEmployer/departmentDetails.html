@@ -31,15 +31,17 @@
 
                 <h2>
                     <a href="{% url 'companyDetails' companyId=company.CompanyId %}" style="color:white">
-                        {{company.Name}} Departments
+                        {{company.Name}} Divisions
 
                     </a>
                 </h1>
             </div>
             <div class="row">
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="Go Back To Departments"  style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                        Departments
+
+                    <a class="btn btn-info"  title="Go Back To Departments" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Divisions
+
                     </a>
                 </div>
                 <div style='padding:0.5rem'>
@@ -50,8 +52,10 @@
                 
                 {% if user.is_staff != True %}
                     <div style='padding:0.5rem'>
+
                         <a class="btn btn-info" title="Edit Company Details"  style="color:white" onclick="formSwitch(true)">
                             Edit Department details
+
                         </a>
                     </div>
                    
@@ -62,10 +66,10 @@
         <div style="padding:1rem;" id="addDepHiolder" hidden>
 
             
-            <form  method="post">
+            <form  method="post" style="color:white">
                 {% csrf_token %}
 
-                <div style="padding:1rem; border:solid 1px; border-radius:12px" >
+                <div style="padding:1rem; border:solid 1px; border-radius:12px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
                     <div style="display:flex; justify-content:end">
                         <a class="btn btn-danger" title="Hide The Form"  style="color:white" onclick="formSwitch(false)">
                             Close form
@@ -74,7 +78,7 @@
                     </div>
                     <div>
                         <label>
-                           <b>Department Name<b>
+                           <b>Division Name<b>
                         </label><br/>
                         <input class="form-control" type="text" required name="Name" value="{{department.Name}}" />
 
@@ -97,17 +101,17 @@
 
             </form>
         </div>
-        <div id="depInfoHolder" style="padding:1rem; color:white; " >
+        <div id="depInfoHolder" style="padding:1rem; color:white; font-weight:normal" >
             
             <h2>
-                Department Name: {{department.Name}} </br>
+                Division Name: {{department.Name}}</br>
 
 
             </h2>
             <label>
-                Department Manager
+                Division Manager
             </label>
-            <table class="table" style="color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);border-radius:12px">
+            <table class="table" style="color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);border-radius:12px;font-weight:normal">
                 <tr/>
                     <td>
                         First name:
@@ -132,6 +136,14 @@
                         {{department.Exac.Position}}
                     <td>
                 </tr>
+                <tr/>
+                    <td>
+                        Division Description:
+                    </td>
+                    <td>
+                        {{department.Description}}
+                    <td>
+                </tr>
 
 
             <table>
@@ -139,22 +151,16 @@
 
 
          
-            <h4>
-                Department Description
-            </h4>
-            <br/>
-            <div style="color:white; padding:0.5rem">
-                
-                {{department.Description}}
-                
-            </div>
+            
+           
 
         </div>
+        <hr style="border:solid white"/>
        
         <div>
             <div style="padding:1rem">
                 <h3>
-                    Other Departments
+                    Other Divisions
                 </h3>
             </div>
             <div class="row">
@@ -166,10 +172,11 @@
                     {% for department in otherDepartments %}
                     
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);font-weight:normal">
                                 <div class="card-header">
-                                    {{department.department.Name}} Department
-
+                                    <h5>
+                                        {{department.department.Name}} Division
+                                    </h5>
 
                                 </div>
                                 <div class="card-body">
@@ -182,7 +189,7 @@
                                     <div class="row" style="display:flex; color:white; justify-content:center">
                                         
                                             <div style="padding:0.5rem">
-                                                <a class="btn btn-info"  title=" View Department Details"  href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                                <a class="btn btn-info"  title=" View Division Details"  href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
                                                     Details
                                                 </a>
                                             </div>
@@ -207,7 +214,7 @@
                 {% else %}
                         <div style="display:flex; justify-content:center; width:100%">
                             <p style="border:solid 1px red; padding:1rem; border-radius:12px">
-                                No departments please add a new one by clicking on  "New Department" above.
+                                No Divisions please add a new one by clicking on "Dashboard" >> "New Division" above.
                             </p>
                         </div>
                 {% endif %}

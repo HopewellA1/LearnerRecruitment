@@ -115,7 +115,7 @@
             <div style="padding:1rem">
                 <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
                     {% csrf_token %}
-                    <input type="submit" class="bt btn-outline-danger" value="Confirm Recruitment"/>
+                    <input type="submit" class="bt btn-outline-success" style="color:white; border:solid white" value="Confirm Recruitment"/>
 
 
                 </form>
@@ -445,7 +445,7 @@
                             <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
                                 {% csrf_token %}
                                
-                                <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
+                                <input type="submit" class="bt btn-outline-success"  style="color:white; border:solid white" value="Confirm Recruitment"/>
             
             
                             </form>
