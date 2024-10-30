@@ -46,12 +46,12 @@
             <div style='padding:0.5rem; ' class="row">
                 {% if exac %}
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="Go to Company Departments" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                    <a class="btn btn-info" title="Go To Division" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
                         Departments
                     </a>
                 </div>
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="View learners from this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                    <a class="btn btn-info" title="View Learners In The Company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
                         Company Learners
                     </a>
                 </div>
@@ -60,7 +60,7 @@
                 {% if  exac.Company == exac.Company %}
                     <div style="padding:0.5rem">
                        
-                        <a class="btn btn-info"  title="Go to Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
+                        <a class="btn btn-info"  title="Go To Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
                             Go to Dashboard
                            
                         </a>
@@ -86,7 +86,7 @@
             <div style="padding:1rem">
                 <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
                     {% csrf_token %}
-                    <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
+                    <input type="submit" Title="Confirm Recruitment" class="bt btn-outline-success" value="Confirm Recruitment"/>
 
 
                 </form>

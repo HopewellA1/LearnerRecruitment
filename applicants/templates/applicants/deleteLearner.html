@@ -47,12 +47,12 @@
         <div id="innerManu">
             
             <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                <a class="btn btn-info" style="color:white" title="Back To Learners" href="{% url 'Learners' categoryId=Category.categoryId  %}">
                     Back to Learners
                 </a>
             </div>
             <div style="padding:0.5rem">
-                <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                <a class="btn btn-info" style="color:white" title="Edit Learner Details" href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
                     Edit Learner
                 </a>
             </div>
