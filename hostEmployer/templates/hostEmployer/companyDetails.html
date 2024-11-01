@@ -46,14 +46,12 @@
             <div style='padding:0.5rem; ' class="row">
                 {% if exac %}
                 <div style='padding:0.5rem'>
-
-                    <a class="btn btn-info" title="Go to Company divisions" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                        Divisions
-
+                    <a class="btn btn-info" title="Go to Company Departments" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Departments
                     </a>
                 </div>
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="View Learners In The Company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                    <a class="btn btn-info" title="View learners from this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
                         Company Learners
                     </a>
                 </div>
@@ -62,7 +60,7 @@
                 {% if  exac.Company == exac.Company %}
                     <div style="padding:0.5rem">
                        
-                        <a class="btn btn-info"  title="Go To Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
+                        <a class="btn btn-info"  title="Go to Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
                             Go to Dashboard
                            
                         </a>
@@ -88,7 +86,7 @@
             <div style="padding:1rem">
                 <form method="post" action="{% url 'ConfirmLearner' learnerId=learner.ApplicantId departmentId=department.DepartmentId %}">
                     {% csrf_token %}
-                    <input type="submit" Title="Confirm Recruitment" class="bt btn-outline-success" value="Confirm Recruitment"/>
+                    <input type="submit" class="bt btn-outline-success" value="Confirm Recruitment"/>
 
 
                 </form>
@@ -106,142 +104,149 @@
             </div>
 
         {% endif %}
-        <div style="padding:1rem">
 
-            <p >
-                
-
-                <div>
-                    <div style="color:white">
-                        <h2>Basic Details</h2>
-                    </div>
-                    <table class="table" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
-                        <tr>
-                            <th>
-                                Company Name:
-                            </th>
-                            <td>
-                                {{company.Name}}
-                            </td>
-                                
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Address:
-                            </th>
-                            <td>
-                                {{company.Address}}
-                            </td>
-                                
-                        </tr>
-
-                        <tr>
-                            <th>
-                                Company Email: 
-                            </th>
-                            <td>
-                                {{ company.Email }}
-                            </td>
-                                
-                        </tr>
-                        <tr>
-                            <th>
-                                Added By: 
-                            </th>
-                            <td>
-                                {{company.user.first_name}} {{company.user.last_name}}<br/>
-                                ({{company.user.email}})
-                            </td>
-                                
-                        </tr>
-                        <tr>
-                            <th>
-                                Learners Recruited: 
-                            </th>
-                            <td>
-                                {{numLearners}}
-                            </td>
-                                
-                        </tr>
-                       
-                        <tr>
-                            <th>
-                                Managers Recruiting: 
-                            </th>
-                            <td>
-                                {{numManagers}}
-                            </td>
-                                
-                        </tr>
-                        <tr>
-                            <th>
-                                Compony Phone:
-                            </th>
-                            <td>
-                                {{company.Phone}}
-                            </td>
-                                
-                        </tr>
-                       
-                 
-                    </table>
-                    <hr/>
-                    <div style="color:white">
-                        <h2>
-                            Managers
-                        </h2>
-
-                    </div>
-                    <table class="table" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Gender
-                            </th>
-                            <th>
-                                Position
-                            </th>
-                            <th>
-                                Email
-                            </th>
-                            <th>
-                                Phone
-                            </th>
-                        </tr>
-                        {% for manager  in All_Exacs %}
-                        <tr>
-                            <td>
-                                {{manager.FirstName}} {{manager.LastName}} 
-                            </td>
-                            <td>
-                                {{manager.Gender}}
-                            </td>
-                            <td>
-                                {{manager.Position}}
-                            </td>
-                            <td>
-                                {{manager.EmailAddress}}
-                            </td>
-                            <td>
-                                {{manager.PhoneNumber}}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    
-                    
-                </div>
-            </p>
-        </div>
+        
 
     </div>
 
+<div class="container">
+
+             
+
+    <div> 
+        <div style="color:white">
+            <h2>Basic Details</h2>
+        </div>
+            <table class="tabled" style="width:100%;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white; border-radius:12px">
+                <tr>
+                    <th>
+                        Company Name:
+                    </th>
+                    <td>
+                        {{company.Name}}
+                    </td>
+                        
+                </tr>
+
+                <tr>
+                    <th>
+                        Address:
+                    </th>
+                    <td>
+                        {{company.Address}}
+                    </td>
+                        
+                </tr>
+
+                <tr>
+                    <th>
+                        Company Email: 
+                    </th>
+                    <td>
+                        {{ company.Email }}
+                    </td>
+                        
+                </tr>
+                <tr>
+                    <th>
+                        Added By: 
+                    </th>
+                    <td>
+                        {{company.user.first_name}} {{company.user.last_name}}<br/>
+                        ({{company.user.email}})
+                    </td>
+                        
+                </tr>
+                <tr>
+                    <th>
+                        Learners Recruited: 
+                    </th>
+                    <td>
+                        {{numLearners}}
+                    </td>
+                        
+                </tr>
+                
+                <tr>
+                    <th>
+                        Managers Recruiting: 
+                    </th>
+                    <td>
+                        {{numManagers}}
+                    </td>
+                        
+                </tr>
+                <tr>
+                    <th>
+                        Compony Phone:
+                    </th>
+                    <td>
+                        {{company.Phone}}
+                    </td>
+                        
+                </tr>
+            
+            </table>
+            <hr/>
+
+            <div class="row" style="display:flex; justify-content:center">
+                
+                {% if All_Exacs %}
+                    {% for manager  in All_Exacs %}
+                    <div style="padding:0.3rem">
+                        <div class="card" style="padding:0.5rem; width:270px; height:400px; font-size:16px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white;">
+                            <div style="padding:0.5rem;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" class="card-header">
+                                <h5>{{manager.Position}}</h5>
+                            </div>
+                            <hr/>
+                            <tr>
+                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
+                                Name: {{manager.FirstName}} {{manager.LastName}}
+                            </div>
+                            </tr>
+                            <tr>
+                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
+                                Gender: {{manager.Gender}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="card-body" style="padding:0.5rem; font-weight:normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Email: {{manager.EmailAddress}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
+                                Phone: {{manager.PhoneNumber}}
+                            </div>
+                        </tr>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {%endif%}
+            </div>
+        
+    </div>
+           
+</div>
+
+   
 
 
 
 
 
+
+
+<style>
+    tr{
+        border:solid  1px;
+        border-radius:12px;
+         
+    }
+    td{
+        padding:0.5rem; 
+    }
+
+</style>
 {% endblock %}
+
