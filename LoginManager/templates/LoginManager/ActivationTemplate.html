@@ -1,9 +1,9 @@
 {% autoescape off %}
-Dear {{ user.first_name }} {{ user.last_name }}, 
+Good day {{ user.first_name }} {{ user.last_name }}, 
 
 I hope this email finds you well.
 
-Please click the link below to activate your account with the Umgeni Water Services graduate program website:
+Click on the link below to activate your Umgeni Water Services Institute of Learning account.
 
 https://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 
@@ -11,5 +11,5 @@ https://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 If you did not sign up for an account with us, please ignore this email.
 
 Thank you,
-The Umgeni Water Team
+The Umgeni Water Services  Team
 {% endautoescape %}

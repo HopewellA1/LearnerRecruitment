@@ -628,6 +628,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div style="padding:0.2rem; color:white; display:flex; justify-content:center; border:solid 1px; border-radius:12px" >
+                                <label>
+                                    <i><b>Note:</b></i>These Learners are Engaged in the Programme and Awaiting Placement Selection
+                                </label>
+                            </div>
+                        </div>
                         <div class="row">
                             {% if AvailableLearners %}
                                 {% for learner in AvailableLearners %}
@@ -725,10 +732,14 @@
                      
                    <div style="color:white; display:flex;justify-content:space-between" class="row container">
                         <div>
-                            <h3>
-                                Recruited Learners
-                            </h3>
+                           <div>
+                                <h3>
+                                    Recruited Learners
+                                </h3>
+                            </div>
+                            
                         </div>
+                       
                         {% if recruited == False or selectState%}
                             <div class="row">
                                 <div style="padding:0.5rem">
@@ -742,6 +753,13 @@
                                 </div>
                             </div>
                         {% endif %}
+                    </div>
+                    <div>
+                        <div style="padding:0.2rem; color:white; display:flex; justify-content:center; border:solid 1px; border-radius:12px">
+                            <label>
+                                <i><b>Note:</b></i> These learners have been selected by host companies and are currently engaged in placement.
+                            </label>
+                        </div>
                     </div>
                     <div class="row">
                         {% if RecruitedLearners %}

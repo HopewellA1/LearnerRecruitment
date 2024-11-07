@@ -173,6 +173,8 @@ def selectCategory(request, departmentId):
         "department": department,
         "categories": Categories
     }
+    
+    messages.warning(request, f"Please select a category from the options below to add learners to your division:  {department.Name}")
     return render(request, 'hostEmployer/selectCategory.html', payload)
 
 @login_required
