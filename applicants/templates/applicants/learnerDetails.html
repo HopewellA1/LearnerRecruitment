@@ -59,19 +59,19 @@
             <div class="row">
                 {% if selectState %}
                 <div style="padding:0.5rem">
-                    <a class="btn btn-info" style="color:white"  href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId  %}">
+                    <a class="btn btn-info"  title="Go Back To Learners" style="color:white"  href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=Category.categoryId  %}">
                         Back to Learners
                     </a>
                 </div>
 
                 {% elif is_remove %}
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
+                        <a class="btn btn-info" title="View Learners Details"  style="color:white"  href="{% url 'learnerDetails'  learnerId=learner.ApplicantId %}">
                             Go to learner details
                         </a>
                     </div>
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
+                        <a class="btn btn-info"  title="Go Back To Learners" style="color:white"  href="{% url 'DepartmentLearners' departmentId=department.DepartmentId %}">
                             Back to Learners
                         </a>
                     </div>
@@ -79,12 +79,12 @@
 
                     {% if user.is_staff %}
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
+                            <a class="btn btn-info" title="Go Back To Learners"  style="color:white"  href="{% url 'Learners' categoryId=Category.categoryId  %}">
                                 Back to Learners
                             </a>
                         </div>
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
+                            <a class="btn btn-info" title="Edit Learners Details"  style="color:white"  href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
                                 Edit Learner
                             </a>
                         </div>
@@ -93,12 +93,12 @@
                 
                         
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white"  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
+                            <a class="btn btn-info" title="Go To Recruited Learners"  style="color:white"  href="{% url 'DepartmentLearners' departmentId=learner.Department.DepartmentId %}">
                                 Go to Learners
                             </a>
                         </div>
                         <div style="padding:0.5rem">
-                            <a class="btn btn-danger" href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
+                            <a class="btn btn-danger" title="Remove Learner"  href="{% url 'confirmRemoval' learnerId=learner.ApplicantId %}" >
                                 Remove
                             </a>
                         </div>

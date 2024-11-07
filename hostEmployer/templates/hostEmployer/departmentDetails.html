@@ -38,20 +38,24 @@
             </div>
             <div class="row">
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+
+                    <a class="btn btn-info"  title="Go Back To Departments" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
                         Divisions
+
                     </a>
                 </div>
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                    <a class="btn btn-info" style="color:white" title="View Company Details"   href="{% url 'companyDetails' companyId=company.CompanyId %}">
                         Company details
                     </a>
                 </div>
                 
                 {% if user.is_staff != True %}
                     <div style='padding:0.5rem'>
-                        <a class="btn btn-info" style="color:white" onclick="formSwitch(true)">
-                            Edit Division details
+
+                        <a class="btn btn-info" title="Edit Company Details"  style="color:white" onclick="formSwitch(true)">
+                            Edit Department details
+
                         </a>
                     </div>
                    
@@ -67,7 +71,7 @@
 
                 <div style="padding:1rem; border:solid 1px; border-radius:12px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
                     <div style="display:flex; justify-content:end">
-                        <a class="btn btn-danger" style="color:white" onclick="formSwitch(false)">
+                        <a class="btn btn-danger" title="Hide The Form"  style="color:white" onclick="formSwitch(false)">
                             Close form
                         </a>
 
@@ -185,13 +189,13 @@
                                     <div class="row" style="display:flex; color:white; justify-content:center">
                                         
                                             <div style="padding:0.5rem">
-                                                <a class="btn btn-info" href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
-                                                    Details 
+                                                <a class="btn btn-info"  title=" View Division Details"  href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                                    Details
                                                 </a>
                                             </div>
                                    
                                         <div style="padding:0.5rem">
-                                            <a class="btn btn-info" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+                                            <a class="btn btn-info" title="View Department Learners"  href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
                                                 Learners
                                             </a>
                                         </div>

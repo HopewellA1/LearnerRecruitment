@@ -64,7 +64,7 @@
                 <div style="padding:1rem; border:solid 1px; border-radius:12px;color:white;
                  background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%)" >
                     <div style="display:flex; justify-content:end">
-                        <a class="btn btn-danger" title="Close The Pop-up Form " style="color:white" onclick="formSwitch(false)">
+                        <a class="btn btn-danger" title="Hide Form " style="color:white" onclick="formSwitch(false)">
                             Close form
                         </a>
 
@@ -121,7 +121,9 @@
                                         
                                         <div style="padding:0.5rem">
 
+
                                             <a class="btn btn-info" title="See more details about the Division." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+
                                                 More Details
 
                                             </a>
@@ -130,6 +132,7 @@
                                         <div style="padding:0.5rem">
 
                                             <a class="btn btn-info" title="View learners recruited on this Division" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+
 
                                                 Learners
                                             </a>
