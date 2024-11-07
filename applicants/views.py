@@ -15,6 +15,10 @@ from docx.shared import Inches
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from django.conf import settings
+#new to fix db
+from django.db import transaction
+from datetime import datetime
+
 
 
 def searchLeaners(request, searchLocation):
@@ -24,6 +28,22 @@ def searchLeaners(request, searchLocation):
     
 
 def home(request):
+   
+    # with transaction.atomic():
+    #     # Group learners by LearnerIDNumber, keeping only the earliest record
+    #     unique_learners = (
+    #         Learner.objects.values('LearnerIDNumber')
+    #         .annotate(min_id=models.Min('ApplicantId'))
+    #     )
+
+    #     # Extract unique IDs to keep
+    #     unique_ids = [item['min_id'] for item in unique_learners]
+
+    #     # Delete duplicate records, keeping only unique ones
+    #     Learner.objects.exclude(ApplicantId__in=unique_ids).delete()
+
+    # print("Duplicates deleted successfully.")
+   
    
     return render(request, 'applicants/home.html')
 
@@ -145,6 +165,7 @@ def editLearner(request, learnerId):
             "learner":learner,
             "Category": learner.category
         }
+       
         return render(request, 'applicants/editLearner.html', payload)
     
     if request.method =='POST':
@@ -280,7 +301,7 @@ def deleteLearner(request, learnerId):
         return redirect("home")
     Category = learner.category
     if request.method == 'GET':
-        messages.warning(request, 'Are you sure you want to delete this learner?')
+        
         payload = {
             "learner": learner,
             "Category":Category
@@ -413,7 +434,14 @@ def download_excel(request, categoryId):
     # Set up the response
     response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename='+Category.categoryName+'.xlsx'
-    return response
+    
+    
+    if response:
+        
+        return response
+    else:
+        messages.warning(request,"The category does not have any learners loaded.")
+        return redirect("Learners", categoryId)
 
 
 def save_excel_to_db(request):
@@ -434,7 +462,15 @@ def save_excel_to_db(request):
        
         try:
             is_learneron  = get_object_or_404(Learner,LearnerIDNumber = "".join([char for char in str(row['IDENTITY \nNUMBER']) if char.isdigit()]) )
+            if is_learneron.LearnerCellPhoneNumber == "nan / nan":
+                is_learneron.LearnerCellPhoneNumber = "".join([char for char in str(row['CONTACT \nNUMBER']) if char.isdigit()]) 
+                print("number updated: ".join([char for char in str(row['CONTACT \nNUMBER']) if char.isdigit()]))
+                is_learneron.save()
             numThere += 1
+            if is_learneron.DOB == None:
+                is_learneron.DOB= get_dob_from_sa_id(is_learneron.LearnerIDNumber)
+                print("is_learneron.DOB: ", is_learneron.DOB)
+                is_learneron.save()
         except:
             learner = Learner.objects.create(
                 user = user,
@@ -450,7 +486,7 @@ def save_excel_to_db(request):
                 Municipality = row['MUNICIPALITY'],
                 LearnerHomePostalCode = "N/A",
                 STATSSAArea = "N/A",
-                LearnerCellPhoneNumber = str(row['ALTENATIVE \nNUMBER'])+" / "+ str(row['ALTENATIVE \nNUMBER']),
+                LearnerCellPhoneNumber = "".join([char for char in str(row['CONTACT \nNUMBER']) if char.isdigit()]) ,
                 LearnerFaxNumber = "N/A",
                 LearnerEmailAddress = row['EMAIL \nADDRESS'],
                 Province = "N/A",
@@ -465,6 +501,7 @@ def save_excel_to_db(request):
                 RACE = row['RACE'],
                 MajorSubjects = "N/A",
                 Experience = row['Experience'],
+                
             )
             numLearners += 1
 
@@ -474,7 +511,23 @@ def save_excel_to_db(request):
     if numThere > 0:
         messages.warning(request, f"{numThere} learner(s) have been already added.")
     return redirect("Learners", categoryId =Category.categoryId)
-    
+  
+  
+  
+
+def get_dob_from_sa_id(id_number):
+  
+    # Extract the YYMMDD part for DOB
+    dob_str = id_number[:6]
+    # Determine the century and parse the DOB string to a datetime object
+    try:
+        # Attempt to parse as 19XX (1900s)
+        dob = datetime.strptime("19" + dob_str, "%Y%m%d")
+    except ValueError:
+        # If the above fails, assume 20XX (2000s)
+        dob = datetime.strptime("20" + dob_str, "%Y%m%d")
+    return dob
+  
 def filterDigits(string):
     
     pass

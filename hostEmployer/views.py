@@ -159,9 +159,7 @@ def DepartmentLearners(request,departmentId):
     
 @login_required
 def selectCategory(request, departmentId):
-    
     user = request.user
-    
     try:
         department = get_object_or_404(Department, pk = departmentId)  
     except:
@@ -434,7 +432,7 @@ def download_departmentExcel(request):
     if companyId:
         Learners = []
         
-        print("companyId: ", companyId)
+        
         try:
             company = get_object_or_404(Company, pk = companyId)
         except:
@@ -448,6 +446,8 @@ def download_departmentExcel(request):
                Learners.append(i) 
                
         spreadName = company.Name+"_learners"
+        returning  = "comp"
+        
           
     
     if departmentId:
@@ -463,8 +463,10 @@ def download_departmentExcel(request):
         
         spreadName = department.Company.Name+'_'+department.Name+'_learners'
         
+        returning  = "dep"
         
-    
+        
+    response = None
     if Learners:   
         
         wb = openpyxl.Workbook()
@@ -561,7 +563,18 @@ def download_departmentExcel(request):
         # Set up the response
         response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename='+spreadName+'.xlsx'
+        print("here")
+        
+    if response:
         return response
+    else:
+        if returning == "comp":
+            messages.warning(request, "The company has not recruited any learners.")
+            return redirect("CompanyLearners", CompanyId =companyId )
+        elif returning == "dep":
+            messages.warning(request, "The department has not recruited any learners.")
+            
+            return redirect("DepartmentLearners", departmentId =departmentId )
 
     
         

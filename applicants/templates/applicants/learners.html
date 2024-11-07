@@ -263,18 +263,19 @@
                 {% endif %}
               
                 {% if department %}
-                   
-
                     <div style="padding:0.5rem">
                         <a class="btn btn-info" style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
                             {{department.Company.Name}} Divisions 
                         </a>
                     </div>
 
-                    
-                    
-                
-
+                    {% if user.is_staff %}
+                        <div style="padding:0.5rem">
+                            <a class="btn btn-info" style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
+                                download excel sheet 
+                            </a>
+                        </div>
+                    {% endif %}
                 {% endif %}
                 
             </div>

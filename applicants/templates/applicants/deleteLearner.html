@@ -33,7 +33,7 @@
 
     <div class="container">
         <div>
-            <h1>
+            <h1 style="color:white">
                 {{Category.categoryName}} Learner
             </h1>
             <br/>
@@ -63,29 +63,30 @@
             <p>
                 {{learner.DegreeTitle}}
             </p>
+            <div style="padding:1rem; display:flex; justify-content:center; flex-direction:column; color:white" class="coll">
+                <p style="color:white">
+                    If you are sure you want to delete this learner click below
+                </p>
+                
+                <form method="post" >
+                    {% csrf_token %}
+    
+                    <input type="hidden" value="{{learner.ApplicantId}}" name="learnerId" />
+    
+                    <input type="submit" value="Confirm Delete" style="color:white; border:solid white" class="btn btn-outline-success"/>
+                </form>
+            </div>
+    
         </div>
-        <div style="padding:1rem; display:flex; justify-content:center; flex-direction:column" class="coll">
-            <p>
-                If you are sur eyou want to delete this learner click below
-            </p>
-            
-            <form method="post" >
-                {% csrf_token %}
-
-                <input type="hidden" value="{{learner.ApplicantId}}" name="learnerId" />
-
-                <input type="submit" value="Confirm Delete" class="btn btn-outline-success"/>
-            </form>
-        </div>
-
-        <div style="padding:1rem">
+       
+        <div style="padding:1;font-weight:normal;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white">
 
             <p >
                 
 
-                <div>
+                <div >
 
-                    <table class="table">
+                    <table class="table"  style="color:white">
                         <tr>
                             <th>
                                 ID number:
@@ -376,7 +377,7 @@
                     </table>
                     
                     <div style="padding:1rem; display:flex; justify-content:center; flex-direction:column" class="coll">
-                        <p>
+                        <p style="color:white">
                             If you are sur eyou want to delete this learner click below
                         </p>
                         
@@ -385,7 +386,7 @@
 
                             <input type="hidden" value="{{learner.ApplicantId}}" name="learnerId" />
 
-                            <input type="submit" value="Confirm Delete" class="btn btn-outline-success"/>
+                            <input type="submit" value="Confirm Delete" style="color:white; border:solid white" class="btn btn-outline-success"/>
                         </form>
                     </div>
 

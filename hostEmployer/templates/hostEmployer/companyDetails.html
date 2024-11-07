@@ -44,20 +44,21 @@
             </div>
             
             <div style='padding:0.5rem; ' class="row">
-                {% if exac %}
+               
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="Go to Company Departments" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                        Departments
+                    <a class="btn btn-info" title="Click to see {{company.Name}} Divisions" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                        Divisions
                     </a>
                 </div>
+               
                 <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="View learners from this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                    <a class="btn btn-info" title="View learners recruited by this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
                         Company Learners
                     </a>
                 </div>
-                {% endif %}
                 
-                {% if  exac.Company == exac.Company %}
+                {% if  exac.Company == exac.Company and user.is_staff == False %}
+                   
                     <div style="padding:0.5rem">
                         
                         <a class="btn btn-info"  title="Go to Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
@@ -66,9 +67,6 @@
                         </a>
 
                     </div>
-                {% endif %}
-
-                {% if exac %}
                     <div style="padding:0.5rem">
                         <a class="btn btn-info"  title="Edit Company Details " style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
                             Edit Details
@@ -76,6 +74,8 @@
 
                     </div>
                 {% endif %}
+
+               
             </div>  
 
         </div>
@@ -190,7 +190,7 @@
             </div>
             <hr/>
 
-            <div class="row" style="display:flex; justify-content:center">
+            <div class="row" >
                 
                 {% if All_Exacs %}
                     {% for manager  in All_Exacs %}

@@ -31,7 +31,7 @@
 
     
    <div class="container">
-        <div>
+        <div style="color:white; font-weight:normal">
             <h1>
                 {{Category.categoryName}} Learner
              </h1>
@@ -53,41 +53,41 @@
         </div>
 
       
-        <div id="addformHolder" >
+        <div class="card" id="addformHolder" style="color:white; font-weight:normal; padding:1rem;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
             
             <form method="post"  >
                 {% csrf_token %}
 
-                <div>
-                    <div>
+                <div style="font-weight:normal;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                    <div style="font-weight:normal">
                         <label>
                            <b> ID number*<b>
                         </label><br/>
                         <input class="form-control" type="text" required name="LearnerIDNumber" value="{{learner.LearnerIDNumber}}" />
 
                     </div>
-                    <div>
+                    <div style="font-weight:normal">
                         <label>
                            <b>First name*<b>
                         </label><br/>
                         <input class="form-control" required type="text" name="LearnerFirstName" value="{{learner.LearnerFirstName}}" />
 
                     </div>
-                    <div>
+                    <div style="font-weight:normal">
                         <label>
                            <b>Last name*<b>
                         </label><br/>
                         <input class="form-control" required type="text" name="LearnerSurname" value="{{learner.LearnerSurname}}" />
 
                     </div>
-                    <div>
+                    <div style="font-weight:normal">
                         <label>
                            <b>Middle name<b>
                         </label><br/>
                         <input class="form-control" type="text" name="LearnerMiddleName" value="{{learner.LearnerMiddleName}}" />
 
                     </div>
-                    <div>
+                    <div style="font-weight:normal">
                         <label>
                            <b>Gender*<b>
                         </label><br/>
@@ -96,7 +96,7 @@
 
                     </div>
                     
-                    <div>
+                    <div style="font-weight:normal">
                         <label>
                             <b>Date of birth*</b>
                         </label><br/>
