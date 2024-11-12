@@ -531,3 +531,8 @@ def get_dob_from_sa_id(id_number):
 def filterDigits(string):
     
     pass
+
+
+def help(request):
+    
+    return render(request, 'applicants/help.html')

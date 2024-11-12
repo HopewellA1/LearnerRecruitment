@@ -1,0 +1,114 @@
+{% extends "applicants/base.html" %}
+{% block content %}
+{% load static %}
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    <div class="container text-center">
+        <h1 style=' color:white' class="form-text">
+            Graduates Placement Programme help page
+        </h1> 
+   </div>
+
+
+   <div class="container">
+    <div class="helpInfo">
+        <b>Notes</b>: Steps to Complete the Placement Process
+        <p>
+            <ul>
+                <li>
+                    <strong>Create an Account or Log In</strong>
+                    <p>
+                        If you don’t have an account, please create one, or log in if you already have an account as outlined on the top manu above.
+                    </p>
+                </li>
+
+                <li>
+                    <strong>Dashboard - Join or Add New Company</strong>
+                    <p>
+                        After logging in, go to the Dashboard, where you’ll find the options to "Join" or "Add New Company" clearly indicated by buttons on the page.
+                    </p>
+                </li>
+
+                <li>
+                    <strong>Add Your Details</strong>
+                    <p>
+                        In the next step, you’ll be prompted to provide additional details about yourself, such as your designation. Once done, please save and continue.
+                    </p>
+                </li>
+
+                <li>
+                    <strong>Dashboard - Add a Division</strong>
+                    <p>
+                        On returning to the Dashboard, please add at least one division where students can be placed.
+                    </p>
+                    <ul>
+                        <li><b>Note</b>: "Division" represents departments in companies that do not have designated departments.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Assign Learners to a Division</strong>
+                    <p>
+                        Once you have divisions set up, click on "Learners" under any division on your Dashboard. Here, you’ll see the list of learners.
+                    </p>
+                    <ul>
+                        <li><b>Note</b>: For new divisions, no learners will be listed initially. In this case, please click the "Add Learners" button on the page menu.</li>
+                        <li>
+                            This will take you to a page where you can select a category to add learners from and begin placing them in the division.
+                        </li>
+                        <li>
+                            You can use the filters "All," "Available," and "Recruited" to facilitate communication between recruiters from your company or other companies about the graduates.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+
+
+        <p>
+            For further queries, please contact:
+            <ul>
+                
+                <li>
+                    Peter Thompson (UWS-MD): <a href="mailto:peter.thompson@umgeni.co.za">peter.thompson@umgeni.co.za</a>
+                </li>
+                <li>
+                    Cedric van der Merwe (UWS-Learning Academy Head): <a href="mailto:cedric.vdm@umgeni.co.za">cedric.vdm@umgeni.co.za</a>
+                </li>
+                <li>
+                    Yonela Sitshaka (Administrator/Support/developer): <a href="mailto:yonela.sitshaka@umgeni.co.za">yonela.sitshaka@umgeni.co.za</a>
+                </li>
+            </ul>
+        </p>
+        
+    </div>
+
+</div>
+<style>
+
+    .helpInfo{
+        border:solid;
+        padding:1rem;
+        color:white;
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        border-radius:12px
+    }
+    p,a{
+        color:white
+    }
+
+</style>
+
+{% endblock %}
