@@ -84,7 +84,8 @@
                     </p>
                 </div>
             {% endif %}   
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <a type="submit" id="submit" onclick="submitForm()" class="btn btn-primary">Sign Up</a>
+            <button hidden id="finalSubmit" type="submit" class="btn btn-primary">Sign Up</button>
         </form>
         <hr>
         <div class="text-center" style="color:white">
@@ -108,28 +109,63 @@
     
 </style>
 <script>
-    const email = document.getElementById("email")
-    
+
+    let seconds = 0;
+    let timer;
+    const txtemail = document.getElementById("email")
+   
+    console.log("email:: ", email.value)
     function hasValidSuffix(email) {
         // Check for a dot followed by at least two alphanumeric characters (letters or digits) at the end
         return /\.[a-zA-Z0-9]{2,}$/.test(email);
     }
 
-
+    function submitForm(){
+        if(test(email.value)){
+            document.getElementById("finalSubmit").click();
+        }
+        else{
+            startTimer(txtemail)
+            return;
+        }
+    }
+ 
+    function startTimer(element) {
+        timer = setInterval(() => {
+            seconds++;
+            if(seconds % 2 == 0){
+                element.style = "border: solid 3px red"
+            }
+            else{
+                element.style = ""
+            }
+            if (seconds === 10) {
+                clearInterval(timer);  // Stop the interval after 5 seconds
+            } 
+        }, 1000); // Runs every 1 second
+       
+    }
+    
     function test(email){
-        
-        if(hasValidSuffix(email)){
+        is_valid = hasValidSuffix(email)
+        if(is_valid){
             msg = ""
             email.style = ""
             document.getElementById("emailhelp").innerHTML = "Your username must be unique. We will let you know if someone has taken it already."
         }
         else{
             msg = "Email must have a dot followed by at least two alphanumeric characters (letters or digits) at the end."
-            email.style = "border:solid red;padding:0.5rem"
+            txtemail.style = "border:solid red 2px;padding:0.5rem"
         }
         document.getElementById("emailhelp").innerHTML = msg
-        document.getElementById("emailhelp").style = "color:red; background-color:white; border-radius:12px"
+        document.getElementById("emailhelp").style = "color:red; background-color:white;padding:0.5rem; "
+       
+        return is_valid
     }
   
+
+   
+
+    
 </script>
 {% endblock %}
