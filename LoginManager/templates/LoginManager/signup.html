@@ -117,7 +117,7 @@
 
 
     function test(email){
-        console.log("emails: ", hasValidSuffix(email))
+        
         if(hasValidSuffix(email)){
             msg = ""
             email.style = ""
@@ -125,7 +125,7 @@
         }
         else{
             msg = "Email must have a dot followed by at least two alphanumeric characters (letters or digits) at the end."
-            email.style = "border:solid red;"
+            email.style = "border:solid red;padding:0.5rem"
         }
         document.getElementById("emailhelp").innerHTML = msg
         document.getElementById("emailhelp").style = "color:red; background-color:white; border-radius:12px"
