@@ -150,7 +150,8 @@
         is_valid = hasValidSuffix(email)
         if(is_valid){
             msg = ""
-            email.style = ""
+            txtemail.style = ""
+            txtemail.hidden = true
             document.getElementById("emailhelp").innerHTML = "Your username must be unique. We will let you know if someone has taken it already."
         }
         else{
