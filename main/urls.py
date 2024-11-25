@@ -20,6 +20,7 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from LoginManager.views import loginuser
+from support.views import contact
 
 urlpatterns = [
     path('', include('applicants.urls')),
@@ -27,6 +28,8 @@ urlpatterns = [
     path('hostEmployer/', include('hostEmployer.urls')),
     path('admin/', admin.site.urls),
     path('accounts/login/', loginuser, name='login'),
+    path('support/', include('support.urls')),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

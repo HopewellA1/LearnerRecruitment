@@ -1,0 +1,70 @@
+{% extends "applicants/base.html" %}
+{% block content %}
+{% if messages  %}
+{% for message in messages %}
+    <br/>
+    <div>
+        <center>
+            <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                {{ message }}
+            </div>
+        </center>
+    </div>
+
+{% endfor %}
+{% endif %}
+
+<div class="container text-center mb-4" style="padding:0.5rem;">
+    <h1 style="color: white;" class="form-text">
+        Contact Support
+    </h1>
+</div>
+
+<div  class="row justify-content-center mt-5">
+    <div class="col-md-5">
+       
+        <form method="post"  style="border:solid;padding:1rem; border-radius:12px;  background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);color:white">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    {% if user %} value="{{user.email}}"{% endif %}
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    id="email"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">First Name</label>
+                <input
+                    {% if user %} value="{{user.first_name}}"{% endif %}
+                    type="name"
+                    name="name"
+                    class="form-control"
+                    id="name"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="email">Last Name</label>
+                <input
+                    {% if user %} value="{{user.last_name}}"{% endif %}
+                    type="surname"
+                    name="surname"
+                    class="form-control"
+                    id="surname"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message:</label>
+                <textarea required class="form-control" id="message"  name="message"></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-success" style="width:100%">submit</button>
+        </form>
+    </div>
+</div>
+{%endblock%}

@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS").split(",")
 CSRF_TRUSTED_ORIGINS =config("Django_CSRF_TRUSTED_ORIGINS").split(",")
 
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'applicants',
     'LoginManager',
     'hostEmployer',
+    'support',
 ]
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -67,27 +68,27 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': config("DATABASE_HOST"), 
-        'NAME': config("DATABASE_NAME"), 
-        'USER': config("DATABASE_USER"),       
-        'PASSWORD':config("DATABASE_PASSWORD") ,   
-        'PORT': config("DATABASE_PORT"),              
-        'OPTIONS': {
-            'ssl': {
-                 'ssl_mode': config("DATABASE_ssl_mode"),
-            }
-        },
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': config("DATABASE_HOST"), 
+#         'NAME': config("DATABASE_NAME"), 
+#         'USER': config("DATABASE_USER"),       
+#         'PASSWORD':config("DATABASE_PASSWORD") ,   
+#         'PORT': config("DATABASE_PORT"),              
+#         'OPTIONS': {
+#             'ssl': {
+#                  'ssl_mode': config("DATABASE_ssl_mode"),
+#             }
+#         },
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -137,3 +138,5 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER =config("EMAIL_HOST_USER")  
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
