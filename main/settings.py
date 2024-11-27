@@ -68,27 +68,27 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': config("DATABASE_HOST"), 
-        'NAME': config("DATABASE_NAME"), 
-        'USER': config("DATABASE_USER"),       
-        'PASSWORD':config("DATABASE_PASSWORD") ,   
-        'PORT': config("DATABASE_PORT"),              
-        'OPTIONS': {
-            'ssl': {
-                 'ssl_mode': config("DATABASE_ssl_mode"),
-            }
-        },
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': config("DATABASE_HOST"), 
+#         'NAME': config("DATABASE_NAME"), 
+#         'USER': config("DATABASE_USER"),       
+#         'PASSWORD':config("DATABASE_PASSWORD") ,   
+#         'PORT': config("DATABASE_PORT"),              
+#         'OPTIONS': {
+#             'ssl': {
+#                  'ssl_mode': config("DATABASE_ssl_mode"),
+#             }
+#         },
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -130,13 +130,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Email config
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.hostinger.com'
-EMAIL_PORT =  config("EMAIL_PORT")  
-EMAIL_USE_TLS = False 
-EMAIL_USE_SSL = True  
-EMAIL_HOST_USER =config("EMAIL_HOST_USER")  
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.hostinger.com'
+#EMAIL_PORT =  config("EMAIL_PORT")  
+#EMAIL_USE_TLS = False 
+#EMAIL_USE_SSL = True  
+#EMAIL_HOST_USER =config("EMAIL_HOST_USER")  
+#EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
