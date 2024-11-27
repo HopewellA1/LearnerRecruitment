@@ -71,4 +71,4 @@ def contact(request):
         return redirect("help")
     
 
-    return render(request, "support/contact.html")
+    return render(request, "support/Contact.html")

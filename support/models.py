@@ -11,6 +11,4 @@ class query(models.Model):
     email = models.TextField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return f"Message from {self.email}"
+        
