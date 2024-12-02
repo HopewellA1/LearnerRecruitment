@@ -102,31 +102,32 @@
                 </div>  
 
                 </div>
-            </div>
+                <div  style=" display:flex; justify-content:center;padding:0.7rem" >
 
-            <div class="card-footer" >
-
-                <div   style="width:100%;display:flex; flex-direction: column" >
-                    <div class="" style="width:100%; font-size:20px ">
-                        
-                            Ready to get started? Sign up now and connect with the talent of tomorrow!
+                    <div   >
+                        <div class="" style="width:100%; font-size:20px ">
                             
-                    </div>
-                    <div class="row" style="width:100%; ">
-                        <!-- Login Button -->
-                        <div style="padding:0.5rem">
-                            <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                                Ready to get started? Sign up now and connect with the talent of tomorrow!
+                                
                         </div>
-                        <!-- Sign Up Button -->
-                        <div style="padding:0.5rem">
-                            <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
-                        </div>
-                        <div style="padding:0.5rem">
-                            <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                        <div class="row " style="display:flex; justify-content:center">
+                            <!-- Login Button -->
+                            <div style="padding:0.5rem">
+                                <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                            </div>
+                            <!-- Sign Up Button -->
+                            <div style="padding:0.5rem">
+                                <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                            </div>
+                            <div style="padding:0.5rem">
+                                <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+      
 
 
         </div>
@@ -137,7 +138,7 @@
        
 
   <style>
-    .card, p{
+    .card, p, card-footer{
         background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
         color:white;
         padding:0.5rem;
