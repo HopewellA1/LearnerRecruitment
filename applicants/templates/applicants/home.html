@@ -21,51 +21,131 @@
         {% endfor %}
     {% endif %}
 
-    <div class="container text-center">
-        <h1 style=' color:white' class="form-text">
-            Graduates Placement Programme
+    <div class="container ">
+        <h1 style=' color:white' class="form-text text-center">
+            Welcome to the Umngeni Water Services Graduate Placement Portal!
         </h1>
-       
-   </div>
-   
-    <div style="padding:2rem; font-size:20px; display:flex; justify-content:center; flex-direction:column; color:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
-
-        <p style=" color:white">
-            
-            <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
-
-
-        </p>
-        <p style="color:white">
-           <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
-
-        </p>
-    </div>
-    {% if user.is_authenticated == False %}
-        <div  style=" display:flex; justify-content:center">
-            <p style=' color:white'>
-                If you already have an account, please log in to continue. If you're new here, take a moment to sign up. Get started below.
+        <div class="row" style="padding:2rem; font-size:20px; display:flex; justify-content:center; color:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
+            <p style=" color:white">
+                
+                Empowering Companies to Find Top Talent Our system simplifies the recruitment process,
+                connecting companies with talented graduates ready to join the workforce. 
+                Whether you’re representing an established company or setting up a new one, 
+                our platform guides you through the process seamlessly.
+    
+            </p>
+            <p style=" color:white">
+                
+                <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
+    
+    
+            </p>
+            <p style="color:white">
+               <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
+    
             </p>
         </div>
-        <div  style=" display:flex; justify-content:center">
-          
-            <div class="row">
-                <!-- Login Button -->
-                <div style="padding:0.5rem">
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+
+            
+        <div class="card">
+            <div class="card-header  text-center">
+
+                <h1>How it Works:</h1>
+                
+            </div>
+            <div class="card-body">
+
+                <div class="text-center">
+                    
                 </div>
-                <!-- Sign Up Button -->
-                <div style="padding:0.5rem">
-                    <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
-                </div>
-                <div style="padding:0.5rem">
-                    <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                <div style="display:flex; justify-content:center;padding:1rem">
+                    
+                    <ol >
+                        <li>
+                            <strong>Sign Up and Activate Your Account:</strong>
+                            <div class="steps">
+                                <ul>
+                                    <li>Register as a new user.</li>
+                                    <li>Receive an activation email to verify your account.</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Choose Your Path:</strong>
+                            <div class="steps">
+                                <ul>
+                                    <li>Join an existing company you're working for.</li>
+                                    <li>OR, create a new company to start recruiting.</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Set Up Your Company Profile:</strong>
+                            <div class="steps">
+                                <ul>
+                                    <li>Register your company.</li>
+                                    <li>Add at least one manager and a division/business unit.</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Start Recruiting:</strong>
+                            <div class="steps">
+                                <ul>
+                                    <li>Browse our graduate database.</li>
+                                    <li>Select and recruit top graduates to grow your team.</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ol>
+                    
+                </div>  
+
                 </div>
             </div>
-        </div>
-    {% endif %}
 
+            <div class="card-footer" >
+
+                <div   style="width:100%;display:flex; flex-direction: column" >
+                    <div class="" style="width:100%; font-size:20px ">
+                        
+                            Ready to get started? Sign up now and connect with the talent of tomorrow!
+                            
+                    </div>
+                    <div class="row" style="width:100%; ">
+                        <!-- Login Button -->
+                        <div style="padding:0.5rem">
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                        </div>
+                        <!-- Sign Up Button -->
+                        <div style="padding:0.5rem">
+                            <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                        </div>
+                        <div style="padding:0.5rem">
+                            <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+   </div>
+   
+    
+        
+       
+
+  <style>
+    .card, p{
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        color:white;
+        padding:0.5rem;
+        border-radius:12px
+    }
   
+  </style>
+
 {% endblock %}
 
 
