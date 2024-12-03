@@ -7,6 +7,7 @@
 
 
     {% load static %}
+   
     {% if messages  %}
         {% for message in messages %}
             <br/>
@@ -21,12 +22,17 @@
         {% endfor %}
     {% endif %}
 
+
+    
     <div class="container ">
+
+       
+
         <h1 style=' color:white' class="form-text text-center">
             Welcome to the Umngeni Water Services Graduate Placement Portal!
         </h1>
         <div class="row" style="padding:2rem; font-size:20px; display:flex; justify-content:center; color:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
-            <p style=" color:white">
+            <p id="about1" style=" color:white">
                 
                 Empowering Companies to Find Top Talent Our system simplifies the recruitment process,
                 connecting companies with talented graduates ready to join the workforce. 
@@ -34,30 +40,28 @@
                 our platform guides you through the process seamlessly.
     
             </p>
-            <p style=" color:white">
+            <p id="about2"  style=" color:white">
                 
                 <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
     
     
             </p>
-            <p style="color:white">
+            <p id="about3"  style="color:white">
                <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
     
             </p>
         </div>
 
             
-        <div class="card">
+        <div class="card" id="howWorks" >
             <div class="card-header  text-center">
 
                 <h1>How it Works:</h1>
                 
             </div>
             <div class="card-body">
-
-                <div class="text-center">
-                    
-                </div>
+  
+               
                 <div style="display:flex; justify-content:center;padding:1rem">
                     
                     <ol >
@@ -100,42 +104,85 @@
                     </ol>
                     
                 </div>  
-
-                </div>
-                <div  style=" display:flex; justify-content:center;padding:0.7rem" >
-
-                    <div   >
-                        <div class="" style="width:100%; font-size:20px ">
-                            
-                                Ready to get started? Sign up now and connect with the talent of tomorrow!
-                                
-                        </div>
-                        <div class="row " style="display:flex; justify-content:center">
-                            <!-- Login Button -->
-                            <div style="padding:0.5rem">
-                                <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
-                            </div>
-                            <!-- Sign Up Button -->
-                            <div style="padding:0.5rem">
-                                <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
-                            </div>
-                            <div style="padding:0.5rem">
-                                <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
-                            </div>
-                        </div>
+                <div>
+                    <div class=" text-center">
+                        <h3> Visual Map</h1>
                     </div>
+                    <div style=" display:flex; justify-content:center; padding:0.5rem; border:solid; border-radius:12px">
+                        <img style="border-radius:12px; width:100%" src="{% static 'support/placementFlow.png' %}"/>
+                    </div>
+
                 </div>
             </div>
+        <div class="card-footer">
+            <div class="text-center" style="width:100%; font-size:20px ">
+                            
+                Ready to get started? Sign up now and connect with the talent of tomorrow!
+                
+            </div>
+            <div class="row " style="display:flex; justify-content:center">
 
-      
+                {% if user.is_authenticated %}
+                            
+                            
+                    {% if user.is_staff == false %}
 
-
+                    {% endif %}
+                {% else %}
+                    <!-- Login Button -->
+                    <div style="padding:0.5rem">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                    </div>
+                    <!-- Sign Up Button -->
+                    <div style="padding:0.5rem">
+                        <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                    </div>
+                    <div style="padding:0.5rem">
+                        <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
    </div>
    
-    
+    <script>
+
+        function checkUser() {
+            // Check if a key exists in local storage
+            const isNewUser = !localStorage.getItem("hasVisited");
         
+            if (isNewUser) {
+                // Perform actions for new users
+                console.log("Welcome, new user!");
+                // Initialize the tour
+                startTour()
+        
+                // Set the key in local storage to mark the user as not new
+                localStorage.setItem("hasVisited", "true");
+            } else {
+                // Perform actions for returning users
+                console.log("Welcome back!");
+            }
+        }
+        function startTour(){
+            introJs().setOptions({
+                steps: [
+                    { element: '#about1', intro: 'Our goals' },
+                    { element: '#about2', intro: 'Who we elevate' },
+                    { element: '#about3', intro: 'Who we elevate' },
+                   
+
+                    { element: '#howWorks', intro: 'How to get started!' }
+                ]
+            }).start();
+        };
+
+        // Start the tour automatically or trigger it with a button
        
+        checkUser()
+    </script>
+        
+     
 
   <style>
     .card, p, card-footer{
@@ -145,8 +192,25 @@
         border-radius:12px
     }
   
+    #instruction1{
+        border:solid;
+        position:absolute;
+        width:100%;
+        min-height:700px;
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        opacity: 0.5    ;
+
+
+
+    }
+
+
+    .container{
+        //border:solid
+    }
   </style>
 
+  
 {% endblock %}
 
 

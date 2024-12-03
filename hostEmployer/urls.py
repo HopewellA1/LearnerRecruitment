@@ -21,6 +21,8 @@ from . import views
 
 
 urlpatterns = [
+    #path('admin/', admin.site.urls),
+    
     path('SelectCompany', views.SelectCompany, name="SelectCompany"),
     path('addManagement/<int:CompanyId>', views.addManagement, name="addManagement"),
     path('departments/<int:CompanyId>', views.departments, name="departments"),
@@ -36,6 +38,9 @@ urlpatterns = [
     path('CompanyLearners/<int:CompanyId>', views.CompanyLearners, name="CompanyLearners"),
     
     path('download_departmentExcel/', views.download_departmentExcel, name="download_departmentExcel"),
-    path('SearchLearners', views.SearchLearners, name="SearchLearners")
+    path('SearchLearners', views.SearchLearners, name="SearchLearners"),
+    
+    #internal use API
+    path('takenTour/<int:tourId>', views.takenTour, name="takenTour"),
    
 ]

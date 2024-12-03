@@ -28,10 +28,47 @@
 
         {% endfor %}
     {% endif %}
+    {% if user.is_staff == False and tour.Step == "Path" %}
+        <div id="moveStep" class="row"  >
+            <b style="padding:0.5rem">Step 2:  Choose Your Path ></b>
+            <div id="note" style="padding:0.5rem">
 
+                <i>Join an existing company you're working for</i>
+                <i>Or</i>
+                <i>create a new company to start recruiting.</i>
+            </div>
+           <div class="row">
+
+               <div style="padding:0.5rem">
+                    <a 
+                       onclick="pageTour()"
+                        style="color:azure"
+                        title="Sign Up and Activate Your Account(Update account)"
+                        id="pageTour"
+                    > 
+                        Retake Page tour
+                    </a>
+               </div>
+
+               <div style="padding:0.5rem">
+                    <a 
+                        href="{% url 'account' %}"
+                        style="color:azure"
+                        title="Sign Up and Activate Your Account(Update account)"
+                        id="PreviousStep"
+                    > 
+                        Previous step
+                    </a>
+                </div>   
+
+           </div>
+
+        </div>
+
+    {% endif %}
     <div class='container' style="padding:1rem; color:white">
         <h1>
-            Recruiting  Companies
+            Recruiting  Companies  {{tour.Step}}
         </h1>
     </div>
     <div id="innerManu" class="row">
@@ -45,8 +82,8 @@
        
     </div>
 
-    <div class="container">
-        <div id="addCompHolder" hidden>
+    <div class="container" style="width:100%">
+        <div id="addCompHolder" hidden="true">
             <form  method="post" >
                 {% csrf_token %}
 
@@ -99,13 +136,10 @@
 
         </div>
 
-
-
-
-        <div class="row">
+        <div class="row" style=" width:inherit">
             {% for company in companies %}
                 <div style="padding:0.5rem; ">
-                    <div id="Companyholder" class="card" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                    <div id="Companyholder" class="card" >
                         <div class="card-header" style =" color:white" >
                             {{company.Name}}
                         </div>
@@ -126,12 +160,12 @@
                                     
                                 {% else %}
                                     <div style='padding:0.5rem'>
-                                        <a class="btn btn-info" title="Details About The Company" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                                        <a id="btnCompanyDetails" class="btn btn-info" title="Details About The Company" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
                                             More Details
                                         </a>
                                     </div>
                                     <div  style='padding:0.5rem'>
-                                        <a href="{% url 'addManagement' CompanyId=company.CompanyId %}" title="Join The Company" class="btn btn-info">
+                                        <a id="btnCompanyJoin" href="{% url 'addManagement' CompanyId=company.CompanyId %}" title="Join The Company" class="btn btn-info">
                                             Join
                                         </a>
                                     </div>
@@ -160,6 +194,88 @@
                 addCompHolder.hidden = true
             }
         }
+       
+       {% if user.is_staff == False %}
+
+            let is_taken = '{{tour.is_taken}}'
+            //ture scripts
+            async function pageTour(){
+
+            
+                await introJs().setOptions({
+                    steps: [
+                        { element: '#moveStep', intro: 'Take note' },
+                        { element: '#PreviousStep', intro: 'This will take you to the account page where you can update your basic user account infomation' },
+                        { element: '#initAdd', intro: 'Use this button to add a new company if the one you work for is not on the  below.' },
+                        { element: '#Companyholder', intro: "Your Company should have this object if they have added a profile"},
+                        { element: '#btnCompanyDetails', intro: "You will land on a page to see all about the company including the managers on it."},
+                        { element: '#btnCompanyJoin', intro: "Click on this button to join the company and enter the next step towards  connecting with the talent of tomorrow!"},
+                        { element: '#pageTour', intro: "Click here to retake the page tour."},
+
+                        //{ element: '#howWorks', intro: 'How to get started!' }
+                    ]
+                }).start();
+                if(is_taken == 'True'){
+                    takenTour()
+                }
+            };
+            
+            if(is_taken == 'False'){
+                pageTour()
+            }
+            
+
+
+            async function takenTour(){
+
+                takenTourURL = '{% url "takenTour" tourId=tour.TourId %}'
+
+                const response = await fetch(`${takenTourURL}`, {method:"GET"});
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Json Date response:', data);
+
+                if(data.Status =="success"){
+                    is_taken = "True"
+                }
+
+                
+              
+            }
+            
+        {% endif %}
     </script>
 
+
+    <style>
+
+        #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:0.7rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+        }
+        #PreviousStep , #pageTour{
+           
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #PreviousStep:hover, #pageTour:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            max-width:300px;
+            height:370px
+        }
+    </style>
 {% endblock %}

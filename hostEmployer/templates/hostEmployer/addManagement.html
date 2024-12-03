@@ -18,9 +18,45 @@
     {% endif %}
 
 
+    <div id="moveStep" class="row"  >
+        <b style="padding:0.5rem">Step 3:  Set Up Your Company Profile></b>
+        <div id="note" style="padding:0.5rem">
 
+            <i>Adding manager details, add more infomation about your occupation on the company you joining</i>
+            
+        </div>
+        <div class="row">
+
+            <div style="padding:0.5rem">
+                    <a 
+                    onclick="pageTour()"
+                        style="color:azure"
+                        title="Sign Up and Activate Your Account(Update account)"
+                        id="pageTour"
+                    > 
+                        Retake Page tour
+                    </a>
+            </div>
+
+            <div style="padding:0.5rem">
+                    <a 
+                        href="{% url 'companyDashboard' %}"
+                        style="color:azure"
+                        title="Choose Your Path (Join an existing company you're working for Or create a new company to start recruiting.)"
+                        id="PreviousStep"
+                    > 
+                        Previous step
+                    </a>
+                </div>   
+
+        </div>
+
+    </div>
+    <div class="text-center" style="padding:1rem; color:azure">
+        <h3> Joining {{company.Name}} </h3> 
+    </div>
     <div class="container">
-        <div id="addCompHolder">
+        <div id="addCompHolder" >
             <form  method="post" >
                 {% csrf_token %}
 
@@ -95,7 +131,7 @@
 
                     <div style="padding:1rem; display:flex;justify-content: center">
                   
-                        <input class="btn btn-success" type="submit" required value="Save and Continue" />
+                        <input class="btn btn-success" id="btnSubmit" type="submit" required value="Save and Continue" />
 
                     </div>
                     
@@ -110,6 +146,51 @@
 
     </div>
 
+
+    <script>
+        let is_taken = '{{tour.is_taken}}'
+        async function pageTour(){
+
+            
+            await introJs().setOptions({
+                steps: [
+                    { element: '#moveStep', intro: 'Take note' },
+                    { element: '#PreviousStep', intro: 'Click here if you are joining the wrong company, you will be taken back to selecting your company.' },
+                    { element: '#addCompHolder', intro: 'Fill in this form to move on to the step.\n Note: all required fields have a *' },
+                    { element: '#btnSubmit', intro: "Click here or [Enter] after filling in the form to submit your infomation and move on to the next step towards connecting with the talent of tomorrow!"},
+                    { element: '#pageTour', intro: "Click here to retake the page tour."},
+
+                    //{ element: '#howWorks', intro: 'How to get started!' }
+                ]
+            }).start();
+            if(is_taken == 'False'){
+                takenTour()
+            }
+           
+        };
+        async function takenTour(){
+
+            takenTourURL = '{% url "takenTour" tourId=tour.TourId %}'
+
+            const response = await fetch(`${takenTourURL}`, {method:"GET"});
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Json Date response:', data);
+
+            if(data.Status =="success"){
+                is_taken = "True"
+            }
+
+            
+          
+        }
+        if(is_taken == 'False'){
+            pageTour()
+        }
+       
+    </script>
 
     <style>
 
@@ -126,5 +207,33 @@
         }
     </style>
 
+    <style>
 
+        #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:0.7rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+        }
+        #PreviousStep , #pageTour{
+           
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #PreviousStep:hover, #pageTour:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            max-width:300px;
+            height:370px
+        }
+    </style>
 {% endblock %}

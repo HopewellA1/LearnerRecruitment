@@ -17,6 +17,10 @@
 
         {% endfor %}
 {% endif %}
+
+<div id="moveStep">
+    <b>Step 1: Sign Up and Activate Your Account > </b>
+</div>
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
         <center>
@@ -101,13 +105,7 @@
 </div>
 
 
-<style>
 
-    label{
-        color:white 
-    }
-    
-</style>
 <script>
 
     let seconds = 0;
@@ -170,4 +168,16 @@
 
     
 </script>
+
+<style>
+
+    #moveStep{
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        padding:0.7rem;
+        color:white
+    }
+    label{
+        color:white 
+    }
+</style>
 {% endblock %}

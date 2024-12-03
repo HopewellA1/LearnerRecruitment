@@ -37,38 +37,51 @@
         <!--If the user is staff-->
 
             
-        <div id="innerManu" class="row">
+        <div id="moveStep" class="row">
             <div style=" color:white; display:flex; padding:0.5rem">
-                <h1>{{company.Name}}</h1>
+                <h4>{{company.Name}}</h4>
                 
             </div>
             
             <div style='padding:0.5rem; ' class="row">
-               
-                <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="Click to see {{company.Name}} Divisions" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
-                        Divisions
-                    </a>
-                </div>
-               
-                <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="View learners recruited by this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
-                        Company Learners
-                    </a>
-                </div>
+               {% if exac.Company == company or user.is_staff %}
+                    <div style='padding:0.1rem'>
+                        <a id="pageTab" title="Click to see {{company.Name}} Divisions" style="color:white"  href="{% url 'departments' CompanyId=company.CompanyId %}">
+                            Divisions
+                        </a>
+                    </div>
                 
-                {% if  exac.Company == exac.Company and user.is_staff == False %}
+                    <div style='padding:0.1rem'>
+                        <a id="pageTab" title="View learners recruited by this company" style="color:white"  href="{% url 'CompanyLearners' CompanyId=company.CompanyId %}">
+                            Company Learners
+                        </a>
+                    </div>
+                {% else %}
+                    <div style='padding:0.1rem'>
+                        <a id="pageTab"  title="View learners recruited by this company" style="color:white"  href="{% url 'companyDashboard' %}">
+                            Back to list
+                        </a>
+                    </div>
+                    <div style='padding:0.1rem'>
+                        <a id="pageTab" title="View learners recruited by this company" style="color:white"  href="{% url 'addManagement' CompanyId=company.CompanyId %}">
+                            Join
+                        </a>
+                    </div>
+
+                {% endif %}
+                
+                {% if  exac.Company == company and user.is_staff == False %}
                    
-                    <div style="padding:0.5rem">
+                    <div style="padding:0.1rem">
                         
-                        <a class="btn btn-info"  title="Go to Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
+                        <a id="pageTab" title="Go to Dashboard"  style="color:white"  href="{% url 'companyDashboard' %}">
                             Go to Dashboard
                             
                         </a>
 
                     </div>
-                    <div style="padding:0.5rem">
-                        <a class="btn btn-info"  title="Edit Company Details " style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
+                    <div style="padding:0.1rem">
+                        <a id="pageTab"  title="Edit Company Details " style="color:white"  href="{% url 'EditCompany' companyId=company.CompanyId %}">
                             Edit Details
                         </a>
 
@@ -107,7 +120,7 @@
 
     </div>
 
-    <div>
+    <div class="container">
 
                 
 
@@ -189,43 +202,40 @@
                 </table>
             </div>
             <hr/>
-
-            <div class="row" >
-                
-                {% if All_Exacs %}
-                    {% for manager  in All_Exacs %}
-                    <div style="padding:0.3rem">
-                        <div class="card" style="padding:0.5rem; width:270px; height:400px; font-size:16px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white;">
-                            <div style="padding:0.5rem;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" class="card-header">
-                                <h5>{{manager.Position}}</h5>
-                            </div>
-                            <hr/>
-                            <tr>
-                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
-                                Name: {{manager.FirstName}} {{manager.LastName}}
-                            </div>
-                            </tr>
-                            <tr>
-                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
-                                Gender: {{manager.Gender}}
-                            </div>
-                        </tr>
-                        <tr>
-                            <div class="card-body" style="padding:0.5rem; font-weight:normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                Email: {{manager.EmailAddress}}
-                            </div>
-                        </tr>
-                        <tr>
-                            <div class="card-body" style="padding:0.5rem; font-weight:normal;">
-                                Phone: {{manager.PhoneNumber}}
-                            </div>
-                        </tr>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {%endif%}
+            <div style="color:white">
+                <h1>Managers</h1>
             </div>
-            
+            <div style="width:100%; display:flex; justify-content:center">
+                
+                
+                <div class="row" style="width:100%; ">
+                    
+                    {% if All_Exacs %}
+                        {% for manager  in All_Exacs %}
+                        <div style="padding:0.3rem">
+                            <div class="card"  id="compCard" style="padding:0.5rem; width:270px; height:400px; font-size:16px; background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white;">
+                                <div class="card-header">
+                                    <h5>{{manager.Position}}</h5>
+                                </div>
+                                <hr/>
+                                
+                                <div class="card-body" style="padding:0.5rem; font-weight:normal;">
+                                    Name: {{manager.FirstName}} {{manager.LastName}}<br/>
+                                    Gender: {{manager.Gender}}<br/>
+                                    Email: {{manager.EmailAddress}}<br/>
+                                    Phone: {{manager.PhoneNumber}}
+
+                                </div>
+                            
+                                
+                                
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {%endif%}
+                </div>
+            </div>
         </div>
             
     </div>
@@ -236,6 +246,33 @@
             display:flex;
             justify-content:space-between;
             
+        }
+        #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:0.7rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+        }
+        #pageTab{
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #pageTab:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+
+        @media only screen and (max-width: 390px) {
+            #compCard{
+                width:300px;
+            }
         }
     </style>
 

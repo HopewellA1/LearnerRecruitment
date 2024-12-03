@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'LoginManager',
     'hostEmployer',
     'support',
+    'rest_framework',
 ]
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

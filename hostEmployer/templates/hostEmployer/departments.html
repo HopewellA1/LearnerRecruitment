@@ -4,6 +4,7 @@
 {% block content %}
     {% load static %}
 
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
 
     <style>
         .gradientColor:{
@@ -24,41 +25,49 @@
         {% endfor %}
     {% endif %}
 
-
-
-
-    <div class="container">
-        <div style="padding:1rem; display:flex; justify-content:space-between" class="row"> 
-            <div>
-
-                <h2>
-                    <a href="{% url 'companyDetails' companyId=company.CompanyId %}" style="color:white">
-                        {{company.Name}} Divisions
-
-                    </a>
-                </h1>
+    <div id="moveStep" class="row"  >
+        <b  style="padding:0.5rem">Step 4:  Start Recruiting ></b>
+        
+        <div class="row" style="border:solid">
+            <div style='padding:0.5rem'>
+                <a id="pageTab2" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                   View Company details
+                </a>
             </div>
-            <div class="row">
-                <div style='padding:0.5rem'>
-                    <a class="btn btn-info" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
-                       View Company details
-                    </a>
-                </div>
-
-                {% if exac%}
+            {% if exac%}
                     <div style='padding:0.5rem'>
-                        <a class="btn btn-info" title="Add New Department To The Company " style="color:white" onclick="formSwitch(true)">
+                        <a  id="pageTab"  title="Add New Division To The Company " style="color:white" onclick="formSwitch(true)">
                           Add New Division
                         </a>
                     </div>
-                {% endif %}
+            {% endif %}
+            <div style="padding:0.5rem">
+                    <a 
+                    onclick="pageTour()"
+                        style="color:azure"
+                        title="Sign Up and Activate Your Account(Update account)"
+                        id="pageTour"
+                    > 
+                        Retake Page tour
+                    </a>
             </div>
+
+           
+
         </div>
-        <hr/>
+
+    </div>
+    <div class="text-center" style="padding:1rem; color:azure">
+        <h3>{{company.Name}} Divisions </h3> 
+    </div>
+
+
+    <div class="container">
+       
         <div style="padding:1rem;" id="addDepHiolder" hidden>
 
             
-            <form  method="post" >
+            <form  method="post"  >
                 {% csrf_token %}
 
                 <div style="padding:1rem; border:solid 1px; border-radius:12px;color:white;
@@ -95,7 +104,7 @@
             </form>
         </div>
         <div>
-            <div class="row">
+            <div class="row" >
 
                 <!--The for loop starts-->
                {% if departments %}
@@ -122,7 +131,7 @@
                                         <div style="padding:0.5rem">
 
 
-                                            <a class="btn btn-info" title="See more details about the Division." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                            <a  class="btn btn-info" title="See more details about the Division." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
 
                                                 More Details
 
@@ -131,7 +140,7 @@
                                      
                                         <div style="padding:0.5rem">
 
-                                            <a class="btn btn-info" title="View learners recruited on this Division" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+                                            <a  class="btn btn-info" title="View learners recruited on this Division" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
 
 
                                                 Learners
@@ -178,7 +187,39 @@
                 addDepHiolder.hidden = true
             }
         }
+        //tours
 
+       
     </script>
+
+    <style>
+
+        #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:0.7rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+        }
+        #PreviousStep , #pageTour, #pageTab, #pageTabDivision{
+           
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #PreviousStep:hover, #pageTour:hover, #pageTab:hover, #pageTabDivision:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            max-width:300px;
+            height:370px
+        }
+    </style>
 
 {% endblock %}
