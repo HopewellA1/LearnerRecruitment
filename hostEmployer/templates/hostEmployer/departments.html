@@ -26,24 +26,24 @@
     {% endif %}
 
     <div id="moveStep" class="row"  >
-        <b  style="padding:0.5rem">Step 4:  Start Recruiting ></b>
+        <b  style="padding:0.5rem">Step 4:  Start Recruiting  ></b>
         
         <div class="row" >
             <div style='padding:0.5rem'>
-                <a id="pageTab2" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
+                <a class="pageTab" id="CompDetails" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
                    View Company details
                 </a>
             </div>
             {% if exac%}
                     <div style='padding:0.5rem'>
-                        <a  id="pageTab"  title="Add New Division To The Company " style="color:white" onclick="formSwitch(true)">
+                        <a class="pageTab"  id="NewDivision"  title="Add New Division To The Company " style="color:white" onclick="formSwitch(true)">
                           Add New Division
                         </a>
                     </div>
             {% endif %}
             <div style="padding:0.5rem">
                     <a 
-                    onclick="pageTour()"
+                    onclick="pageTour1()"
                         style="color:azure"
                         title="Sign Up and Activate Your Account(Update account)"
                         id="pageTour"
@@ -111,18 +111,18 @@
                     {% for department in departments %}
                     
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                            <div id="DivisionCard" class="card border-left-primary shadow h-100 py-2" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
                                 <div class="card-header" style="color:white; font-weight:normal">
-                                    <h5>
+                                    <h5 id="divisionName">
                                         {{department.department.Name}} Division
                                     </h5>
 
 
                                 </div>
                                 <div class="card-body"  style="color:white; font-weight:normal">
-                                    Learners: {{department.numLearners}}
+                                    <label id="lblNumLearner">Learners: {{department.numLearners}}</label>
                                     <hr/>
-                                    {{department.department.Description}}
+                                    <label id="lblDescription">{{department.department.Description}}</label>
                                 </div>
                                 <div class="card-footer">
                                 
@@ -131,7 +131,7 @@
                                         <div style="padding:0.5rem">
 
 
-                                            <a  class="btn btn-info" title="See more details about the Division." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
+                                            <a id="btnDetails"  class="btn btn-info" title="See more details about the Division." href="{% url 'departmentDetails' departmentId=department.department.DepartmentId %}">
 
                                                 More Details
 
@@ -140,14 +140,14 @@
                                      
                                         <div style="padding:0.5rem">
 
-                                            <a  class="btn btn-info" title="View learners recruited on this Division" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
+                                            <a id="btnLearners"  class="btn btn-info" title="View learners recruited on this Division" href="{% url 'DepartmentLearners' departmentId=department.department.DepartmentId %}">
 
 
                                                 Learners
                                             </a>
                                         </div>
                                     </div>
-                                    <div  style="color:white;  font-weight:normal">
+                                    <div   style="color:white;  font-weight:normal">
                                         Added by:<a href="{% url 'home' %}"  style="color:white">
                                                     {{department.department.Exac.FirstName}}  {{department.department.Exac.LastName}}
 
@@ -160,14 +160,16 @@
 
                             
                     {% endfor %}
-
+                    
                 {% else %}
+                    
                         <div style="display:flex; justify-content:center; width:100%;">
                             <p style="border:solid 1px red; padding:1rem; border-radius:12px; color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
-                                No Divisions please add a new one by clicking on  "New Division" above.
+                                {{company.Name}} has no "Divisions/Departments" please add a new by clicking on  "Add New Division" above.
                             </p>
                         </div>
                 {% endif %}
+                
                 <!--The for loop ends-->
 
             </div>
@@ -175,7 +177,7 @@
     </div>
 
 
-
+    <input type="hidden" id="inptDivisions" value="{{hasDivisions}}"/>
     <script>
         let addDepHiolder = document.getElementById("addDepHiolder")
 
@@ -189,7 +191,113 @@
         }
         //tours
 
-       
+        {% if user.is_staff == False %}
+            let is_taken = '{{tour.is_taken}}'
+            let basicTour = "{{basicTour.is_taken}}"
+            let inptDivisions = document.getElementById("inptDivisions").value
+            async function pageTour1(){
+                numTour = 
+            
+                await introJs().setOptions({
+                    steps:getTour(inptDivisions)
+                }).start();
+
+                if(inptDivisions =="True")
+                    if(is_taken == 'False'){
+                        takenTour('{{tour.TourId}}')
+                    }
+                else{
+                    if(basicTour == 'False'){
+                        takenTour('{{basicTour.TourId}}')
+                    }
+                }
+            };
+            
+            function getTour(hasDivisions){
+
+                console.log("hasDivisions",hasDivisions)
+               tour = [
+                    { element: '#moveStep', intro: 'Please take not of the page manu items.' },
+                    { element: '#CompDetails', intro: 'Click on this button to see all about your company.' },
+                    { element: '#NewDivision', intro: 'Click here to open a form to add a new "Division/Department,  in order recruit graduates relevent to that Division/Department."' },
+                    
+                
+                ]
+                if(hasDivisions === "true"){
+                    tour.push({
+                        element: '#DivisionCard',
+                        intro: 'This card is your Division/Department. we use Divisions/Departments to recruit graduates on to the company, let\'s dive in and learn how by clicking "next".'
+                    })
+                    tour.push({
+                        element: '#divisionName',
+                        intro: 'This is the name of the division/department.'
+                    })
+                    tour.push({
+                        element: '#lblNumLearner',
+                        intro: 'This is the number of graduates recruited already on the division.'
+                    })
+                    tour.push({
+                        element: '#lblDescription',
+                        intro: 'This is the description of the division.'
+                    })
+                    tour.push({
+                        element: '#btnDetails',
+                        intro: 'To see more details about the division or if you want to edit the details of the division please click here.'
+                    })
+                    tour.push({
+                        element: '#btnLearners',
+                        intro: 'To see a list of the graduates recruited or recruit more graduates on the division please click here.'
+                    })
+                }
+                else{
+                    tour = [
+                    { element: '#moveStep', intro: 'Please take not of the page manu items.' },
+                    { element: '#CompDetails', intro: 'Click on this button to see all about your company.' },
+                    { element: '#NewDivision', intro: 'Click here to open a form to add a new "Division/Department,  in order recruit graduates relevent to that Division/Department."' },
+                    
+                
+                ]
+                }
+                tour.push({
+                    element: '#pageTour',
+                    intro: 'Click here if you want to redo this page tour."'
+                })
+
+                return tour;
+            }
+
+
+            async function takenTour(tourId){
+                
+                protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+                const domain = '{{domain}}'
+                takenTourURL = `${protocol}://${domain}/hostEmployer/takenTour/${tourId}`
+
+                const response = await fetch(`${takenTourURL}`, {method:"GET"});
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Json Date response:', data);
+
+                if(data.Status =="success"){
+                    is_taken = "True"
+                }
+
+                
+            
+            }
+            if(inptDivisions =="True")
+                if(is_taken == 'False' || basicTour == 'False'){
+                    pageTour1()
+                }
+            else{
+                if(is_taken == 'False'){
+                    pageTour1()
+                }
+
+            }
+        {% endif %}
     </script>
 
     <style>
@@ -201,14 +309,13 @@
             display:flex;
             justify-content:space-between;
         }
-        #PreviousStep , #pageTour, #pageTab, #pageTabDivision{
-           
+        #PreviousStep , #pageTour, .pageTab, #pageTabDivision, #NewDivision{
             padding:0.5rem;
             border-radius: 60%;
             text-decoration: underline;
             cursor: pointer;
         }
-        #PreviousStep:hover, #pageTour:hover, #pageTab:hover, #pageTabDivision:hover{
+        .pageTab:hover, #PreviousStep:hover, #pageTour:hover,  #pageTabDivision:hover, #NewDivision:hover{
             color:black;
             border:solid;
             border-right:none;

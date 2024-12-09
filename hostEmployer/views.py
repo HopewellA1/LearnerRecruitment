@@ -35,16 +35,10 @@ def companyDashboard(request):
 @login_required
 def SelectCompany(request):
     user  = get_object_or_404(User, username = request.user)
-    
     tour = None
     if user.is_staff == False:
-        
-        try:
-            tour = get_object_or_404(Tour, user = user)
-        except :
-            tour = Tour.objects.create(
-                user = user    
-            )
+        tour = getPageTour(user, "Path")
+       
             
     companies = Company.objects.all()
     if request.method == 'GET':
@@ -124,12 +118,18 @@ def departments(request, CompanyId):
 
     
     if request.method == 'GET':
-        
+        hasDivisions = False
+        if departments:
+            hasDivisions = True
         payload = {
             "company": company,
             "departments":departments,
             "exac": exac,
-            "DivisiosTour":getPageTour(request.user,"NewDivision")
+            "tour":getPageTour(request.user,"NewDivision"),
+            "basicTour":getPageTour(request.user,"BasicTour"),
+            "domain": get_current_site(request),
+            "hasDivisions":hasDivisions
+           
             
         }
         
