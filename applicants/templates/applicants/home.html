@@ -39,7 +39,7 @@
         </div>
         <div  style="padding:0.5rem" >
            
-           <div class="card">
+           <div class="card" id="about">
 
                 <div class="card-header text-center">
                     <h4>About the Program</h4>
@@ -234,12 +234,14 @@
         function startTour(){
             introJs().setOptions({
                 steps: [
-                    { element: '#about1', intro: 'Our goals' },
-                    { element: '#howWorks', intro: 'How to get started!' }
+                    { element: '#about', intro: '<b>About Program</b><hr/><br/> ->Please read the "About" section carefully to understand the purpose of this website. This will help you complete tasks efficiently and make the most of the site\'s capabilities.' },
+                   
+                    { element: '#howWorks', intro: 'How to Get Started? <hr/><br/>->Please read all the steps carefully and follow the instructions to ensure a successful recruitment process.' }
                 ]
             }).start();
         };
-        //checkUser()
+        
+         checkUser()
     </script>
         
      
