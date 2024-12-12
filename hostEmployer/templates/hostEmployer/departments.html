@@ -195,11 +195,13 @@
             let is_taken = '{{tour.is_taken}}'
             let basicTour = "{{basicTour.is_taken}}"
             let inptDivisions = document.getElementById("inptDivisions").value
-            async function pageTour1(){
+
+            console.log("inptDivisions: ",inptDivisions)
+            async function pageTour1(inptDivisions){
                 numTour = 
             
                 await introJs().setOptions({
-                    steps:getTour(inptDivisions)
+                    steps:getTour()
                 }).start();
 
                 if(inptDivisions =="True")
@@ -213,8 +215,8 @@
                 }
             };
             
-            function getTour(hasDivisions){
-
+            function getTour(){
+                hasDivisions =inptDivisions
                 console.log("hasDivisions",hasDivisions)
                tour = [
                     { element: '#moveStep', intro: 'Please take not of the page manu items.' },
@@ -223,7 +225,7 @@
                     
                 
                 ]
-                if(hasDivisions === "true"){
+                if(hasDivisions === 'True'){
                     tour.push({
                         element: '#DivisionCard',
                         intro: 'This card is your Division/Department. we use Divisions/Departments to recruit graduates on to the company, let\'s dive in and learn how by clicking "next".'
