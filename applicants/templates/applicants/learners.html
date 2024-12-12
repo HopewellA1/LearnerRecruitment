@@ -7,15 +7,7 @@
 
 
     {% load static %}
-    <style>
-
-      
-        #innerManu{
-            display:flex;
-            justify-content:space-between;
-            
-        }
-    </style>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% if messages  %}
         {% for message in messages %}
@@ -206,14 +198,14 @@
         
 
         
-        <div id="innerManu" class="row container">
+        <div style="padding:1rem;">
            
-            <div class="row" style="padding:1rem; display:flex;">
+            <div  id="innerManu101" class="row" >
                
                 {% if selectState %}
 
                     <div style="padding:0.5rem" >
-                        <a class="btn btn-info" title="Go To Leaners Category" href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                        <a  class="pageTab" title="Go To Leaners Category" href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                             Back to categories
                         </a>
                     </div>
@@ -223,7 +215,7 @@
                     {% if selectState == false %}
                         <div style="padding:0.5rem">
 
-                            <a class="btn btn-info"  title="Download Learners List" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
+                            <a class="pageTab"   title="Download Learners List" style="color:white"  href="{% url 'download_excel' categoryId=Category.categoryId %}">
                                 download excel sheet
 
                             </a>
@@ -241,19 +233,19 @@
                     
                 
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white" title="Go To Company Dashboard" href="{% url 'companyDashboard' %}">
-                            Company Dashboard
+                        <a class="pageTab"  style="color:white" title="Go To Company Dashboard" href="{% url 'companyDashboard' %}">
+                            Dashboard
                         </a>
                     </div>
 
                     <div style="padding:0.5rem" >
-                        <a class="btn btn-info" title="Add Learners To The Company" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
+                        <a  class="pageTab"  title="Add Learners To The Company" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
                             Add learners
                         </a>
                     </div>
                     {% if selectState == false %}
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
+                            <a  class="pageTab"  style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
                                 download excel sheet 
                             </a>
                         </div>
@@ -264,14 +256,14 @@
               
                 {% if department %}
                     <div style="padding:0.5rem">
-                        <a class="btn btn-info" style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
+                        <a  class="pageTab"  style="color:white"  Title="Go To Company Department"  href="{% url 'departments' CompanyId=department.Company.CompanyId %}">
                             {{department.Company.Name}} Divisions 
                         </a>
                     </div>
 
                     {% if user.is_staff %}
                         <div style="padding:0.5rem">
-                            <a class="btn btn-info" style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
+                            <a  class="pageTab"  style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
                                 download excel sheet 
                             </a>
                         </div>
@@ -885,6 +877,21 @@
         
    </script>
 
+
+ 
+   {% if department and exac %}
+
+
+    <script>
+        let is_taken = '{{tour.is_taken}}'
+
+
+    </script>
+
+
+
+   {% endif %}
+
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -900,6 +907,26 @@
         color:white;
         font-weight:normal;
         font-size:18px
+    }
+    #moveStep, #innerManu101{
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        padding:0.7rem;
+        color:white;
+        display:flex;
+        justify-content:end;
+    }
+    .pageTab{
+        padding:0.5rem;
+        border-radius: 60%;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .pageTab:hover{
+        color:black;
+        border:solid;
+        border-right:none;
+        border-top:none;
+        text-decoration:none;
     }
 </style>
 

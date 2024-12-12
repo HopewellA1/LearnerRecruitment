@@ -161,7 +161,8 @@ def DepartmentLearners(request,departmentId):
         exac = get_object_or_404(Exac, user = request.user)
     except:
         exac = None
-    learners = Learner.objects.filter(Department = department, Status="Recruited") 
+    learners = Learner.objects.filter(Department = department, Status="Recruited")
+    #tour 
     if request.method == 'GET':
         
         payload = {
@@ -169,7 +170,8 @@ def DepartmentLearners(request,departmentId):
             "department": department,
             "company":company,
             "exac": exac,
-            "recruited":True
+            "recruited":True,
+            "tour":getPageTour(request.user,"NewDivision"),
         }
         
         return render(request, 'applicants/learners.html', payload)
@@ -795,20 +797,22 @@ def SearchLearners(request):
    
 @api_view(['POST', 'GET'])
 def takenTour(request, tourId):
-    try:
-        
-        tour = get_object_or_404(Tour, pk= tourId)
-        tour.is_taken =True
-        tour.save()
-        status = "success"
-    except:
-        status = "fail"
-        
     
-    payload = {
-        "Status": status,
-    }
-    return Response(payload)
+    if request.method =="GET":
+        try:
+            
+            tour = get_object_or_404(Tour, pk= tourId)
+            tour.is_taken =True
+            tour.save()
+            status = "success"
+        except:
+            status = "fail"
+            
+        
+        payload = {
+            "Status": status,
+        }
+        return Response(payload)
 
 
 def getPageTour(user, step):
