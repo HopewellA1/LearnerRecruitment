@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS").split(",")
 CSRF_TRUSTED_ORIGINS =config("Django_CSRF_TRUSTED_ORIGINS").split(",")
 
@@ -60,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+               # 'support.context_processors.query_count',
             ],
         },
     },
@@ -130,13 +131,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Email config
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'smtp.hostinger.com'
-#EMAIL_PORT =  config("EMAIL_PORT")  
-#EMAIL_USE_TLS = False 
-#EMAIL_USE_SSL = True  
-#EMAIL_HOST_USER =config("EMAIL_HOST_USER")  
-#EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
-#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.hostinger.com'
+EMAIL_PORT =  config("EMAIL_PORT")  
+EMAIL_USE_TLS = False 
+EMAIL_USE_SSL = True  
+EMAIL_HOST_USER =config("EMAIL_HOST_USER")  
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 

@@ -11,4 +11,4 @@ class query(models.Model):
     email = models.TextField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-        
+    status = models.CharField(max_length=30, default="Pending")      

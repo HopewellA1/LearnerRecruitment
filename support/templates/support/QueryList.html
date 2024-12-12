@@ -1,0 +1,37 @@
+{% extends "applicants/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Support Queries</h1>
+    <!-- Display the total and unresolved query counts -->
+    <p>Total Queries: {{ total_queries }}</p>
+    <p>Unresolved Queries: {{ unresolved_queries }}</p>
+
+    <!-- Table to display the list of queries -->
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for query in queries %}
+            <tr>
+                <td>{{ query.queryId  }}</td> <!-- Query ID -->
+                <td>{{ query.name }} {{ query.surname }}</td> <!-- User's Name -->
+                <td>{{ query.email }}</td> <!-- User's Email -->
+                <td>{{ query.message|truncatewords:10 }}</td> <!-- Shortened Query Message -->
+                <td>
+                    <!-- Link to respond to this query -->
+                    <a href="{% url 'response' query.queryId  %}" class="btn btn-primary btn-sm">Respond</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
