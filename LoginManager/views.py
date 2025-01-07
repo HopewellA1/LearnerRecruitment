@@ -145,7 +145,7 @@ def signupuser(request):
                     messages.success(request,"Account created successfully, an email has been sent for activation please visit email ("+request.POST['email'].lower()+") to activate your account.")
                 else:
                     messages.warning(request, "Account created successfully, something went wrong while sending an activation email, please contact support.")
-                    return redirect('home')
+                return redirect('home')
             except IntegrityError:
                 messages.error(request, "Username Already Taken")
                 return render(request,'LoginManager/signup.html',{'form':UserCreationForm()})
