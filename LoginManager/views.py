@@ -74,7 +74,7 @@ def activate(request, uidb64, token):
         
     if user != None and account_activation_token.check_token(user, token):
         user.is_active = True
-        messages.success(request,f"welcome {user.username}, your account has been verified and made active please proceed to login")
+        messages.success(request,f"welcome {user.username}, your account has been verified and made active please proceed to login.")
         user.save()
        
     return redirect('home')
