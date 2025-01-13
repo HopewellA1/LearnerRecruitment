@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -59,9 +60,48 @@ def SelectCompany(request):
             Email = request.POST["Email"]
         )
         
-        messages.success(request, 'The company details have been added successfully. Add your management details.')
-        return redirect('addManagement',CompanyId =company.CompanyId )
+        profile = {
+            
+            "company":company,
+            "FirstName": request.POST["FirstName"],
+            "LastName":  request.POST["LastName"],
+            "Gender":request.POST["Gender"],
+            "Position": request.POST["Position"],
+            "EmailAddress": request.POST["EmailAddress"],
+            "PhoneNumber":request.POST["PhoneNumber"],
+            "Address": request.POST["Address"]
+        }
+        saveExacInfo(profile, request)
+        messages.success(request, 'The company details and your profile information have been added successfully. You can now add your company\'s divisions or departments.')
+        #return redirect('addManagement',CompanyId =company.CompanyId )
+        return redirect('departments', CompanyId = company.CompanyId)
     
+    
+    
+def saveExacInfo(profile, request):
+   
+    try:
+        exac = get_object_or_404(Exac, user = request.user)
+    except:
+        exac = Exac.objects.create(
+            user = request.user,
+            Company = profile["company"],
+            FirstName =profile["FirstName"],
+            LastName =profile["LastName"],
+            Gender = profile["Gender"],
+            Position =profile["Position"],
+            EmailAddress = profile["EmailAddress"],
+            PhoneNumber = profile["PhoneNumber"],
+            Address = profile["Address"],   
+        )
+        
+    if exac:
+        return False
+    else:
+        return False
+        
+        
+        
 @login_required  
 def addManagement(request,CompanyId):
     company = get_object_or_404(Company, pk = CompanyId)
@@ -92,7 +132,7 @@ def addManagement(request,CompanyId):
                 Address = request.POST["Address"],   
             )
         
-        messages.success(request, 'Manager details added successfully, please add or select your Division to add learners.')
+        messages.success(request, 'Manager profile details added successfully, please add or select your Division to add learners.')
         return redirect('departments', CompanyId = CompanyId)
     
     
