@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', loginuser, name='login'),
     path('support/', include('support.urls')),
+    path('placement/', include('placement.urls')),
     
 ]
 
