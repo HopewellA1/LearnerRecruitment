@@ -7,6 +7,7 @@
 
 
     {% load static %}
+   
     {% if messages  %}
         {% for message in messages %}
             <br/>
@@ -21,49 +22,255 @@
         {% endfor %}
     {% endif %}
 
-    <div class="container text-center">
-        <h1 style=' color:white' class="form-text">
-            Graduates Placement Programme
-        </h1>
+
+    
+    <div class="container ">
+
        
-   </div>
-   
-    <div style="padding:2rem; font-size:20px; display:flex; justify-content:center; flex-direction:column; color:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);" >
 
-        <p style=" color:white">
-            
-            <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
-
-
-        </p>
-        <p style="color:white">
-           <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
-
-        </p>
-    </div>
-    {% if user.is_authenticated == False %}
-        <div  style=" display:flex; justify-content:center">
-            <p style=' color:white'>
-                If you already have an account, please log in to continue. If you're new here, take a moment to sign up. Get started below.
-            </p>
+        <div>
+            <h1 style=' color:white' class="form-text text-center">
+                Welcome to uMngeni Water Services Graduate Placement Opportunity!
+            </h1>
+            <div style=" display:flex;justify-content:center;color:white; font-size:26px ">
+                <!--rgb(12, 52, 131)-->
+                Empowering the Future Workforce Through Work-Based Learning
+            </div>
         </div>
-        <div  style=" display:flex; justify-content:center">
-          
-            <div class="row">
-                <!-- Login Button -->
-                <div style="padding:0.5rem">
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+        <div  style="padding:0.5rem" >
+           
+           <div class="card" id="about">
+
+                <div class="card-header text-center">
+                    <h4>About the Program</h4>
+                    <p style="color:azure">
+
+
+                        uMngeni Water Services (UWS) is seeking host employers to mentor a pool of talented young graduates who have recently completed degrees in various disciplines,
+                        including Engineering, Science, Finance, Human Resources, Sociology, and Public Administration. 
+                        These graduates will be placed with host employers for a 12-month internship starting in January 2025 to gain practical work-based learning (WBL) experience.
+
+                    </p>
                 </div>
-                <!-- Sign Up Button -->
-                <div style="padding:0.5rem">
-                    <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                <div class="card-body">
+                    <div>
+                        <b>What UWS Offers:<b>
+                        <p >
+                            <ul style="font-weight:normal">
+                                <li><b>Monthly Stipend:</b> UWS provides graduates a stipend of<u><b> R7,000</b></u> to cover travel and basic needs.</li>
+                                <li>
+                                    <b>Administration: </b>
+                                    All payments, uniform provision, and logistical arrangements will be managed by UWS, ensuring no financial burden on host employers.
+                                </li>
+                                <li><b>Graduate Database: </b>Host employers can access a curated database of pre-recruited graduates to select candidates who best meet their needs.</li>
+                            </ul>
+                        <p>
+                    </div>
+                    <div>
+                        <b>Host Employer Responsibilities:</b>
+                        <p>
+
+                            <ol style="font-weight:normal">
+                                <li>
+                                    <b>Mentorship and Supervision:</b> Provide structured mentorship and guidance.
+                                </li>
+                                <li>
+                                    <b>Performance Management: </b>Ensure graduates adhere to workplace standards, arrive punctually, 
+                                    and integrate with the company’s culture.
+                                </li>
+                                <li>
+                                    <b>Optional Stipend Top-Up: </b>
+                                    Employers may choose to supplement the stipend at their discretion.
+                                </li>
+
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                        <b>
+                            Work-Based Learning (WBL):
+                        </b>
+                        <p  style="color:azure">
+                            This program bridges academic knowledge with hands-on experience, enhancing the graduates’ employability and providing host employers with enthusiastic, trainable talent.
+                        </p>
+
+                    </div>
+
                 </div>
-                <div style="padding:0.5rem">
-                    <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+
+           </div>
+
+           
+            
+            {% comment %} <p id="about2"  style=" color:white">
+                
+                <b>Internship Placement for Work-Based Learning (WBL) - University</b>: Graduates who have completed their qualifications and are seeking a 12-month internship program to gain practical WBL experience.
+    
+    
+            </p>
+            <p id="about3"  style="color:white">
+               <strong> Work-Based Learning (WBL)</strong>: Is an educational component that provides students with real-life work experiences where they can apply academic and technical skills and increase the prospect of employability.
+    
+            </p> {% endcomment %}
+        </div>
+
+        <div style="padding:0.5rem">    
+            <div class="card" id="howWorks" >
+                <div class="card-header  text-center">
+
+                    <h1>How it Works:</h1>
+                    <p  style="color:azure">
+                        Welcome to the UWS Graduate Placement Portal, where companies can connect with top graduates to meet their staffing needs effortlessly. 
+                    </p>
+                </div>
+                <div class="card-body">
+    
+                
+                    <div style="display:flex; justify-content:center;padding:1rem">
+                        
+                        <ol >
+                            <li>
+                                <strong>Sign Up and Activate Your Account:</strong>
+                                <div class="steps">
+                                    <ul>
+                                        <li>Register as a new user.</li>
+                                        <li>Receive an activation email to verify your account.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Choose Your Path:</strong>
+                                <div class="steps">
+                                    <ul>
+                                        <li>Join an existing company you're working for.</li>
+                                        <li>OR, create a new company to start recruiting.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Set Up Your Company Profile:</strong>
+                                <div class="steps">
+                                    <ul>
+                                        <li>Register your company.</li>
+                                        <li>Add at least one manager and a division/business unit.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Start Recruiting:</strong>
+                                <div class="steps">
+                                    <ul>
+                                        <li>Browse our graduate database.</li>
+                                        <li>Select and recruit top graduates to grow your team.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ol>
+                        
+                    </div>  
+                    <div>
+                        <div class=" text-center">
+                            <h3> Visual Map</h1>
+                        </div>
+                        <div style=" display:flex; justify-content:center; padding:0.5rem; border:solid; border-radius:12px">
+                            <img style="border-radius:12px; width:100%" src="{% static 'support/placementFlow.png' %}"/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="text-center" style="width:100%; font-size:20px ">
+                                    
+                        Ready to get started? Sign up now and connect with the talent of tomorrow!
+                        
+                    </div>
+                    <div class="row " style="display:flex; justify-content:center">
+
+                        {% if user.is_authenticated %}
+                                    
+                                    
+                            {% if user.is_staff == false %}
+
+                            {% endif %}
+                        {% else %}
+                            <!-- Login Button -->
+                            <div style="padding:0.5rem">
+                                <a href="{% url 'login' %}" class="btn btn-primary btn-lg ml-2">Login</a>
+                            </div>
+                            <!-- Sign Up Button -->
+                            <div style="padding:0.5rem">
+                                <a  href="{% url 'Signup' %}" class="btn btn-secondary btn-lg ml-2">Sign Up</a>
+                            </div>
+                            <div style="padding:0.5rem">
+                                <a style="color:white"  href="{% url 'help' %}" class="btn btn-warning btn-lg ml-2">Help</a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    {% endif %}
+   </div>
+   
+    <script>
+
+        function checkUser() {
+            // Check if a key exists in local storage
+            const isNewUser = !localStorage.getItem("hasVisited");
+        
+            if (isNewUser) {
+                // Perform actions for new users
+                console.log("Welcome, new user!");
+                // Initialize the tour
+                startTour()
+        
+                // Set the key in local storage to mark the user as not new
+                localStorage.setItem("hasVisited", "true");
+            } else {
+                // Perform actions for returning users
+                console.log("Welcome back!");
+            }
+        }
+        function startTour(){
+            introJs().setOptions({
+                steps: [
+                    { element: '#about', intro: '<b>About Program</b><hr/><br/> ->Please read the "About" section carefully to understand the purpose of this website. This will help you complete tasks efficiently and make the most of the site\'s capabilities.' },
+                   
+                    { element: '#howWorks', intro: 'How to Get Started? <hr/><br/>->Please read all the steps carefully and follow the instructions to ensure a successful recruitment process.' }
+                ]
+            }).start();
+        };
+        
+         checkUser()
+    </script>
+        
+     
+
+  <style>
+    .card,  card-footer{
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        color:white;
+        padding:0.5rem;
+        border-radius:12px
+    }
+  
+    #instruction1{
+        border:solid;
+        position:absolute;
+        width:100%;
+        min-height:700px;
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+        opacity: 0.5    ;
+
+
+
+    }
+
+
+    .container{
+        //border:solid
+    }
+  </style>
 
   
 {% endblock %}

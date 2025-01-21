@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render,redirect, get_object_or_404
 from applicants.models import *
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 import openpyxl
@@ -10,6 +11,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from io import BytesIO
 from django.http import HttpResponse
 from django.db.models import Q
+from rest_framework.decorators import api_view
+from rest_framework.response import Response 
+
 
 
 
@@ -30,14 +34,18 @@ def companyDashboard(request):
     
 @login_required
 def SelectCompany(request):
-    user = request.user
-    
-    
+    user  = get_object_or_404(User, username = request.user)
+    tour = None
+    if user.is_staff == False:
+        tour = getPageTour(user, "Path")
+       
+            
     companies = Company.objects.all()
     if request.method == 'GET':
         
         payload = {
-            "companies":companies
+            "companies":companies,
+            "tour":tour
         }
         return render(request, 'hostEmployer/SelectCompany.html', payload)
     
@@ -62,24 +70,27 @@ def addManagement(request,CompanyId):
     if request.method =='GET':
         
         payload = {
-           "company": company, 
+           "company": company,
+            "tour":getPageTour(user, "Profile") 
         }
         
         return render(request, 'hostEmployer/addManagement.html', payload)
     
     if request.method == 'POST':
-        
-        exac = Exac.objects.create(
-            user = user,
-            Company = company,
-            FirstName = request.POST["FirstName"],
-            LastName = request.POST["LastName"],
-            Gender = request.POST["Gender"],
-            Position = request.POST["Position"],
-            EmailAddress = request.POST["EmailAddress"],
-            PhoneNumber = request.POST["PhoneNumber"],
-            Address = request.POST["Address"],   
-        )
+        try:
+            exac = get_object_or_404(Exac, user = user)
+        except:
+            exac = Exac.objects.create(
+                user = user,
+                Company = company,
+                FirstName = request.POST["FirstName"],
+                LastName = request.POST["LastName"],
+                Gender = request.POST["Gender"],
+                Position = request.POST["Position"],
+                EmailAddress = request.POST["EmailAddress"],
+                PhoneNumber = request.POST["PhoneNumber"],
+                Address = request.POST["Address"],   
+            )
         
         messages.success(request, 'Manager details added successfully, please add or select your Division to add learners.')
         return redirect('departments', CompanyId = CompanyId)
@@ -107,11 +118,18 @@ def departments(request, CompanyId):
 
     
     if request.method == 'GET':
-        
+        hasDivisions = False
+        if departments:
+            hasDivisions = True
         payload = {
             "company": company,
             "departments":departments,
-            "exac": exac
+            "exac": exac,
+            "tour":getPageTour(request.user,"NewDivision"),
+            "basicTour":getPageTour(request.user,"BasicTour"),
+            "domain": get_current_site(request),
+            "hasDivisions":hasDivisions
+           
             
         }
         
@@ -143,7 +161,8 @@ def DepartmentLearners(request,departmentId):
         exac = get_object_or_404(Exac, user = request.user)
     except:
         exac = None
-    learners = Learner.objects.filter(Department = department, Status="Recruited") 
+    learners = Learner.objects.filter(Department = department, Status="Recruited")
+    #tour 
     if request.method == 'GET':
         
         payload = {
@@ -151,7 +170,8 @@ def DepartmentLearners(request,departmentId):
             "department": department,
             "company":company,
             "exac": exac,
-            "recruited":True
+            "recruited":True,
+            "tour":getPageTour(request.user,"NewDivision"),
         }
         
         return render(request, 'applicants/learners.html', payload)
@@ -775,3 +795,35 @@ def SearchLearners(request):
 
             return render(request, 'applicants/learners.html', payload)
    
+@api_view(['POST', 'GET'])
+def takenTour(request, tourId):
+    
+    if request.method =="GET":
+        try:
+            
+            tour = get_object_or_404(Tour, pk= tourId)
+            tour.is_taken =True
+            tour.save()
+            status = "success"
+        except:
+            status = "fail"
+            
+        
+        payload = {
+            "Status": status,
+        }
+        return Response(payload)
+
+
+def getPageTour(user, step):
+    #Profile, Path
+    
+    try:
+        tour = get_object_or_404(Tour, user = user, Step = step)
+    except: 
+        tour = Tour.objects.create(
+            user = user,
+            Step = step 
+        )
+    return tour
+    

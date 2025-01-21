@@ -11,4 +11,14 @@ class query(models.Model):
     email = models.TextField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=30, default="Pending")      
+    status = models.CharField(max_length=30, default="Pending")   
+
+
+
+
+class Response(models.Model):
+    responseId = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="support_replies",null=True, blank=True )
+    query = models.ForeignKey(query,on_delete=models.CASCADE,null=False, blank=False,related_name="responses")
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
