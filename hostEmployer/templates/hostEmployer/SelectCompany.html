@@ -33,9 +33,9 @@
             <b style="padding:0.5rem">Step 2:  Choose Your Path ></b>
             <div id="note" style="padding:0.5rem">
 
-                <i>Join an existing company you're working for</i>
-                <i>Or</i>
-                <i>create a new company to start recruiting.</i>
+                <i>Join an existing company you are working for,</i>
+                <i>or</i>
+                <i>add a new company to start recruiting.</i>
             </div>
            <div class="row">
 
@@ -46,7 +46,7 @@
                         title="Sign Up and Activate Your Account(Update account)"
                         id="pageTour"
                     > 
-                        Retake Page tour
+                        Take Page tour
                     </a>
                </div>
 
@@ -66,11 +66,7 @@
         </div>
 
     {% endif %}
-    <div class='container' style="padding:1rem; color:white">
-        <h1>
-            Recruiting  Companies  {{tour.Step}}
-        </h1>
-    </div>
+    
     <div id="innerManu" class="row">
         {% if user.is_staff == False %}   
             <div style="padding:0.5rem">
@@ -94,7 +90,11 @@
                             Close
                         </a>
                     </div>
-
+                    <div class="titleDiv">
+                        <h4>
+                            Company Basic Information
+                        </h4>
+                    </div>
                     <div>
                         <label style="color:white">
                            <b>Company Name*<b>
@@ -123,7 +123,84 @@
                         <input class="form-control" type="text" required name="Address" />
 
                     </div>
+                    <hr/>
+                    <div style=" color:white" class="fromCard">
+                        <div class="titleDiv">
+                            <h4>
+                                Your Profile and Designation
+                            </h4> 
 
+                        </div>
+                        <div>
+                            <label>
+                               First Name*
+                            </label><br/>
+                            <input class="form-control" type="text" required name="FirstName" value="{{user.first_name}}" />
+    
+                        </div>
+                        <div>
+                            <label>
+                               Last Name
+                            </label><br/>
+                            <input class="form-control" type="text" required name="LastName" value="{{user.last_name}}"/>
+    
+                        </div>
+                        <div>
+                            <label>
+                               Gender*
+                            </label><br/>
+                            <select class="form-control"  required name="Gender" >
+                                <option value="Male">
+                                    Male
+                                </option>
+                                <option value="Female">
+                                    Female
+                                </option>
+    
+                                <option value="Other">
+                                    Other
+                                </option>
+    
+                            </select>
+    
+    
+    
+                        </div>
+                        <div>
+                            <label>
+                               Position*
+                            </label><br/>
+                            <input class="form-control" type="text" required name="Position" placeholder="e.g CEO"/>
+    
+                        </div>
+                        <div>
+                            <label>
+                               Email Address*
+                            </label><br/>
+                            <input class="form-control" type="email" required name="EmailAddress" value="{{user.email}}"/>
+    
+                        </div>
+                        <div>
+                            <label>
+                               Phone number*
+                            </label><br/>
+                            <input class="form-control" type="text" required name="PhoneNumber" />
+    
+                        </div>
+    
+                        <div>
+                            <label>
+                               Address*
+                            </label><br/>
+                            <input class="form-control" type="text" required name="Address" />
+    
+                        </div>
+    
+                        
+    
+                        
+                        
+                    </div>
                     <div style="padding:1rem; display:flex;justify-content: center">
                   
                         <input class="btn btn-success" type="submit" required value="Save and Continue" />
@@ -135,7 +212,13 @@
             </form>
 
         </div>
-
+        <div>
+            <div class='container' style="padding:1rem; color:white">
+                <h1>
+                    Recruiting  Companies
+                </h1>
+            </div>
+        </div>
         <div class="row" style=" width:inherit">
             {% for company in companies %}
                 <div style="padding:0.5rem; ">
@@ -220,9 +303,7 @@
                 }
             };
             
-            if(is_taken == 'False'){
-                pageTour()
-            }
+           
             
 
 
@@ -276,6 +357,9 @@
             background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
             max-width:300px;
             height:370px
+        }
+        .titleDiv{
+            color:white
         }
     </style>
 {% endblock %}

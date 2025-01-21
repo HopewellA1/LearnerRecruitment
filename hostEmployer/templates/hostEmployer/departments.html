@@ -26,8 +26,13 @@
     {% endif %}
 
     <div id="moveStep" class="row"  >
-        <b  style="padding:0.5rem">Step 4:  Start Recruiting  ></b>
-        
+        {% if departments %}
+            <b  style="padding:0.5rem">Step 4:  Add Division/Department  ></b>
+
+
+        {% else %}
+            <b  style="padding:0.5rem">Step 5: Recruiting  ></b>
+        {% endif %}
         <div class="row" >
             <div style='padding:0.5rem'>
                 <a class="pageTab" id="CompDetails" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
@@ -48,7 +53,7 @@
                         title="Sign Up and Activate Your Account(Update account)"
                         id="pageTour"
                     > 
-                        Retake Page tour
+                        Take Page tour
                     </a>
             </div>
 
@@ -198,22 +203,56 @@
 
             console.log("inptDivisions: ",inptDivisions)
             async function pageTour1(inptDivisions){
-                numTour = 
+              
             
                 await introJs().setOptions({
                     steps:getTour()
                 }).start();
 
-                if(inptDivisions =="True"){
-                    if(is_taken == 'False'){
-                        takenTour('{{tour.TourId}}')
-                    }
-                }
+                
                 if(basicTour == 'False'){
                     takenTour('{{basicTour.TourId}}')
                 }
             };
-            
+            async function pageTour2(){
+                await introJs().setOptions({
+                    steps:getTour2()
+                }).start();
+
+                if(is_taken == 'False'){
+                    takenTour('{{tour.TourId}}')
+                }
+                
+            }
+            function getTour2(){
+                tour = []
+                tour.push({
+                    element: '#DivisionCard',
+                    intro: 'This card is your Division/Department. we use Divisions/Departments to recruit graduates on to the company, let\'s dive in and learn how by clicking "next".'
+                })
+                tour.push({
+                    element: '#divisionName',
+                    intro: 'This is the name of the division/department.'
+                })
+                tour.push({
+                    element: '#lblNumLearner',
+                    intro: 'This is the number of graduates recruited already on the division.'
+                })
+                tour.push({
+                    element: '#lblDescription',
+                    intro: 'This is the description of the division.'
+                })
+                tour.push({
+                    element: '#btnDetails',
+                    intro: 'To see more details about the division or if you want to edit the details of the division please click here.'
+                })
+                tour.push({
+                    element: '#btnLearners',
+                    intro: 'To see a list of the graduates recruited or recruit more graduates on the division please click here.'
+                })
+
+                return tour;
+            }
             function getTour(){
                 hasDivisions =inptDivisions
                 console.log("hasDivisions",hasDivisions)
@@ -289,9 +328,7 @@
             
             }
             
-            if(is_taken == 'False' || basicTour == 'False'){
-                pageTour1()
-            }
+            
            
         {% endif %}
     </script>

@@ -13,6 +13,7 @@ class Company(models.Model):
     Phone = models.CharField(max_length=20)
     Email = models.CharField(max_length=60)
     Address = models.CharField(max_length=100, default='None')
+    
 class Exac(models.Model):
     Management = models.AutoField(primary_key=True,blank=False, null=False, auto_created=True)
     user = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)#added by who

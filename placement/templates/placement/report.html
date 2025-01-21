@@ -1,0 +1,90 @@
+{% extends "applicants/base.html" %}
+
+{% block content %}
+
+    {% load static %}
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+
+    {{categories}}
+
+    <div class="container"> 
+
+        <div class="horizontalscrollar">
+
+            <div class="row" style="border">
+                {% for category in categories%}
+                    <div style="padding:0.5rem">
+                        <div class="card" title="Click here to select a category" style="max-width:300px" onclick="gocateg('{{category.categoryId}}')">
+                           
+                            <div class="card-header ">
+                                <h2>
+                                    {{category.category.categoryName}}
+                                </h2>
+                            </div>
+                            <div class="card-body ">
+                                <p>   
+                                    Total Learners: {{category.analytics.totalLearners}}<br/>
+                                    Recruited Learners:  {{category.analytics.numRecruited}}<br/>
+                                    Recruited Learners:  {{category.analytics.numRecruited}}<br/>
+                                    Available Learners: {{category.analytics.numAvailble}}
+                                </p>
+                            
+                            </div>
+                            <div class="card-footer">
+                                <h4>
+                                    {{category.category.code}}
+                                </h4>
+                              
+                                    
+                                    
+    
+                            </div>
+                            
+                        </div>
+    
+                    </div>
+                    {% comment %} <a   id="btngocateg{{category.category.categoryId}}" href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=category.category.categoryId  %}" hidden> </a>
+                     {% endcomment %}
+                    <script>
+                        
+                        function gocateg(id){
+                            let btngocateg = document.getElementById("btngocateg"+id);
+                            btngocateg.click()
+                        }
+                    </script>
+                {% endfor %}
+        
+            </div>
+    
+        </div>
+    </div>
+    <hr/>
+
+
+
+
+
+    <style>
+
+        .horizontalscrollar{
+            overflow:hidden;
+            overflow-x:auto;
+            overflow-y:hidden;
+        }
+        .card b
+    </style>
+{% endblock %}

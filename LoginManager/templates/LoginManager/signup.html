@@ -47,7 +47,7 @@
         {% endif %}
             
         
-        <form method="POST" action="">
+        <form method="POST" class="signUpForm" action="">
             {% csrf_token %}
             <div class="form-group">
                 <label for="first_name">First name</label>
@@ -178,6 +178,13 @@
     }
     label{
         color:white 
+    }
+    .signUpForm{
+        border:solid white;
+        padding:1rem;
+        border-radius:12px;
+        background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+
     }
 </style>
 {% endblock %}

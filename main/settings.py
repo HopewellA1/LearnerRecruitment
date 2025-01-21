@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'hostEmployer',
     'support',
     'rest_framework',
+    'placement',
 ]
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

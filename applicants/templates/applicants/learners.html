@@ -240,13 +240,13 @@
 
                     <div style="padding:0.5rem" >
                         <a  class="pageTab"  title="Add Learners To The Company" style="color:white"  href="{% url 'selectCategory' departmentId=department.DepartmentId %}">
-                            Add learners
+                            Select learners
                         </a>
                     </div>
                     {% if selectState == false %}
                         <div style="padding:0.5rem">
                             <a  class="pageTab"  style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
-                                download excel sheet 
+                                Download Excel Sheet
                             </a>
                         </div>
 
@@ -264,7 +264,7 @@
                     {% if user.is_staff %}
                         <div style="padding:0.5rem">
                             <a  class="pageTab"  style="color:white" title="Download List Of Learners"  href="{% url 'download_departmentExcel'   %}?departmentId={{department.DepartmentId}}">
-                                download excel sheet 
+                                Download Excel Sheet
                             </a>
                         </div>
                     {% endif %}
@@ -624,7 +624,7 @@
                         <div>
                             <div style="padding:0.2rem; color:white; display:flex; justify-content:center; border:solid 1px; border-radius:12px" >
                                 <label>
-                                    <i><b>Note:</b></i>These Learners are Engaged in the Programme and Awaiting Placement Selection
+                                    <i><b>Note:</b></i> These learners are available for {{Category.categoryName}}. Please select from the grid.
                                 </label>
                             </div>
                         </div>
@@ -779,7 +779,7 @@
                                             Status: 
                                             
                                             <i style=" background-color:white; border-radius:12px; padding:0.23rem" class="text-warning"><b>{{learner.Status}}</b></i>   <br/>
-                                                        Company: {{learner.Exac.Company }}<br/>
+                                                        Company: {{learner.Exac.Company.Name }}<br/>
                                                         Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
                                                         Manager email:<br/>{{learner.Exac.EmailAddress}} 
                                            
