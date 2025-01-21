@@ -82,14 +82,14 @@ def findComps(categ):
     comps = Company.objects.all()
     
     for comp in comps:
-        print("comps:::::: ",comp)
+   
         compAnalytic = getCompanyAnalytics(comp.CompanyId)
-        deps = compAnalytic.departments
+        deps = compAnalytic["departments"]
         #deps = Department.objects.filter(Company = comp)
-        print("CategorycategId, categ: ", categ) 
+        
         departments = []
         for dep in deps:
-            learners = Learner.objects.filter(Department = dep.department, category = categ)
+            learners = Learner.objects.filter(Department = dep["department"], category = categ)
             if countObj(learners) > 0:
                 departments.append({
                     "department": dep,

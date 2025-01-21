@@ -1,0 +1,289 @@
+{% extends "applicants/base.html" %}
+{% block content %}
+    {% load static %}
+
+
+    {% if messages  %}
+        {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </center>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+
+    <div class="container">
+
+
+       
+
+        <div id="moveStep" class="row"  >
+            <h2>
+                Anouncements
+            </h2>
+
+            <div class="row" >
+                {% comment %} <div style="padding:0.2px">
+                    <a class="pageTab" id="CompDetails" title="View Company Details" style="color:white">
+                       All Anouncements
+                    </a>
+                </div>
+                
+                <div style="padding:0.2px">
+                        <a class="pageTab"> 
+                            Categories Anouncements
+                        </a>
+                </div>
+                <div style="padding:0.2px">
+                    <a class="pageTab" > 
+                        Companies Anouncements
+                    </a>
+                </div>
+                <div style="padding:0.2px">
+                    <a class="pageTab" > 
+                        Universal Anouncements
+                    </a>
+                </div> {% endcomment %}
+                <div style="padding:0.2px;">
+                    <a onclick="initNewAnounce(false)" class="pageTab" > 
+                        New Anouncement
+                    </a>
+                </div>
+               
+    
+            </div>
+    
+        </div>
+        <div id="newAnounceHolder">
+           
+            <form id="newAnounceForm" method="post" action="{% url 'Anouncements' %}">
+                <div id="formTop">
+                    <a class="btn btn-warning"  onclick="initNewAnounce(true)"> Cancel</a>
+                </div>
+                {% csrf_token %}
+
+                <div class="inputHoolder">
+                    <label>
+                        Subject
+                    </label>
+                    <input {% if subject %}value="{{subject}}"{% endif %} required type="text" name="subject" class="form-control"/>
+                </div>
+                <div class="inputHoolder">
+                    <label>
+                        Subject
+                    </label>
+                    <textarea required name="message" class="form-control">{% if message %}value="{{message}}"{% endif %}</textarea>
+                </div>
+                <div class="inputHoolder">
+                    <label>
+                        Filters
+                    </label>
+
+                    <div>
+                        <div>
+                            <label>
+                                Learners in Category
+                            </label>
+                            <input name="audiance" type="radio" onclick="includeCateg(true)" value="LearnersCategory" required/>
+
+                       </div>
+                       <div>
+                            <label>
+                                Companies in Category
+                            </label>
+                            <input name="audiance" onclick="includeCateg(true)"  type="radio" value="CompaniesCategory" />
+
+                       </div>
+                       
+                       <div>
+                            <label>
+                                All Companies
+                            </label>
+                            <input name="audiance" onclick="includeCateg(false)"  type="radio" value="AllCompanies" />
+                        </div>
+                        <div>
+                            <label>
+                                All Learners
+                            </label>
+                            <input name="audiance" onclick="includeCateg(false)"  type="radio" value="AllLearners" />
+                        </div>
+                    </div>
+
+                    
+
+
+
+                </div>
+                <div  class="inputHoolder" style="display:flex; flex-direction: column">
+                    <div id="lblSelect">
+                        <label>
+                            Select category
+                        </label>
+                    </div>
+                    <div id="selecterHolder">
+
+                       
+                    </div>
+
+
+                </div>
+                <div class="inputHoolder">
+                    <div>
+                        <p>
+                            <b>Note:</b>  Please note that this message will be sent throughemail from info@uwsil.com.
+                        </p>
+                    </div>
+
+                    <input type="submit" value="Send Anouncement" style="width:100%" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+        <div id="allAnouncements">
+            
+            {% for anouncement in anouncements %}
+               <div class="card-cover">
+                    <div class="card">
+                        <div class="card-hearder">
+
+                        <h4>
+                                {{anouncement.anouncement.title}}
+                        </h4>
+                        </div>
+                        <hr/>
+                        <div class="card-body">
+
+                            {{anouncement.anouncement.description}}
+                        </div>
+                        <div class="card-footer">
+
+                            <div>
+                                Date anounced: {{anouncement.anouncement.Date}}
+                            </div>
+                            <div>
+                                form :{{anouncement.anouncement.user.first_name}} {{anouncement.anouncement.user.last_name}} -->
+                                to: {{anouncement.Sent_to}}
+                            </div>
+                        </div>
+
+
+                    </div>
+               </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <script>
+        function includeCateg(isInclude){
+            if(isInclude){
+                document.getElementById("lblSelect").hidden = false
+                document.getElementById("selecterHolder").innerHTML= `
+                    <select name="CategoryID" class="form-control" id="inpCategoryID"  required>
+                        {% for category in categories %}
+                            <option value="{{category.categoryId}}">
+                                {{category.categoryName}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                `
+                document.getElementById("selecterHolder").hidden = false
+            }
+            else{
+                document.getElementById("selecterHolder").innerHTML =  `<input type="hidden" id="inpCategoryID" name="CategoryID" value="None" />`
+                document.getElementById("selecterHolder").hidden = true
+                document.getElementById("lblSelect").hidden = true
+            }
+            
+        }
+        includeCateg(false)
+
+        function initNewAnounce(isInit){
+            console.log("jncvjrnvj")
+            document.getElementById("newAnounceHolder").hidden = isInit
+            console.log("document.getElementById", document.getElementById("newAnounceHolder").hidden)
+        }
+        initNewAnounce(true)
+    </script>
+
+
+    <style>
+        #allAnouncements{
+            
+           {% comment %} // border:solid;
+            height:500px;
+            overflow:hidden;
+            overflow-y:auto; {% endcomment %}
+        }
+        #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:1rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+            width:auto  
+        }
+        .pageTab{
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+            position:relative;
+            top:0.5rem
+        }
+        .pageTab:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+        .card{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            color:white;
+            width:100%
+        }
+        .card-hearder{
+            padding:1rem
+        }
+        .card-footer{
+            display:flex;
+            justify-content:space-between
+        }
+        .card-cover{
+            padding:0.5rem
+        }
+       
+        .container{
+            //display:flex;
+           // justify-centent:center
+        }
+        #newAnounceHolder{
+            padding:1rem;
+            display:flex;
+            justify-content:center;
+            
+        }
+        #newAnounceForm{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:1rem;
+            color:white;
+            width:100%
+        }
+        .inputHoolder{
+            padding:0.5rem
+        }
+        #formTop{
+            display:flex;
+            justify-content: end
+        }
+        
+    </style>
+{% endblock %}
