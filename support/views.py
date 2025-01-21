@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
 import json
 from .models import *
 from django.contrib.auth.decorators import login_required 
@@ -15,6 +14,10 @@ from django.contrib.auth.models import User
 from placement.views import findComps
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
+from rest_framework.decorators import api_view
+from django.db.models import Q
+
+
 
 def contact(request):
     if request.method == "POST":
@@ -196,8 +199,6 @@ def ajax_response(request):
 
             response_message = data.get("response_message")
 
-            
-
             if not queryId or not response_message:
                 return JsonResponse({"success": False, "error": "Invalid data provided."}, status=400)
 
@@ -270,7 +271,8 @@ def Anouncements(request):
         
         payload = {
             "anouncements":  getAnouncements(Anouncement.objects.all().order_by('-AnouncementId')),
-            "categories": category.objects.all()
+            "categories": category.objects.all(),
+            "domain": get_current_site(request)
         }
         return render(request, 'support/Anouncements.html',payload)
     
@@ -363,7 +365,7 @@ def getAnouncements(anounceList):
             "anouncement": anouncement,
             "Sent_to": getSentTo(anouncement.AnouncementId)
         })
-
+    
     return anouncements
 
 
@@ -382,5 +384,34 @@ def getSentTo(anouncementId):
         return "Unknown"
             
             
+#****************Search anouncements**********************************************************************
+
+@api_view(['GET'])
+def searchAnouncements(request, searched):
+    try:
+        Searched = searched.strip()
+    except:
+       Searched = ''
+    anouncements= []
     
+    
+    anounces=Anouncement.objects.filter(Q(
+        Q(title__icontains=Searched) |
+        Q(description__icontains=Searched)
+        
+    ))
+    print("anounces: ", anounces)
+    if anounces:
+        for anouncement in anounces:
+            
+            anouncements.append({
+                "anouncement": anouncement,
+                "Sent_to": getSentTo(anouncement.AnouncementId)
+            })
+   
+    payload={
+        "anouncements":anouncements
+    }
+    return JsonResponse(payload)
+   
 

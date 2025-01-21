@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 
@@ -13,6 +14,7 @@ class Company(models.Model):
     Phone = models.CharField(max_length=20)
     Email = models.CharField(max_length=60)
     Address = models.CharField(max_length=100, default='None')
+    dateAdded = models.DateField(default=timezone.now())
     
 class Exac(models.Model):
     Management = models.AutoField(primary_key=True,blank=False, null=False, auto_created=True)

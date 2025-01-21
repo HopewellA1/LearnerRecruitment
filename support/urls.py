@@ -13,6 +13,9 @@ urlpatterns = [
     path("ajax_response/", ajax_response, name="ajax_response"),
     path('response_list/', views.response_list, name="response_list"),
     path('contact/', views.contact, name="contact"),
-    path('Anouncements', views.Anouncements, name="Anouncements")
+    path('Anouncements', views.Anouncements, name="Anouncements"),
+    
+    #APIs
+    path("searchAnouncements/<str:searched>", views.searchAnouncements, name="searchAnouncements")
 ]
 

@@ -96,7 +96,7 @@
                        </div>
                        <div>
                             <label>
-                                Companies in Category
+                                Companies in Category 
                             </label>
                             <input name="audiance" onclick="includeCateg(true)"  type="radio" value="CompaniesCategory" />
 
@@ -203,13 +203,42 @@
             }
             
         }
-        includeCateg(false)
+        
 
         function initNewAnounce(isInit){
             console.log("jncvjrnvj")
             document.getElementById("newAnounceHolder").hidden = isInit
             console.log("document.getElementById", document.getElementById("newAnounceHolder").hidden)
         }
+        
+        //comming in with the search API
+
+        async function searchAnouncements(search){
+                
+            protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+            const domain = '{{domain}}'
+            takenTourURL = `${protocol}://${domain}/support/searchAnouncements/${search}`
+
+            const response = await fetch(`${takenTourURL}`, {method:"GET"});
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Json Date response:', data);
+
+            if(data.Status =="success"){
+                is_taken = "True"
+            }
+
+            
+        
+        }
+
+
+
+
+        //Lead calls
+        includeCateg(false)
         initNewAnounce(true)
     </script>
 
