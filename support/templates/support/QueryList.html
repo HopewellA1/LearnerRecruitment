@@ -1,0 +1,148 @@
+{% extends "applicants/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Support Queries</h1>
+        <a href="{% url 'response_list' %}" class="btn btn-primary">View Responses</a>
+
+    </div>
+    <p>Total Queries: {{ total_queries }}</p>
+    <p>Unresolved Queries: {{ unresolved_queries }}</p>
+
+
+
+    <div>
+        {% for query in queries %}
+            <div style="padding:0.5rem">
+                <div class="card" style="background:linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white">
+                    <div class="card-header split">
+                        <div>
+                            {{ query.name }} {{ query.surname }}
+                        </div>
+                        <div>
+                            <a onclick="openModal('{{query.queryId}}', true)" class="btn btn-primary">Respond</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5>Query:</h5>
+                        {{ query.message }}
+                    </div>
+                    <div id="query{{query.queryId}}" class="card-footer" style="display: none;">
+                        <h5>Responses:</h5>
+                        <ul>
+                            {% for response in query.responses.all %}
+                            <li>
+                                <div style="font-weight: bold;">
+                                    {% if response.user %}
+                                        {{ response.user.username }}
+                                    {% else %}
+                                        Anonymous
+                                    {% endif %}
+                                </div>
+                                <div style="margin-top: 0.5rem;">
+                                    {{ response.message }}
+                                </div>
+                                <div style="font-size: 0.9rem; color: white; margin-top: 0.3rem;">
+                                    {{ response.date|date:"d M Y, H:i" }}
+                                </div>
+                            </li>
+                            
+                            
+                            {% empty %}
+                                <li>No responses yet.</li>
+                            {% endfor %}
+                        </ul>
+    
+                        <div style="border:solid; padding: 0.5rem;">
+                            <textarea id="responseMessage{{query.queryId}}" class="form-control mt-3" placeholder="Type your response here"></textarea>
+                            <input type="hidden" id="csrfToken" value="{{ csrf_token }}">
+                        </div>
+    
+                        <div class="split">
+                            <div>
+                                <a onclick="submitResponse('{{query.queryId}}')" class="btn btn-success">Submit</a>
+                            </div>
+                            <div>
+                                <a onclick="openModal('{{query.queryId}}', false)" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+
+</div>
+
+<!-- Bootstrap Modal -->
+
+
+<script>
+    let currentQueryId = null;
+
+    // Open modal and populate query details
+    function openModal(queryId, isOpen) {
+        const modal = document.getElementById("query" + queryId);
+
+        if (isOpen) {
+            modal.style.display = "block"; // Show modal
+        } else {
+            modal.style.display = "none"; // Hide modal
+    }
+}
+
+    // Submit response via AJAX
+    function submitResponse(queryId) {
+        const responseMessage = document.getElementById('responseMessage'+queryId).value;
+        console.log("responseMessage: ",responseMessage)
+        if (!responseMessage.trim()) {
+            alert("Please enter a response.");
+            return;
+        }
+
+        fetch("{% url 'ajax_response' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify({
+                queryId: queryId,
+                response_message: responseMessage,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("data: ",data)
+                if (data.success) {
+                    alert("Response sent successfully!");
+                    openModal(queryId, false);
+                    // Mark row as resolved
+                    // const row = document.getElementById(`query-${currentQueryId}`);
+                    // row.classList.add("table-success");
+                    // const modalElement = document.getElementById('responseModal');
+                    // const modal = bootstrap.Modal.getInstance(modalElement);
+                    // modal.hide();
+
+                } else {
+                    alert("Failed to send the response. Please try again.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            });
+    }
+</script>
+
+
+<style>
+
+    .split{
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+    }
+</style>
+{% endblock %}

@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+               # 'support.context_processors.query_count',
             ],
         },
     },
@@ -71,26 +72,26 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': config("DATABASE_HOST"), 
-        'NAME': config("DATABASE_NAME"), 
-        'USER': config("DATABASE_USER"),       
-        'PASSWORD':config("DATABASE_PASSWORD") ,   
-        'PORT': config("DATABASE_PORT"),              
-        'OPTIONS': {
-            'ssl': {
-                 'ssl_mode': config("DATABASE_ssl_mode"),
-            }
-        },
-    }
+  'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'HOST': config("DATABASE_HOST"), 
+       'NAME': config("DATABASE_NAME"), 
+       'USER': config("DATABASE_USER"),       
+       'PASSWORD':config("DATABASE_PASSWORD") ,   
+       'PORT': config("DATABASE_PORT"),              
+       'OPTIONS': {
+           'ssl': {
+                'ssl_mode': config("DATABASE_ssl_mode"),
+           }
+       },
+   }
 }
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+#       'default': {
+#           'ENGINE': 'django.db.backends.sqlite3',
+#           'NAME': BASE_DIR / 'db.sqlite3',
+#       }
+#   }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

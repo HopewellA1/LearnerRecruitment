@@ -148,9 +148,16 @@
                             
                             {% if user.is_staff %}
                                 
+                            
+
                                 
-                                
-                               
+                            <li class="nav-item">
+
+                                <a style="color: white;" href="{% url 'QueryList' %}"  class="nav-link" >
+                                    Queries <span id="query-count" class="badge badge-info">...</span>
+                                </a>
+                            </li>
+
                                 <li class="nav-item">
 
                                     <a style="color: white;" href="{% url 'SelectCompany' %}"  class="nav-link" >
@@ -272,6 +279,23 @@
   </script>
   <!-- custom js -->
   <script src="{% static 'Login/js/custom.js' %}"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        fetch("{% url 'total_queries_api' %}")
+            .then(response => response.json())
+            .then(data => {
+               
+                const queryCountSpan = document.getElementById("query-count");
+                queryCountSpan.textContent = data.unresolved_queries;
+            })
+            .catch(error => {
+                console.error("Error fetching query count:", error);
+            });
+    });
+    </script>
+    
  
   {% if user.is_authenticated %}
     {% comment %} <script>
