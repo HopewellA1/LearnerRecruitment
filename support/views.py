@@ -397,18 +397,28 @@ def searchAnouncements(request, searched):
     
     anounces=Anouncement.objects.filter(Q(
         Q(title__icontains=Searched) |
-        Q(description__icontains=Searched)
+        Q(description__icontains=Searched)|
+        Q(Date__icontains=Searched)|
+        Q(audiance__icontains=Searched)
         
     ))
-    print("anounces: ", anounces)
+    
     if anounces:
         for anouncement in anounces:
             
             anouncements.append({
-                "anouncement": anouncement,
-                "Sent_to": getSentTo(anouncement.AnouncementId)
+                "anouncement": anouncement.AnouncementId,
+                "Sent_to": getSentTo(anouncement.AnouncementId),
+                "subject":anouncement.title,
+                "message": anouncement.description,
+                "Date": anouncement.Date,
+                "senderName": anouncement.user.first_name,
+                "senderSurname": anouncement.user.last_name,
+                "senderEmail": anouncement.user.email
+                
             })
-   
+    
+          
     payload={
         "anouncements":anouncements
     }

@@ -33,6 +33,9 @@
         {% else %}
             <b  style="padding:0.5rem">Step 5: Recruiting  ></b>
         {% endif %}
+        <div class="text-center" style=" color:azure">
+            <h3>{{company.Name}} Divisions </h3> 
+        </div>
         <div class="row" >
             <div style='padding:0.5rem'>
                 <a class="pageTab" id="CompDetails" title="View Company Details" style="color:white"  href="{% url 'companyDetails' companyId=company.CompanyId %}">
@@ -62,9 +65,7 @@
         </div>
 
     </div>
-    <div class="text-center" style="padding:1rem; color:azure">
-        <h3>{{company.Name}} Divisions </h3> 
-    </div>
+    
 
 
     <div class="container">
@@ -168,7 +169,7 @@
                     
                 {% else %}
                     
-                        <div style="display:flex; justify-content:center; width:100%;">
+                        <div style="display:flex; justify-content:center; width:100%;padding:1rem">
                             <p style="border:solid 1px red; padding:1rem; border-radius:12px; color:white;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
                                 {{company.Name}} has no "Divisions/Departments" please add a new by clicking on  "Add New Division" above.
                             </p>

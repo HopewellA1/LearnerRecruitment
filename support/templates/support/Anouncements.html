@@ -52,7 +52,7 @@
                     </a>
                 </div> {% endcomment %}
                 <div style="padding:0.2px;">
-                    <a onclick="initNewAnounce(false)" class="pageTab" > 
+                    <a title="Click here to create a new anouncement." onclick="initNewAnounce(false)" class="pageTab" > 
                         New Anouncement
                     </a>
                 </div>
@@ -60,6 +60,20 @@
     
             </div>
     
+        </div>
+
+        <div id="searchHolder" class="row">
+            <input onkeyup="searchAnouncements(this.value)" type="text" placeholder="Search: anouncement" title="Search by Subject or part of the message you remember." class="form-control" id=="txtSearch" />
+            <div class="column">
+                <div id="refreshHolder" hidden>
+                    <a class="btn btn-primary" href="{% url 'Anouncements' %}" >
+                        Refresh Page
+                    </a>
+                </div>
+                <div id="Noresults" style="padding:1rem" hidden>
+                    <label style="background-color: red; color:white; padding:0.5rem"> No results found</label>
+                </div>
+            </div>
         </div>
         <div id="newAnounceHolder">
            
@@ -162,14 +176,17 @@
 
                             {{anouncement.anouncement.description}}
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer row">
 
                             <div>
                                 Date anounced: {{anouncement.anouncement.Date}}
                             </div>
                             <div>
-                                form :{{anouncement.anouncement.user.first_name}} {{anouncement.anouncement.user.last_name}} -->
+                                from :{{anouncement.anouncement.user.first_name}} {{anouncement.anouncement.user.last_name}}
                                 to: {{anouncement.Sent_to}}
+                            </div>
+                            <div>
+                                {{anouncement.anouncement.user}}
                             </div>
                         </div>
 
@@ -206,37 +223,101 @@
         
 
         function initNewAnounce(isInit){
-            console.log("jncvjrnvj")
+           
             document.getElementById("newAnounceHolder").hidden = isInit
-            console.log("document.getElementById", document.getElementById("newAnounceHolder").hidden)
+            
         }
         
         //comming in with the search API
-
+        
         async function searchAnouncements(search){
-                
+            allAnouncements = document.getElementById("allAnouncements")
+            const oldHTML = allAnouncements.innerHTML
             protocol = window.location.protocol === 'https:' ? 'https' : 'http';
-            const domain = '{{domain}}'
-            takenTourURL = `${protocol}://${domain}/support/searchAnouncements/${search}`
+            const domain = '{{domain}}';
+            searchURL = `${protocol}://${domain}/support/searchAnouncements/${search}`;
 
-            const response = await fetch(`${takenTourURL}`, {method:"GET"});
+            const response = await fetch(`${searchURL}`, {method:"GET"});
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok: ', response);
+                allAnouncements.innerHTML = ``
+                document.getElementById("Noresults").hidden = false
             }
             const data = await response.json();
-            console.log('Json Date response:', data);
-
-            if(data.Status =="success"){
-                is_taken = "True"
+           
+            document.getElementById("refreshHolder").hidden = false;
+           
+            if(data.anouncements.length > 0){
+                populateResult(data.anouncements)
+                document.getElementById("Noresults").hidden = true
             }
-
+            else{
+                allAnouncements.innerHTML = ``
+                document.getElementById("Noresults").hidden = false
+            }
             
         
         }
 
 
+        function populateResult(anouncements){
+            allAnouncements = document.getElementById("allAnouncements")
+            allAnouncements.innerHTML = null
+            anouncements.forEach(anouncement => {
+                
+              
+
+                allAnouncements.innerHTML += `
+                    <div class="card-cover">
+                        <div class="card">
+                            <div class="card-hearder">
+
+                            <h4>
+                                    `+ anouncement.subject +`
+                            </h4>
+                            </div>
+                            <hr/>
+                            <div class="card-body">
+
+                                `+anouncement.message+`
+                            </div>
+                            <div class="card-footer row">
+
+                                <div>
+                                    Date anounced: `+ convertDate(anouncement.Date) + `
+                                </div>
+                                <div>
+                                    from :`+anouncement.senderName+` `+anouncement.senderSurname+`
+                                    to: `+anouncement.Sent_to+`
+                                </div>
+                                <div>
+                                    `+anouncement.senderEmail+`
+                                </div>
+                            </div>
 
 
+                        </div>
+                    </div>
+
+                `
+          
+            });
+        }
+        function convertDate(date){
+            const dateDate = new Date(date);
+            const options = {
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric', 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            };
+            const formattedDate = dateDate.toLocaleString('en-US', options);
+     
+            return formattedDate
+
+        }
         //Lead calls
         includeCateg(false)
         initNewAnounce(true)
@@ -313,6 +394,29 @@
             display:flex;
             justify-content: end
         }
-        
+
+        #searchHolder{
+            padding:1rem;
+            display:flex;
+            justify-content:center
+        }
+        #searchHolder > input{
+            width:100%;
+            height:70px;
+        }
+        #refreshHolder{
+            padding:0.5rem
+        }
+        .card-footer > div{
+            padding:0.5rem;
+           
+        }
+        .card-footer > div:hover{
+            border:solid white;
+            border-top:none;
+            border-radius: 60px;
+            border-right:none;
+            cursor:pointer
+        }
     </style>
 {% endblock %}
