@@ -28,7 +28,7 @@ def searchLeaners(request, searchLocation):
     
 
 def home(request):
-   
+  
     # with transaction.atomic():
     #     # Group learners by LearnerIDNumber, keeping only the earliest record
     #     unique_learners = (
@@ -43,7 +43,7 @@ def home(request):
     #     Learner.objects.exclude(ApplicantId__in=unique_ids).delete()
 
     # print("Duplicates deleted successfully.")
-   
+
    
     return render(request, 'applicants/home.html')
 
@@ -536,3 +536,11 @@ def filterDigits(string):
 def help(request):
     
     return render(request, 'applicants/help.html')
+
+
+
+# def removeFakeAccounts():
+#     users = User.objects.filter(is_active = False)
+#     for user in users:
+#         print(f"Name: {user.first_name}; last name: {user.last_name};**email: {user.email} ;**** Active State: {user.is_active}; super user state: {user.is_superuser}")
+#         user.delete()

@@ -35,7 +35,7 @@ class Department(models.Model):
     Company = models.ForeignKey(Company,blank=True,null=True,on_delete=models.CASCADE)#added by who
     Exac = models.ForeignKey(Exac,blank=True,null=True,on_delete=models.CASCADE)#added by who
     Name = models.CharField(max_length=60)
-    Description = models.CharField(max_length=300, default='None')
+    Description = models.CharField(max_length=1000, default='None')
     is_Recruited = models.BooleanField(default=True)
     
 

@@ -747,21 +747,23 @@
                             </div>
                         {% endif %}
                     </div>
-                    <div>
-                        <div style="padding:0.2rem; color:white; display:flex; justify-content:center; border:solid 1px; border-radius:12px">
-                            <label>
-                                <i><b>Note:</b></i> These learners have been selected by host companies and are currently engaged in placement.
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
+                    
+                    <div ~>
                         {% if RecruitedLearners %}
-                            {% for learner in RecruitedLearners %}
+                            <div>
+                                <div style="padding:0.2rem; color:white; display:flex; justify-content:center; border:solid 1px; border-radius:12px">
+                                    <label>
+                                        <i><b>Note:</b></i> These learners have been selected.
+                                    </label>
+                                </div>
+                            </div>
+                           <div class="row">
+                                {% for learner in RecruitedLearners %}
                                 <div style="padding:0.5rem">
                                     <div class="card" style="padding:0.5rem; max-width:250px; height:500px; font-size:16px;background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white; ">
                                         <div style="padding:0.5rem" class="card-card-header">
                                             <h4>
-    
+
                                                 {{learner.LearnerFirstName}}  {{learner.LearnerSurname}}
                                             </h4>
                                         </div>
@@ -782,8 +784,8 @@
                                                         Company: {{learner.Exac.Company.Name }}<br/>
                                                         Manager: {{learner.Exac.FirstName}} {{learner.Exac.LastName}}<br/>
                                                         Manager email:<br/>{{learner.Exac.EmailAddress}} 
-                                           
-    
+                                        
+
                                         </div>
                                         <div class="card-footer">
                                             <div class="row" style=" display:flex;justify-content:center">
@@ -793,7 +795,7 @@
                                                             View
                                                         </a> 
                                                     </div>    
-    
+
                                                     <div style="padding:0.25rem">
                                                         <a  class="btn btn-warning" title="Edit Learner Details" href="{% url 'editLearner' learnerId=learner.ApplicantId %}">
                                                             Edit
@@ -841,7 +843,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     </div>
                 </div>   

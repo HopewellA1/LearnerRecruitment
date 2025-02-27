@@ -25,7 +25,8 @@ from .tokens import account_activation_token, Password_Reset_token
 from django.core.mail import send_mail, BadHeaderError
 from django.db.models.query_utils import Q
 from django.contrib.auth.tokens import default_token_generator
-
+from django.conf import settings
+import requests
 
 
 #User = get_user_model()
@@ -129,11 +130,32 @@ def home(request):
         return render(request,'LoginManager/home.html')
         
     return render(request,'LoginManager/home.html')
+def validate_recaptcha(recaptcha_response):
+    data = {
+        'secret': settings.RECAPTCHA_PRIVATE_KEY,
+        'response': recaptcha_response
+    }
+    response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+    result = response.json()
+    
+    print("result: ", result)
+    return result["success"]
+
 
 def signupuser(request):
     if request.method == 'GET':
-        return render(request,'LoginManager/signup.html',{'form':UserCreationForm()})
+        
+        payload = {
+            'RECAPTCHA_PUBLIC_KEY': settings.RECAPTCHA_PUBLIC_KEY,
+            'form':UserCreationForm()
+        }
+        return render(request,'LoginManager/signup.html',payload)
     else:
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        if not validate_recaptcha(recaptcha_response):
+            messages.error(request,"reCAPTCHA failed. Please try again.")
+            return redirect('Signup')
+        
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.create_user(first_name = request.POST["first_name"],last_name = request.POST["last_name"],username = request.POST['email'].lower(),email =request.POST['email'].lower(), password = request.POST['password1'],)# email = request.POST['email'],
