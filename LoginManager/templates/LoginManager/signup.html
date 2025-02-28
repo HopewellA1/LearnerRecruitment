@@ -1,22 +1,23 @@
 {% extends "applicants/base.html" %}
 
-{% block content %}
-{% load static %}
-{% if messages %}
-        {% for message in messages %}
-        <br/>
-        <div>
-            <center>
-                <div style="padding:1rem;  border:solid 2px #FF69B4; border-radius:15px; width:40%; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% endif %}">
-                <p >
-                    <b> {{ message }}.</b>
-                </p>
-                </div>
-            </center>
-        </div>
+    {% block content %}
+    
+    <script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_PUBLIC_KEY }}"></script>
+    {% if messages %}
+            {% for message in messages %}
+            <br/>
+            <div>
+                <center>
+                    <div style="padding:1rem;  border:solid 2px #FF69B4; border-radius:15px; width:40%; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% endif %}">
+                    <p >
+                        <b> {{ message }}.</b>
+                    </p>
+                    </div>
+                </center>
+            </div>
 
-        {% endfor %}
-{% endif %}
+            {% endfor %}
+    {% endif %}
 
 <div id="moveStep">
     <b>Step 1: Sign Up and Activate Your Account > </b>
@@ -48,6 +49,8 @@
             
         
         <form method="POST" class="signUpForm" action="">
+
+            
             {% csrf_token %}
             <div class="form-group">
                 <label for="first_name">First name</label>
@@ -88,6 +91,8 @@
                     </p>
                 </div>
             {% endif %}   
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
             {% comment %} <a type="submit" id="submit" onclick="submitForm()" class="btn btn-primary">Sign Up</a> {% endcomment %}
             <button   type="submit" class="btn btn-primary">Sign Up</button>
         </form>
@@ -168,7 +173,13 @@
 
     
 </script>
-
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{ RECAPTCHA_PUBLIC_KEY }}', {action: 'submit'}).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+</script>
 <style>
 
     #moveStep{

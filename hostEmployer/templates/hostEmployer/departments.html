@@ -27,11 +27,11 @@
 
     <div id="moveStep" class="row"  >
         {% if departments %}
-            <b  style="padding:0.5rem">Step 4:  Add Division/Department  ></b>
-
+            <b  style="padding:0.5rem">Step 5: Recruiting  ></b>
 
         {% else %}
-            <b  style="padding:0.5rem">Step 5: Recruiting  ></b>
+        <b  style="padding:0.5rem">Step 4:  Add Division/Department  ></b>
+           
         {% endif %}
         <div class="text-center" style=" color:azure">
             <h3>{{company.Name}} Divisions </h3> 
@@ -95,7 +95,7 @@
                         <label>
                            <b>Description<b>
                         </label><br/>
-                        <textarea class="form-control" type="text" max="300" required name="Description"></textarea>
+                        <textarea max="1000" class="form-control" type="text" onkeyup="validateDescription(this.value)" required name="Description"></textarea>
 
                     </div>
                     
@@ -109,7 +109,7 @@
 
             </form>
         </div>
-        <div>
+        <div style="padding:0.5rem">
             <div class="row" >
 
                 <!--The for loop starts-->
@@ -329,7 +329,13 @@
             
             }
             
-            
+            function validateDescription(txtDescription){
+                if(txtDescription.value.length > 3){
+                    console.log(txtDescription.value.length)
+                    return;
+                }
+                
+            }
            
         {% endif %}
     </script>

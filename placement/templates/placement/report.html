@@ -23,25 +23,76 @@
 
     <div class="container"> 
 
-        <div class="horizontalscrollar">
+        <div>
 
-            <div class="row" style="border">
+            <div  style="border">
                 {% for category in categories%}
                     <div style="padding:0.5rem">
-                        <div class="card" title="Click here to select a category" style="max-width:300px" onclick="gocateg('{{category.categoryId}}')">
+                        <div id="pdf-content{{category.category.categoryId}}" class="card" style="width:100%">
                            
-                            <div class="card-header ">
-                                <h2>
-                                    {{category.category.categoryName}}
-                                </h2>
+                            <div class="card-header row">
+                                <div class="cardheader row">
+                                        
+                                    <div>
+                                        <h2>
+                                            {{category.category.categoryName}}
+                                        </h2>
+                                    </div>
+                                    <div class="row">
+                                        <div style="padding:0.5rem">
+                                            <a href="{% url 'download_category_report' categoryId=category.category.categoryId  %}"> Download report</a>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body ">
-                                <p>   
-                                    Total Learners: {{category.analytics.totalLearners}}<br/>
-                                    Recruited Learners:  {{category.analytics.numRecruited}}<br/>
-                                    Recruited Learners:  {{category.analytics.numRecruited}}<br/>
-                                    Available Learners: {{category.analytics.numAvailble}}
-                                </p>
+                               <div style="padding:0.5rem">
+                                    <p id="categAnalytic{{category.category.categoryId}}" style="color:white">   
+                                        Total Learners: {{category.analytics.totalLearners}}<br/>
+                                        Recruited Learners:  {{category.analytics.numRecruited}}<br/>
+                                      
+                                        Available Learners: {{category.analytics.numAvailble}}
+                                    </p>
+                                <div>
+                                <hr/>   
+                                <div style="padding:0.5rem">
+
+                                    <div>
+                                        <h5>
+                                            Companies that recruited from category
+                                        </h5>
+                                        <div class="row" >
+                                            
+
+                                            {% if category.CategoryCompanies %}
+
+                                                {% for company in  category.CategoryCompanies.Comapnies %}
+
+                                                    <div style="padding:0.5rem">
+                                                        <div class="compCard">
+                                                            <div class="compCard-header">
+                                                                {{company.Company.Name }}
+                                                            </div>
+                                                            <div class="compCard-body">
+                                                                {% comment %} <p id="compAnalytic"> {% endcomment %}
+
+
+                                                                    Total Learners: 125<br/>
+                                                                    Recruited Learners: 30<br/>
+                                                                    Recruited Learners: 30<br/>
+                                                                    Available Learners: 95<br/>
+                                                                {% comment %} </p> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                         
+
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             
                             </div>
                             <div class="card-footer">
@@ -57,15 +108,8 @@
                         </div>
     
                     </div>
-                    {% comment %} <a   id="btngocateg{{category.category.categoryId}}" href="{% url 'selectLearner' departmentId=department.DepartmentId categoryId=category.category.categoryId  %}" hidden> </a>
-                     {% endcomment %}
-                    <script>
-                        
-                        function gocateg(id){
-                            let btngocateg = document.getElementById("btngocateg"+id);
-                            btngocateg.click()
-                        }
-                    </script>
+               
+                   
                 {% endfor %}
         
             </div>
@@ -85,6 +129,113 @@
             overflow-x:auto;
             overflow-y:hidden;
         }
-        .card b
+        .cardheader{
+            display:flex;
+            justify-content: space-between;
+            padding:0.5rem;
+          
+            width:100%
+        }
+        #downloadReport{
+            padding:0.5rem;
+            border-radius: 60%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #downloadReport:hover{
+            color:black;
+            border:solid;
+            border-right:none;
+            border-top:none;
+            text-decoration:none;
+        }
+        .compCard{
+            border:solid 1px;
+            border-radius:12px;
+            padding:0.5rem
+        }
+        .compCard-header{
+            border-bottom: solid 1px;
+            width:100%
+        }
+        .compCard-body > p{
+            color:white
+        }
+        .compCard-body{
+
+        }
+        .card {
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            color:white;
+            padding:0.5rem
+        }
     </style>
+
+
+
+
+
+<hr/>
+<!--download category report **********************************************************-->
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script> {% endcomment %}
+<script src="{% static 'placement/html2pdf.bundle.min.js' %}"></script>
+<div id="">
+    <h1>My Responsive PDF</h1>
+    <p>This content will be converted to a PDF and maintain its responsiveness.</p>
+    <img src="example.jpg" alt="Example Image" style="max-width: 100%; height: auto;">
+</div>
+<button id="download-pdf">Download PDF</button>
+<script>
+    document.getElementById('download-pdf').addEventListener('click',async  function() => {
+        // Select the element to convert
+        
+        
+         
+
+        
+        // Set options for PDF
+        
+
+        
+        
+        //document.getElementById("pdf-content").style = ""
+    });
+
+    async function downloadPDFReport(categoryID){
+        const element = document.getElementById('pdf-content'+categoryID);
+        //customizeForPDF(categoryID)
+        const options = {
+            margin:       0, // Margins in inches
+            filename:     'responsive-document.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 }, // Improve resolution
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        // Generate and download the PDF
+        await html2pdf().set(options).from(element).save();
+        ReverseCustomizedForPDF()
+    }
+
+    function customizeForPDF(categoryID){
+        document.getElementById("pdf-content"+categoryID).style="background: white; color:black"
+        document.getElementById("downloadReport"+categoryID).hidden = true
+        document.getElementById("categAnalytic"+categoryID).style = "color:black;border:none"
+        document.getElementById("compAnalytic"+categoryID).style = "color:black"
+       
+    }
+    function ReverseCustomizedForPDF(categoryID){
+        //background: 
+        document.getElementById("downloadReport"+categoryID).hidden = false
+        document.getElementById("categAnalytic"+categoryID).style = "color:white;"
+        document.getElementById("pdf-content"+categoryID).style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%); color:white"
+
+        document.getElementById("compAnalytic"+categoryID).style = "color:white"
+        /*let elements = document.getElementsByClassName("compCard-body");
+
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.color = "black";
+        }*/
+    }
+</script>
+
 {% endblock %}
