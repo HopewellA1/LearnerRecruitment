@@ -42,5 +42,6 @@ urlpatterns = [
     
     #internal use API
     path('takenTour/<int:tourId>', views.takenTour, name="takenTour"),
+    path("searchCompany/<str:searched>", views.searchCompany, name="searchCompany")
    
 ]

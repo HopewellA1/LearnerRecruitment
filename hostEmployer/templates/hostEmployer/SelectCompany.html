@@ -213,13 +213,28 @@
 
         </div>
         <div>
-            <div class='container' style="padding:1rem; color:white">
+            
+            <div id="moveStep" class="row"  >
                 <h1>
                     Recruiting  Companies
                 </h1>
             </div>
         </div>
-        <div class="row" style=" width:inherit">
+
+        <div id="searchHolder" class="row">
+            <input onkeyup="searchCompany(this.value)" type="text" placeholder="Search: Company" title="Search by Subject or part of the message you remember." class="form-control" id=="txtSearch" />
+            <div class="column">
+                <div id="refreshHolder" hidden>
+                    <a class="btn btn-primary" href="{% url 'SelectCompany' %}" >
+                        Refresh Page
+                    </a>
+                </div>
+                <div id="Noresults" style="padding:1rem" hidden>
+                    <label style="background-color: red; color:white; padding:0.5rem"> No results found</label>
+                </div>
+            </div>
+        </div>
+        <div class="row" style=" width:inherit" id="AllCompanies">
             {% for company in companies %}
                 <div style="padding:0.5rem; ">
                     <div id="Companyholder" class="card" >
@@ -327,6 +342,105 @@
             }
             
         {% endif %}
+
+        async function searchCompany(search) {
+            console.log("Search input:", search); 
+            const AllCompanies = document.getElementById("AllCompanies");
+            const refreshHolder = document.getElementById("refreshHolder");
+            const noResults = document.getElementById("Noresults");
+
+            // Clear previous results and handle empty search query
+            if (!search.trim()) {
+                AllCompanies.innerHTML = '';
+                noResults.hidden = false;
+                refreshHolder.hidden = false;
+                return;
+            }
+
+            // Construct the URL
+            const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+            const domain = '{{ domain }}'; // Ensure this is passed in the Django context
+
+            console.log("domain: ", domain)
+            const searchURL = `${protocol}://${domain}/hostEmployer/searchCompany/${encodeURIComponent(search)}`;
+
+            try {
+                // Fetch results
+                const response = await fetch(searchURL);
+                if (!response.ok) throw new Error('Failed to fetch search results');
+
+                // Parse JSON response
+                const data = await response.json();
+                console.log("API Response:", data);
+                console.log("Full response structure:", JSON.stringify(data, null, 2));
+
+                // Display results
+                refreshHolder.hidden = false;
+                if (data.companies && data.companies.length > 0) {
+                    
+                    populateResult(data.companies);
+                    noResults.hidden = true;
+                } else {
+                    AllCompanies.innerHTML = '';
+                    noResults.hidden = false;
+                }
+            } catch (error) {
+                console.error('Search failed:', error);
+                AllCompanies.innerHTML = '';
+                noResults.hidden = false;
+            }
+        }
+
+// Move this function outside of searchCompany
+function populateResult(companies) {
+    console.log("data.companies8: ", companies)
+    const AllCompanies = document.getElementById("AllCompanies");
+    AllCompanies.innerHTML = null; // Clear previous results
+    
+    companies.forEach(company => {
+     
+        // Make sure to use the company object directly for user info
+        AllCompanies.innerHTML += `
+            <div style="padding:0.5rem;">
+                <div id="Companyholder" class="card">
+                    <div class="card-header" style="color:white">
+                        ${company.Name}
+                    </div>
+                    <div class="card-body">
+                        <p style="color:white">
+                             Added by: ${company.first_name}  ${company.last_name}<br/>
+                            Email: ${company.email}
+                            
+                        </p>
+                    
+                    </div>
+                    <div class="card-footer" style="background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);">
+                        <div class="row">
+                            <div style='padding:0.5rem'>
+                                <a class="btn btn-info" title="Details About The Company" style="color:white" href="/hostEmployer/companyDetails/${company.CompanyId}">
+                                    More Details
+                                </a>
+                            </div>
+                            <div style='padding:0.5rem'>
+                                <a id="btnCompanyJoin" href="/hostEmployer/addManagement/${company.CompanyId}" title="Join The Company" class="btn btn-info">
+                                    Join
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+
+     
+
+
+// Example implementation for populateResult
+
+
     </script>
 
 
@@ -339,8 +453,20 @@
             display:flex;
             justify-content:space-between;
         }
+        #searchHolder{
+            padding:1rem;
+            display:flex;
+            justify-content:center
+        }
+        #searchHolder > input{
+            width:100%;
+            height:70px;
+        }
+        #refreshHolder{
+            padding:0.5rem
+        }
         #PreviousStep , #pageTour{
-           
+            
             padding:0.5rem;
             border-radius: 60%;
             text-decoration: underline;
