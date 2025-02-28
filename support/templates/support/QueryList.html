@@ -1,13 +1,13 @@
 {% extends "applicants/base.html" %}
 {% block content %}
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center" id="moveStep">
         <h1>Support Queries</h1>
-        <a href="{% url 'response_list' %}" class="btn btn-primary">View Responses</a>
+        
 
     </div>
-    <p>Total Queries: {{ total_queries }}</p>
-    <p>Unresolved Queries: {{ unresolved_queries }}</p>
+    <p style= "color:white; text-align:right">Total Queries: {{ total_queries }}</p>
+    <p style= "color:white; text-align:right">Unresolved Queries: {{ unresolved_queries }}</p>
 
 
 
@@ -138,6 +138,13 @@
 
 
 <style>
+    #moveStep{
+            background: linear-gradient(to top, rgb(12, 52, 131) 0%, rgb(162, 182, 223) 100%, rgb(107, 140, 206) 100%, rgb(162, 182, 223) 100%);
+            padding:0.7rem;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+    }
 
     .split{
         display: flex;

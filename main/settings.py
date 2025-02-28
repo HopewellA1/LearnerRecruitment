@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS").split(",")
 CSRF_TRUSTED_ORIGINS =config("Django_CSRF_TRUSTED_ORIGINS").split(",")
 RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY")
@@ -39,7 +40,6 @@ INSTALLED_APPS = [
     'support',
     'rest_framework',
     'placement',
-    'captcha'
 ]
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -65,7 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-               # 'support.context_processors.query_count',
+               
             ],
         },
     },
@@ -73,7 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'main.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+#https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
   'default': {
        'ENGINE': 'django.db.backends.mysql',

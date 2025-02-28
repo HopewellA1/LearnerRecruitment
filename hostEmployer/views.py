@@ -9,7 +9,7 @@ import openpyxl
 from openpyxl.styles import PatternFill
 from django.contrib.sites.shortcuts import get_current_site
 from io import BytesIO
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
@@ -46,7 +46,8 @@ def SelectCompany(request):
         
         payload = {
             "companies":companies,
-            "tour":tour
+            "tour":tour,
+            "domain": get_current_site(request)
         }
         return render(request, 'hostEmployer/SelectCompany.html', payload)
     
@@ -93,6 +94,31 @@ def SelectCompany(request):
         #return redirect('addManagement',CompanyId =company.CompanyId )
         return redirect('departments', CompanyId = company.CompanyId)
     
+
+@api_view(['GET'])
+def searchCompany(request, searched):
+    companies = []
+    searched = searched.strip().lower()
+    # Perform the search query on the Company model
+    results = Company.objects.filter(
+        Q(Name__icontains=searched) 
+    )
+       
+    for company in results:
+        print("company::::: ",company)
+        companies.append( {
+            "CompanyId": company.CompanyId,
+            "Name": company.Name,
+            "Phone": company.Phone,
+            "Email": company.Email,
+            "Address": company.Address,
+            "dateAdded": company.dateAdded.isoformat(),
+            "first_name": company.user.first_name,
+            "last_name": company.user.last_name ,
+            "email": company.user.email ,
+        })
+    print("companies: ", companies)    
+    return JsonResponse({"companies": companies}, status=200)
     
     
 def saveExacInfo(profile, request):

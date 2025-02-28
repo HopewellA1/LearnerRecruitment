@@ -8,7 +8,7 @@
             <br/>
             <div>
                 <center>
-                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-centent:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
+                    <div style="padding:1rem; border-radius:15px; width:auto; display:flex; justify-content:center;align-content:center;" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}info{% endif %}">
                         {{ message }}
                     </div>
                 </center>
@@ -63,7 +63,7 @@
         </div>
 
         <div id="searchHolder" class="row">
-            <input onkeyup="searchAnouncements(this.value)" type="text" placeholder="Search: anouncement" title="Search by Subject or part of the message you remember." class="form-control" id=="txtSearch" />
+            <input onkeyup="searchAnouncements(this.value)" type="text" placeholder="Search: anouncement" title="Search by Subject or part of the message you remember." class="form-control" id="txtSearch" />
             <div class="column">
                 <div id="refreshHolder" hidden>
                     <a class="btn btn-primary" href="{% url 'Anouncements' %}" >
@@ -229,7 +229,7 @@
         }
         
         //comming in with the search API
-        
+        // Mtho
         async function searchAnouncements(search){
             allAnouncements = document.getElementById("allAnouncements")
             const oldHTML = allAnouncements.innerHTML
